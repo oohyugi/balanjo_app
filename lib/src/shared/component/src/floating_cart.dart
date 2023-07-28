@@ -2,7 +2,6 @@ import 'package:balanjo_app/config/route/route_destination.dart';
 import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:balanjo_app/src/utils/UiState.dart';
 import 'package:balanjo_app/src/utils/extensions/double_ext.dart';
-import 'package:balanjo_app/src/utils/extensions/string_extentions.dart';
 import 'package:balanjo_app/theme/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,17 +16,9 @@ class FloatingCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CartCubit, CartState>(
       builder: (context, state) {
-        if (state.uiState.isSuccess && state.products.isNotEmpty) {
-          var totalItem = state.products
-              .fold(0, (previousValue, element) => previousValue + element.qty);
-
-          double estimatePrice = state.products.fold(
-              0.0,
-              (previousValue, element) =>
-                  previousValue +
-                  ((element.discountPrice == 0
-                      ? element.basePrice
-                      : element.discountPrice) * element.qty));
+        if (state.uiState.isSuccess && state.cart?.totalItem != 0) {
+          final totalItem = state.cart?.totalItem;
+          final totalEstimatedPrice = state.cart?.totalEstimatedPrice ?? 0;
           return Card(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(26)),
@@ -74,7 +65,7 @@ class FloatingCart extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          estimatePrice.toIdr(),
+                          totalEstimatedPrice.toIdr(),
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium

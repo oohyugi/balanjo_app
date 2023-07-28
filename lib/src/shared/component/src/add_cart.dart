@@ -15,16 +15,10 @@ class AddCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CartCubit, CartState>(
       builder: (context, state) {
-        if (state.uiState.isSuccess) {
-          final isInCart =
-              state.products.any((element) => element.id == product.id);
-
-          var newProduct = product;
-
-          if (isInCart) {
-            newProduct = state.products
-                .firstWhere((element) => element.id == product.id);
-          }
+        if (state.uiState.isSuccess && state.cart != null) {
+          final isInCart = state.cart?.items
+                  .any((element) => element.productId == product.id) ??
+              false;
 
           return AnimatedContainer(
             duration: const Duration(milliseconds: 100),
@@ -38,7 +32,7 @@ class AddCart extends StatelessWidget {
                     : Colors.transparent),
             child: !isInCart
                 ? InkWell(
-                    onTap: () => context.read<CartCubit>()..addItem(product),
+                    onTap: () => context.read<CartCubit>()..increment(product),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 4, horizontal: 16),
@@ -55,16 +49,22 @@ class AddCart extends StatelessWidget {
                     children: [
                       IncrementButton(
                           onClick: () =>
-                              context.read<CartCubit>().decrement(newProduct),
-                          isEnable: newProduct.qty > 0,
+                              context.read<CartCubit>().decrement(product),
+                          isEnable: isInCart,
                           icon: Icons.remove),
                       Expanded(
                         child: SizedBox(
                           width: 24,
                           child: Center(
                             child: Text(
-                              "${newProduct.qty}",
-                              style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Theme.of(context).colorScheme.onBackground),
+                              "${state.cart?.items.firstWhere((element) => element.productId == product.id).qty}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge
+                                  ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground),
                               maxLines: 1,
                             ),
                           ),
@@ -72,8 +72,12 @@ class AddCart extends StatelessWidget {
                       ),
                       IncrementButton(
                           onClick: () =>
-                              context.read<CartCubit>().increment(newProduct),
-                          isEnable: newProduct.qty < newProduct.maxQty,
+                              context.read<CartCubit>().increment(product),
+                          isEnable: state.cart?.items
+                                  .firstWhere((element) =>
+                                      element.productId == product.id)
+                                  .qty !=
+                              product.maxQty,
                           icon: Icons.add)
                     ],
                   ),

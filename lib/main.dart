@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<CartCubit>()..fetchCarts(),
+      create: (context) => getIt<CartCubit>()..fetchCart(),
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'Balanjo',
