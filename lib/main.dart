@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'Balanjo',
-        themeMode: ThemeMode.dark,
+        themeMode: ThemeMode.system,
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: lightColorScheme,

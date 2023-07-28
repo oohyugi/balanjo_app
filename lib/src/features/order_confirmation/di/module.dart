@@ -1,6 +1,12 @@
+import 'package:balanjo_app/src/features/order_confirmation/bloc/src/item_order_cubit.dart';
+import 'package:balanjo_app/src/features/order_confirmation/data/repository/order_repository.dart';
+
 import '../../../../main.dart';
 import '../bloc/bloc.dart';
 
 void orderModule() {
-  getIt.registerFactory(() => SummaryOrderCubit());
+  getIt.registerLazySingleton(() => OrderRepository(cartLocalService: getIt()));
+
+  getIt.registerFactory(() => SummaryOrderCubit(orderRepository: getIt()));
+  getIt.registerFactory(() => ItemOrderCubit(orderRepository: getIt()));
 }

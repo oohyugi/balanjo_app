@@ -15,22 +15,7 @@ abstract class IProductRepository {
 class ProductRepository implements IProductRepository {
   @override
   Future<List<ProductModel>> fetchForyouProduct() {
-    return Future.value(_dummies());
-  }
-
-  List<ProductModel> _dummies() {
-    List<ProductModel> list = List.empty(growable: true);
-    for (var i = 0; i < 10; i++) {
-      list.add(ProductModel(
-          id: i,
-          imageUrl:
-              "https://sesa.id/cdn/shop/products/pete-kupas-web_300x@2x.jpg?v=1674791258",
-          title: "Salmon Premium Fillet Fresh",
-          discountPercent: "-15%",
-          basePrice: 10000*(i+1).toDouble(),
-          discountPrice: 8000*(i+1).toDouble()));
-    }
-    return list;
+    return Future.value(ProductModel.dummiesForyou());
   }
 
   @override
@@ -44,7 +29,7 @@ class ProductRepository implements IProductRepository {
         endDate: endDate,
         isShow: _isShowFlashSale(
             DateTime.parse(startDate), DateTime.parse(endDate)),
-        products: _dummies()));
+        products: ProductModel.dummiesFlashSale()));
   }
 
   bool _isShowFlashSale(DateTime startDateMil, DateTime endDateMil) {

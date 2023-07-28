@@ -4,17 +4,17 @@ import '../../../../utils/log.dart';
 import '../dao/cart_dao.dart';
 
 class CartLocalService {
-  final IsarDb isarDb;
+  final IsarDb _isarDb;
 
-  CartLocalService(this.isarDb);
+  CartLocalService(this._isarDb);
 
   Future<void> saveToCart(CartDao cart) async {
-    final isar = await isarDb.db;
+    final isar = await _isarDb.db;
     isar.writeTxnSync<int>(() => isar.cartDaos.putSync(cart));
   }
 
   Future<void> saveProductToCart(CartDao cart) async {
-    final isar = await isarDb.db;
+    final isar = await _isarDb.db;
     final result =
         isar.cartDaos.filter().productIdEqualTo(cart.productId).findFirstSync();
 
@@ -29,7 +29,7 @@ class CartLocalService {
   }
 
   Future<void> removeCart(int productId) async {
-    final isar = await isarDb.db;
+    final isar = await _isarDb.db;
     final result =
         isar.cartDaos.filter().productIdEqualTo(productId).findFirstSync();
 
@@ -39,7 +39,7 @@ class CartLocalService {
   }
 
   Future<List<CartDao>> getAlCart() async {
-    final isar = await isarDb.db;
+    final isar = await _isarDb.db;
     var carts = isar.writeTxnSync(() => isar.cartDaos.where().findAllSync());
     logDebug("carts", carts.length);
 
@@ -47,7 +47,7 @@ class CartLocalService {
   }
 
   Future<CartDao?> getCartByProductId(int id) async {
-    final isar = await isarDb.db;
+    final isar = await _isarDb.db;
     return isar.cartDaos.filter().productIdEqualTo(id).findFirstSync();
   }
 }

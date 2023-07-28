@@ -16,7 +16,7 @@ class PricingDetail extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Divider(),
-              ItemPrice(title: "Subtotal", value: state.data!.subTotal.toIdr()),
+              ItemPrice(title: "Estimated Price", value: state.data!.estimatedPrice.toIdr()),
               ItemPrice(
                   title: "Ongkos kirim",
                   value: state.data!.deliveryFee.toIdr(),valueColor:Theme.of(context).colorScheme.primary ,),

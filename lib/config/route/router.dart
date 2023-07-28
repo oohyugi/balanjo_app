@@ -5,14 +5,15 @@ import 'package:balanjo_app/src/features/collections/bloc/bloc.dart';
 import 'package:balanjo_app/src/features/collections/collections_screen.dart';
 import 'package:balanjo_app/src/features/home/bloc/bloc.dart';
 import 'package:balanjo_app/src/features/home/home_screen.dart';
-import 'package:balanjo_app/src/features/order_confirmation/bloc/bloc.dart';
-import 'package:balanjo_app/src/features/order_confirmation/order_confirmation_screen.dart';
+
 import 'package:balanjo_app/src/utils/extensions/string_extentions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../src/features/home/main_screen.dart';
+import '../../src/features/order_confirmation/bloc/bloc.dart';
+import '../../src/features/order_confirmation/order_confirmation_screen.dart';
 import '../../src/shared/bloc/bloc.dart';
 
 const _pageKey = ValueKey('_pageKey');
@@ -28,90 +29,93 @@ final appRouter = GoRouter(
   routes: [
     // HomeScreen
 
-    GoRoute(path: RouteDestination.main,
-        builder: (context,state) => MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => getIt<HomeCubit>(),
+    GoRoute(
+        path: RouteDestination.main,
+        builder: (context, state) => MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => getIt<HomeCubit>(),
+                ),
+                BlocProvider(
+                  create: (context) =>
+                      getIt<CategoriesCubit>()..fetchCategories(),
+                ),
+                BlocProvider(
+                  create: (context) =>
+                      getIt<ForyouProductCubit>()..fetchProduct(),
+                ),
+                BlocProvider(
+                  create: (context) => getIt<FlashSaleCubit>()..fetchProduct(),
+                ),
+              ],
+              child: const MainScreen(),
             ),
-            BlocProvider(
-              create: (context) =>
-              getIt<CategoriesCubit>()..fetchCategories(),
-            ),
-            BlocProvider(
-              create: (context) =>
-              getIt<ForyouProductCubit>()..fetchProduct(),
-            ),
-            BlocProvider(
-              create: (context) =>
-              getIt<FlashSaleCubit>()..fetchProduct(),
-            ),
-          ],
-          child: const MainScreen(),
-        ),
         routes: [
-      GoRoute(
-          path: RouteDestination.home,
-          builder: (context, state) => MultiBlocProvider(
-                providers: [
-                  BlocProvider(
-                    create: (context) => getIt<HomeCubit>(),
+          GoRoute(
+              path: RouteDestination.home,
+              builder: (context, state) => MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (context) => getIt<HomeCubit>(),
+                      ),
+                      BlocProvider(
+                        create: (context) =>
+                            getIt<CategoriesCubit>()..fetchCategories(),
+                      ),
+                      BlocProvider(
+                        create: (context) =>
+                            getIt<ForyouProductCubit>()..fetchProduct(),
+                      ),
+                      BlocProvider(
+                        create: (context) =>
+                            getIt<FlashSaleCubit>()..fetchProduct(),
+                      ),
+                    ],
+                    child: const HomeScreen(),
                   ),
-                  BlocProvider(
-                    create: (context) =>
-                        getIt<CategoriesCubit>()..fetchCategories(),
-                  ),
-                  BlocProvider(
-                    create: (context) =>
-                        getIt<ForyouProductCubit>()..fetchProduct(),
-                  ),
-                  BlocProvider(
-                    create: (context) =>
-                        getIt<FlashSaleCubit>()..fetchProduct(),
-                  ),
-                ],
-                child: const HomeScreen(),
-              ),
-          routes: [
-            GoRoute(
-                name: RouteDestination.categories,
-                path: RouteDestination.categories,
-                builder: (context, state) => BlocProvider(
-                      create: (context) =>
-                          getIt<CategoriesCubit>()..fetchCategories(),
-                      child: const CategoriesScreen(),
-                    ),
-                routes: []),
-            GoRoute(
-                path: "${RouteDestination.collections}/:id",
-                name: RouteDestination.collections,
-                builder: (context, state) => MultiBlocProvider(
-                      providers: [
-                        BlocProvider(
-                          create: (context) => getIt<CollectionsCubit>(),
-                        ),
-                        BlocProvider(
+              routes: [
+                GoRoute(
+                    name: RouteDestination.categories,
+                    path: RouteDestination.categories,
+                    builder: (context, state) => BlocProvider(
                           create: (context) =>
                               getIt<CategoriesCubit>()..fetchCategories(),
+                          child: const CategoriesScreen(),
                         ),
-                      ],
-                      child: CollectionsScreen(
-                        id: state.pathParameters['id'].orEmpty,
-                      ),
-                    )),
-            GoRoute(
-                path: RouteDestination.orderConfirmation,
-                name: RouteDestination.orderConfirmation,
-                builder: (context, state) => MultiBlocProvider(
-                      providers: [
-                        BlocProvider(
-                          create: (context) => getIt<SummaryOrderCubit>(),
-                        ),
-                      ],
-                      child: const OrderConfirmationScreen(),
-                    ))
-          ]),
-    ])
+                    routes: []),
+                GoRoute(
+                    path: "${RouteDestination.collections}/:id",
+                    name: RouteDestination.collections,
+                    builder: (context, state) => MultiBlocProvider(
+                          providers: [
+                            BlocProvider(
+                              create: (context) => getIt<CollectionsCubit>(),
+                            ),
+                            BlocProvider(
+                              create: (context) =>
+                                  getIt<CategoriesCubit>()..fetchCategories(),
+                            ),
+                          ],
+                          child: CollectionsScreen(
+                            id: state.pathParameters['id'].orEmpty,
+                          ),
+                        )),
+                GoRoute(
+                    path: RouteDestination.orderConfirmation,
+                    name: RouteDestination.orderConfirmation,
+                    builder: (context, state) => MultiBlocProvider(
+                          providers: [
+                            BlocProvider(
+                              create: (context) => getIt<SummaryOrderCubit>(),
+                            ),
+                            BlocProvider(
+                              create: (context) => getIt<ItemOrderCubit>()..fetchItemsOrder(),
+                            ),
+                          ],
+                          child: const OrderConfirmationScreen(),
+                        ))
+              ]),
+        ])
     // PlaylistHomeScreen
   ],
 );

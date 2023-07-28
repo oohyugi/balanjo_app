@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class SummaryOrderMdl extends Equatable {
   final String id;
   final int totalItem;
-  final double subTotal;
+  final double estimatedPrice;
   final double totalPrice;
   final double deliveryFee;
   final double totalDiscount;
@@ -11,12 +11,12 @@ class SummaryOrderMdl extends Equatable {
   const SummaryOrderMdl(
       {required this.id,
       required this.totalItem,
-      required this.subTotal,
+      required this.estimatedPrice,
       required this.totalPrice,
       required this.deliveryFee,
       required this.totalDiscount});
 
   @override
   List<Object?> get props =>
-      [id, totalItem, subTotal, totalPrice, deliveryFee, totalDiscount];
+      [id, totalItem, estimatedPrice, totalPrice, deliveryFee, totalDiscount];
 }
