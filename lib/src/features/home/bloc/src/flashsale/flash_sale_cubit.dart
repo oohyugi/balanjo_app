@@ -1,27 +1,25 @@
-import 'package:balanjo_app/src/features/home/data/repository/repository.dart';
 import 'package:balanjo_app/src/utils/UiState.dart';
-import 'package:balanjo_app/src/utils/log.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../model/model.dart';
+import '../../../repository/repository.dart';
 
 part 'flash_sale_state.dart';
 
 class FlashSaleCubit extends Cubit<FlashSaleState> {
-  FlashSaleCubit({required this.productRepository})
+  FlashSaleCubit({required this.homeRepository})
       : super(const FlashSaleState.loading());
 
-  final ProductRepository productRepository;
+  final HomeRepository homeRepository;
 
   void fetchProduct() async {
-    var repo = await productRepository.fetchFlashSale();
+    var repo = await homeRepository.fetchFlashSale();
     emit(FlashSaleState.success(repo));
   }
 
   void hideFlashSale() async {
-    var repo = await productRepository.fetchFlashSale();
-    logDebug("hide", "ggg");
+    var repo = await homeRepository.fetchFlashSale();
     emit(const FlashSaleState.failure());
   }
 }

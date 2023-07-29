@@ -32,7 +32,7 @@ class ItemCard extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SpaceVertical(size: 4),
+            const SpaceVertical(size: 4),
             SizedBox(
               child: Text(
                 product.title,
@@ -47,15 +47,12 @@ class ItemCard extends StatelessWidget {
             const SpaceVertical(size: 4),
             Row(
               children: [
-                Text(
-                    product.discountPrice != 0
-                        ? product.discountPrice.toIdr()
-                        : product.basePrice.toIdr(),
+                Text(product.displayPrice.toIdr(),
                     style: Theme.of(context).textTheme.labelMedium?.copyWith(
                         fontWeight: FontWeight.w700,
                         color: Theme.of(context).colorScheme.onBackground)),
                 const SpaceHorizontal(size: 4),
-                if (product.discountPrice != 0)
+                if (product.discountPercent != 0)
                   Text(product.basePrice.toIdr(),
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
                           decoration: TextDecoration.lineThrough,

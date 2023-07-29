@@ -15,7 +15,6 @@ class Checkout extends StatelessWidget {
     return BlocBuilder<SummaryOrderCubit, SummaryOrderState>(
       builder: (context, state) {
         if (state.uiState.isSuccess && state.data != null) {
-          logDebug("checkout", state.data?.totalPrice);
           return BottomSheet(
             elevation: 0,
             shape: const RoundedRectangleBorder(

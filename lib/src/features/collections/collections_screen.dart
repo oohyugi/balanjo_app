@@ -24,54 +24,71 @@ class CollectionsScreen extends StatelessWidget {
       builder: (context, state) {
         if (state.uiState.isSuccess && state.categories.isNotEmpty) {
           final itemWithId =
-              state.categories.firstWhereOrNull((element) => element.id == id);
+              state.categories.firstWhereOrNull((element) => element.id == int.parse(id));
           final initialIndex =
               itemWithId != null ? state.categories.indexOf(itemWithId) : 0;
 
-          context.read<CollectionsCubit>().fetchProduct(id);
+          context.read<CollectionsCubit>().fetchProduct(state.categories[initialIndex].id);
           return DefaultTabController(
             initialIndex: initialIndex,
             length: state.categories.length,
-            child: BaseLayout(
-              title: const Text("Product"),
-              tabBar: TabBar(
-                tabs: state.categories
-                    .map((e) => Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 0.0, vertical: 8.0),
-                          child: Text(e.name.toLowerCase().capitalize),
-                        ))
-                    .toList(),
-                isScrollable: true,
-              ),
-              body: TabBarView(
-                children: state.categories
-                    .map((e) => BlocBuilder<CollectionsCubit, CollectionsState>(
-                          builder: (context, state) {
-                            if (state.uiState.isSuccess &&
-                                state.products.isNotEmpty) {
-                              return ResponsiveGridList(
-                                  minItemWidth:
-                                      MediaQuery.of(context).size.width / 2.5,
-                                  maxItemsPerRow: 2,
-                                  horizontalGridSpacing: 8,
-                                  verticalGridSpacing: 8,
-                                  horizontalGridMargin: 16,
-                                  verticalGridMargin: 16,
-                                  listViewBuilderOptions:
-                                      ListViewBuilderOptions(
-                                          padding: EdgeInsets.only(bottom: 68)),
-                                  children: state.products
-                                      .map((e) => ProductCard(
-                                            product: e,
-                                          ))
-                                      .toList());
-                            }
-                            return Container();
-                          },
-                        ))
-                    .toList(),
-              ),
+            child: Builder(
+              builder: (context) {
+                return BaseLayout(
+                  title: const Text("Product"),
+                  tabBar: TabBar(
+                    onTap: (index) {
+                      context
+                          .read<CollectionsCubit>()
+                          .fetchProduct(state.categories[index].id);
+                    },
+
+                    tabs: state.categories
+                        .map((e) => Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 0.0, vertical: 8.0),
+                              child: Text(e.name.toLowerCase().capitalize),
+                            ))
+                        .toList(),
+                    isScrollable: true,
+                  ),
+                  body: TabBarView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: state.categories
+                        .map((e) => BlocBuilder<CollectionsCubit, CollectionsState>(
+                              builder: (context, state) {
+                                if (state.uiState.isSuccess &&
+                                    state.products.isNotEmpty) {
+                                  return ResponsiveGridList(
+                                      minItemWidth:
+                                          MediaQuery.of(context).size.width / 2.5,
+                                      maxItemsPerRow: 2,
+                                      horizontalGridSpacing: 8,
+                                      verticalGridSpacing: 8,
+                                      horizontalGridMargin: 16,
+                                      verticalGridMargin: 16,
+                                      listViewBuilderOptions:
+                                          ListViewBuilderOptions(
+                                              padding: EdgeInsets.only(bottom: 68)),
+                                      children: state.products
+                                          .map((e) => ProductCard(
+                                                product: e,
+                                              ))
+                                          .toList());
+                                }else if(state.uiState.isInitial) {
+                                  return const Center(child: CircularProgressIndicator());
+                                }
+                                return Center(
+                                    child: Text(
+                                  "No Product",
+                                  style: Theme.of(context).textTheme.bodySmall),
+                                );
+                              },
+                            ))
+                        .toList(),
+                  ),
+                );
+              }
             ),
           );
         } else {

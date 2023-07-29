@@ -8,7 +8,8 @@ class RouteDestination {
   static const categories = "categories";
   static const orderConfirmation = "order_confirmation";
 
-  static navigateToCollections(BuildContext context, String id) {
-    context.pushNamed(RouteDestination.collections, pathParameters: {"id": id});
+  static navigateToCollections(BuildContext context, int id) {
+    context
+        .pushNamed(RouteDestination.collections, pathParameters: {"id": "$id"});
   }
 }

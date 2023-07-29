@@ -30,8 +30,6 @@ class _CarousellState extends State<Carousell>
   void initState() {
     _children = carousels
         .mapIndexed((i, e) {
-
-          logDebug("Index", i);
           return Container(
             margin: EdgeInsets.only(left: i==0?16:2,right: i==carousels.length-1?16:2),
             child: Card(

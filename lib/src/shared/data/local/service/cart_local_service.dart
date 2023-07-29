@@ -24,7 +24,6 @@ class CartLocalService {
           ..estimatePrice = cart.estimatePrice)
         : cart));
 
-    logDebug("save", cart.productId);
 
   }
 
@@ -41,7 +40,6 @@ class CartLocalService {
   Future<List<CartDao>> getAlCart() async {
     final isar = await _isarDb.db;
     var carts = isar.writeTxnSync(() => isar.cartDaos.where().findAllSync());
-    logDebug("carts", carts.length);
 
     return carts;
   }

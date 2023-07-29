@@ -1,5 +1,5 @@
 class CategoriesModel {
-  final String id;
+  final int id;
   final String name;
   final String? imageUrl;
   final List<SubCategoryModel> subCategories;
@@ -15,7 +15,7 @@ class CategoriesModel {
 
     categories.add(
       CategoriesModel(
-        id: "1",
+        id: 1,
         name: "Sayur & Buah",
         imageUrl:
             "https://sesa.id/cdn/shop/files/Category_icon_Sayur_buah_220x@2x.jpg?v=1689226398",
@@ -35,7 +35,7 @@ class CategoriesModel {
     );
     categories.add(
       const CategoriesModel(
-          id: "2",
+          id: 2,
           name: "Daging & Seafood",
           imageUrl:
               "https://sesa.id/cdn/shop/files/Category_icon_Daging_Seafood_220x@2x.jpg?v=1689169125",
@@ -43,7 +43,7 @@ class CategoriesModel {
     );
     categories.add(
       const CategoriesModel(
-          id: "3",
+          id: 3,
           name: "Beras & Kacang",
           imageUrl:
               "https://sesa.id/cdn/shop/files/Category_icon_Beras_Kacang_220x@2x.jpg?v=1689226348",
@@ -51,7 +51,7 @@ class CategoriesModel {
     );
     categories.add(
       const CategoriesModel(
-          id: "4",
+          id: 4,
           name: "Bahan Masakan",
           imageUrl:
               "https://sesa.id/cdn/shop/files/Category_icon_Bahan_Masak_220x@2x.jpg?v=1689226360",
@@ -59,7 +59,7 @@ class CategoriesModel {
     );
     categories.add(
       const CategoriesModel(
-          id: "5",
+          id: 5,
           name: "Makanan Anak",
           imageUrl:
               "https://sesa.id/cdn/shop/files/Category_icon_makanan_anak_220x@2x.jpg?v=1689226305",
@@ -67,7 +67,7 @@ class CategoriesModel {
     );
     categories.add(
       const CategoriesModel(
-          id: "6",
+          id: 6,
           name: "Sarapan",
           imageUrl:
               "https://sesa.id/cdn/shop/files/Category_icon_Sarapan_220x@2x.jpg?v=1689226259",
@@ -75,14 +75,14 @@ class CategoriesModel {
     );
     categories.add(
       const CategoriesModel(
-          id: "7",
+          id: 7,
           name: "Susu & Olahan",
           imageUrl:
               "https://sesa.id/cdn/shop/files/Category_icon_Susu_Olahan_220x@2x.jpg?v=1689189389",
           subCategories: []),
     );
     const CategoriesModel(
-        id: "8",
+        id: 8,
         name: "Makanan Beku",
         imageUrl:
             "https://sesa.id/cdn/shop/files/Category_icon_Makanan_Beku_220x@2x.jpg?v=1689226317",

@@ -38,7 +38,6 @@ class _SearchState extends State<Search> {
         defaultScrollNotificationPredicate(notification)) {
       final bool oldScrolledUnder = _scrolledUnder;
       final ScrollMetrics metrics = notification.metrics;
-      // logDebug("axis", metrics.extentBefore);
       switch (metrics.axisDirection) {
         case AxisDirection.up:
           // Scroll view is reversed

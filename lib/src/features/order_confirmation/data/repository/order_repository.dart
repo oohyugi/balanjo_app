@@ -1,7 +1,9 @@
 import 'package:balanjo_app/src/features/order_confirmation/model/model.dart';
 import 'package:balanjo_app/src/shared/data/local/dao/cart_dao.dart';
 import 'package:balanjo_app/src/shared/data/local/service/cart_local_service.dart';
+import 'package:balanjo_app/src/shared/data/network/product/product_remote_datasource.dart';
 import 'package:balanjo_app/src/shared/model/model.dart';
+import 'package:balanjo_app/src/utils/extensions/string_extentions.dart';
 
 abstract class IOrderRepository {
   Future<List<ProductModel>> fetchListCart();
@@ -11,22 +13,22 @@ abstract class IOrderRepository {
 
 class OrderRepository implements IOrderRepository {
   final CartLocalService cartLocalService;
+  final ProductRemoteDataSource productRemoteDataSource;
 
-  OrderRepository({required this.cartLocalService});
+  OrderRepository(
+      {required this.cartLocalService, required this.productRemoteDataSource});
 
   @override
   Future<List<ProductModel>> fetchListCart() async {
     final carts = await cartLocalService.getAlCart();
-    List<ProductModel> productsInCart = listProductInCart(carts);
-
-    return Future.value(productsInCart);
+    return await _getProductInCart(carts);
   }
 
   @override
   Future<SummaryOrderMdl> fetchOrderSummary() async {
     final carts = await cartLocalService.getAlCart();
 
-    List<ProductModel> productsInCart = listProductInCart(carts);
+    List<ProductModel> productsInCart = await _getProductInCart(carts);
 
     var totalItem =
         carts.fold(0, (previousValue, element) => previousValue + element.qty);
@@ -37,11 +39,7 @@ class OrderRepository implements IOrderRepository {
     double discountPrice = productsInCart.fold(
         0,
         (previousValue, element) =>
-            previousValue +
-            ((element.discountPrice != 0
-                    ? element.discountPrice
-                    : element.basePrice) *
-                element.qty));
+            previousValue + (element.displayPrice * element.qty));
 
     double basePrice = productsInCart.fold(
         0,
@@ -60,28 +58,16 @@ class OrderRepository implements IOrderRepository {
         totalDiscount: discountTotal));
   }
 
-  List<ProductModel> listProductInCart(List<CartDao> carts) {
-    var list = ProductModel.list() +
-        ProductModel.dummiesFlashSale() +
-        ProductModel.dummiesForyou();
+  Future<List<ProductModel>> _getProductInCart(List<CartDao> carts) async {
+    final carts = await cartLocalService.getAlCart();
 
-    final List<ProductModel> productsInCart = List.empty(growable: true);
-    var productIds = carts.map((e) => e.productId).toList();
+    if (carts.isEmpty) return [];
+    final productsInCart = await productRemoteDataSource
+        .fetchProductsByIds(carts.map((e) => e.productId).toList());
 
-    for (var product in list) {
-      if (productIds.any((element) => element == product.id)) {
-        productsInCart.add(ProductModel(
-            imageUrl: product.imageUrl,
-            title: product.title,
-            discountPercent: product.discountPercent,
-            basePrice: product.basePrice,
-            discountPrice: product.discountPrice,
-            id: product.id,
-            qty: carts
-                .firstWhere((element) => element.productId == product.id)
-                .qty));
-      }
-    }
-    return productsInCart;
+    return productsInCart
+        .map((e) => e.toProductModel(
+            qty: carts.firstWhere((element) => element.productId == e.id).qty))
+        .toList();
   }
 }

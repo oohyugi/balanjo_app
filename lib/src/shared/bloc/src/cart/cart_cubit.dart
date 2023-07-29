@@ -13,14 +13,14 @@ class CartCubit extends Cubit<CartState> {
   final CartRepository cartRepository;
 
   void increment(ProductModel product) async {
-   await cartRepository.increment(product.id, product.maxQty,
-        product.discountPrice == 0 ? product.basePrice : product.discountPrice);
+    logDebug(tag: "product", message: product.maxQty.toString());
+    await cartRepository.increment(
+        product.id, product.maxQty, product.displayPrice);
     fetchCart();
   }
 
-  void decrement(ProductModel product)async {
-    await cartRepository.decrement(product.id,
-        product.discountPrice == 0 ? product.basePrice : product.discountPrice);
+  void decrement(ProductModel product) async {
+    await cartRepository.decrement(product.id, product.displayPrice);
     fetchCart();
   }
 

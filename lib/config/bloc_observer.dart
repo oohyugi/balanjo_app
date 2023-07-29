@@ -6,12 +6,12 @@ class BBlocObserve extends BlocObserver {
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    logDebug('Bloc Transition :', transition);
+    logDebug(tag:'Bloc Transition :', message:transition);
   }
 
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-    logDebug('Bloc change :', change);
+    logDebug(tag:'Bloc change :', message: change);
   }
 }

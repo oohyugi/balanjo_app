@@ -60,7 +60,8 @@ class ProductCard extends StatelessWidget {
                 height: 34.0,
                 child: Text(
                   product.title,
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onBackground),
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground),
                   maxLines: 2,
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.ellipsis,
@@ -74,7 +75,7 @@ class ProductCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               children: [
-                if (product.discountPercent.isNotEmpty)
+                if (product.discountPercent != 0)
                   Container(
                     decoration: BoxDecoration(
                       borderRadius:
@@ -84,19 +85,22 @@ class ProductCard extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 4.0, vertical: 3.0),
-                      child: Text(
-                        product.discountPercent,
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.onError,fontWeight: FontWeight.w700)
-                      ),
+                      child: Text("-${product.discountPercent}%",
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelSmall
+                              ?.copyWith(
+                                  color: Theme.of(context).colorScheme.onError,
+                                  fontWeight: FontWeight.w700)),
                     ),
                   ),
-                if (product.discountPercent.isNotEmpty)
+                if (product.discountPercent != 0)
                   const SpaceHorizontal(size: 8.0),
-                if (product.discountPrice != 0)
-                  Text(
-                    product.basePrice.toIdr(),
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(decoration: TextDecoration.lineThrough,color: Theme.of(context).colorScheme.onBackground)
-                  )
+                if (product.discountPercent != 0)
+                  Text(product.basePrice.toIdr(),
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          decoration: TextDecoration.lineThrough,
+                          color: Theme.of(context).colorScheme.onBackground))
               ],
             ),
           ),
@@ -104,11 +108,10 @@ class ProductCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
-              product.discountPrice != 0
-                  ? product.discountPrice.toIdr()
-                  : product.basePrice.toIdr(),
-              style:Theme.of(context).textTheme.labelLarge?.copyWith(color: Theme.of(context).colorScheme.onBackground,fontWeight: FontWeight.w700)
-            ),
+               product.displayPrice.toIdr(),
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontWeight: FontWeight.w700)),
           ),
           const SpaceVertical(size: 8),
           Padding(

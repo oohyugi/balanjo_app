@@ -123,11 +123,11 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
             ),
           ),
         ),
-        SubCategoryWidget(
-          items: widget.categories[categorySelectedIndex].subCategories,
-          onClick: (childId, subId) => widget.onItemClick(
-              widget.categories[categorySelectedIndex].id, subId, childId),
-        )
+        // SubCategoryWidget(
+        //   items: widget.categories[categorySelectedIndex].subCategories,
+        //   onClick: (childId, subId) => widget.onItemClick(
+        //       widget.categories[categorySelectedIndex].id, subId, childId),
+        // )
       ],
     );
   }

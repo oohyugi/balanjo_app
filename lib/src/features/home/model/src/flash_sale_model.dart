@@ -1,7 +1,7 @@
 import '../../../../shared/model/model.dart';
 
 class FlashSaleModel {
-  final String id;
+  final int id;
   final String startDate;
   final String endDate;
   final bool isShow;

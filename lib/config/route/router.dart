@@ -97,7 +97,7 @@ final appRouter = GoRouter(
                             ),
                           ],
                           child: CollectionsScreen(
-                            id: state.pathParameters['id'].orEmpty,
+                            id: state.pathParameters['id']??"0",
                           ),
                         )),
                 GoRoute(
