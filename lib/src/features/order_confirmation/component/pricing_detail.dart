@@ -1,4 +1,6 @@
 import 'package:balanjo_app/src/features/order_confirmation/bloc/bloc.dart';
+import 'package:balanjo_app/src/shared/component/component.dart';
+import 'package:balanjo_app/src/shared/component/src/shimmer_loading.dart';
 import 'package:balanjo_app/src/utils/UiState.dart';
 import 'package:balanjo_app/src/utils/extensions/double_ext.dart';
 import 'package:flutter/material.dart';
@@ -11,25 +13,30 @@ class PricingDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SummaryOrderCubit, SummaryOrderState>(
       builder: (context, state) {
-        if (state.uiState.isSuccess && state.data != null) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Divider(),
-              ItemPrice(title: "Estimated Price", value: state.data!.estimatedPrice.toIdr()),
-              ItemPrice(
-                  title: "Ongkos kirim",
-                  value: state.data!.deliveryFee.toIdr(),valueColor:Theme.of(context).colorScheme.primary ,),
-              ItemPrice(
-                title: "Diskon",
-                value: "- ${state.data!.totalDiscount.toIdr()}",
-                valueColor: Theme.of(context).colorScheme.error,
-              ),
-              const Divider(),
-            ],
-          );
-        }
-        return Container();
+        if (state.uiState.isSuccess && state.data != null) {}
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Divider(),
+            ItemPrice(
+                isLoading: state.uiState.isInitial,
+                title: "Estimated Price",
+                value: state.data?.estimatedPrice.toIdr() ?? ""),
+            ItemPrice(
+              isLoading: state.uiState.isInitial,
+              title: "Ongkos kirim",
+              value: state.data?.deliveryFee.toIdr() ?? "",
+              valueColor: Theme.of(context).colorScheme.primary,
+            ),
+            ItemPrice(
+              isLoading: state.uiState.isInitial,
+              title: "Diskon",
+              value: "- ${state.data?.totalDiscount.toIdr()}",
+              valueColor: Theme.of(context).colorScheme.error,
+            ),
+            const Divider(),
+          ],
+        );
       },
     );
   }
@@ -37,11 +44,16 @@ class PricingDetail extends StatelessWidget {
 
 class ItemPrice extends StatelessWidget {
   const ItemPrice(
-      {super.key, required this.title, required this.value, this.valueColor});
+      {super.key,
+      required this.title,
+      required this.value,
+      this.valueColor,
+      required this.isLoading});
 
   final String title;
   final String value;
   final Color? valueColor;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +64,23 @@ class ItemPrice extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onBackground),
+            style: Theme.of(context)
+                .textTheme
+                .labelMedium
+                ?.copyWith(color: Theme.of(context).colorScheme.onBackground),
           ),
-          Text(value,
-              style: Theme.of(context)
-                  .textTheme
-                  .labelMedium
-                  ?.copyWith(color: valueColor??Theme.of(context).colorScheme.onBackground))
+          ShimmerLoading(
+            isLoading: isLoading,
+            child: isLoading?Container(
+                width: 100,
+                height: 20,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Theme.of(context).colorScheme.surface)):Text(value,
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    color: valueColor ??
+                        Theme.of(context).colorScheme.onBackground)),
+          ),
         ],
       ),
     );

@@ -6,7 +6,7 @@ import '../bloc/bloc.dart';
 
 void orderModule() {
   getIt.registerLazySingleton(() => OrderRepository(
-      cartLocalService: getIt(), productRemoteDataSource: getIt()));
+      cartLocalDataSource: getIt(), productRemoteDataSource: getIt()));
 
   getIt.registerFactory(() => SummaryOrderCubit(orderRepository: getIt()));
   getIt.registerFactory(() => ItemOrderCubit(orderRepository: getIt()));

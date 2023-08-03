@@ -51,7 +51,7 @@ class CategoriesWidget extends StatefulWidget {
     required this.onItemClick,
   });
 
-  final List<CategoriesModel> categories;
+  final List<CategoryModel> categories;
   final Function(
           String categoryId, String subCategoryId, String childCategoryId)
       onItemClick;

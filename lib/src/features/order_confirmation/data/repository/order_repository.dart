@@ -1,9 +1,8 @@
 import 'package:balanjo_app/src/features/order_confirmation/model/model.dart';
 import 'package:balanjo_app/src/shared/data/local/dao/cart_dao.dart';
-import 'package:balanjo_app/src/shared/data/local/service/cart_local_service.dart';
+import 'package:balanjo_app/src/shared/data/local/datasource/cart_local_datasource.dart';
 import 'package:balanjo_app/src/shared/data/network/product/product_remote_datasource.dart';
 import 'package:balanjo_app/src/shared/model/model.dart';
-import 'package:balanjo_app/src/utils/extensions/string_extentions.dart';
 
 abstract class IOrderRepository {
   Future<List<ProductModel>> fetchListCart();
@@ -12,21 +11,22 @@ abstract class IOrderRepository {
 }
 
 class OrderRepository implements IOrderRepository {
-  final CartLocalService cartLocalService;
+  final CartLocalDataSource cartLocalDataSource;
   final ProductRemoteDataSource productRemoteDataSource;
 
   OrderRepository(
-      {required this.cartLocalService, required this.productRemoteDataSource});
+      {required this.cartLocalDataSource,
+      required this.productRemoteDataSource});
 
   @override
   Future<List<ProductModel>> fetchListCart() async {
-    final carts = await cartLocalService.getAlCart();
+    final carts = await cartLocalDataSource.getAlCart();
     return await _getProductInCart(carts);
   }
 
   @override
   Future<SummaryOrderMdl> fetchOrderSummary() async {
-    final carts = await cartLocalService.getAlCart();
+    final carts = await cartLocalDataSource.getAlCart();
 
     List<ProductModel> productsInCart = await _getProductInCart(carts);
 
@@ -59,14 +59,15 @@ class OrderRepository implements IOrderRepository {
   }
 
   Future<List<ProductModel>> _getProductInCart(List<CartDao> carts) async {
-    final carts = await cartLocalService.getAlCart();
+    final carts = await cartLocalDataSource.getAlCart();
 
     if (carts.isEmpty) return [];
     final productsInCart = await productRemoteDataSource
         .fetchProductsByIds(carts.map((e) => e.productId).toList());
 
     return productsInCart
-        .map((e) => e.toProductModel(
+        .map((e) => ProductModel.fromApi(
+            res: e,
             qty: carts.firstWhere((element) => element.productId == e.id).qty))
         .toList();
   }

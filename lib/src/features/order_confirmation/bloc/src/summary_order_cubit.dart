@@ -1,10 +1,8 @@
-import 'dart:math';
 
 import 'package:balanjo_app/src/features/order_confirmation/data/repository/order_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../../shared/model/model.dart';
 import '../../../../utils/UiState.dart';
 import '../../model/model.dart';
 

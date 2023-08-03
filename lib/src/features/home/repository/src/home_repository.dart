@@ -1,8 +1,11 @@
 import 'package:balanjo_app/src/features/home/model/src/flash_sale_model.dart';
+import 'package:balanjo_app/src/shared/data/local/dao/product_dao.dart';
+import 'package:balanjo_app/src/shared/data/local/datasource/product_local_datasource.dart';
 import 'package:balanjo_app/src/shared/data/network/product/product_remote_datasource.dart';
 import 'package:balanjo_app/src/utils/extensions/string_extentions.dart';
+import '../../../../shared/data/network/response/product_response.dart';
 import '../../../../shared/model/model.dart';
-import '../../../../utils/log.dart';
+import '../../../../utils/sync_server.dart';
 
 abstract class IHomeRepository {
   Future<List<ProductModel>> fetchForyouProduct();
@@ -13,20 +16,51 @@ abstract class IHomeRepository {
 class HomeRepository implements IHomeRepository {
   final ProductRemoteDataSource productRemoteDataSource;
 
-  HomeRepository(this.productRemoteDataSource);
+  final ProductLocalDataSource productLocalDataSource;
+
+  HomeRepository(this.productRemoteDataSource, this.productLocalDataSource);
 
   @override
   Future<List<ProductModel>> fetchForyouProduct() async {
-    final products = await productRemoteDataSource.fetchProductBySection(2);
-    return products.map((e) => e.toProductModel()).toList();
+    final Result<List<ProductModel>> result = await syncData<List<ProductModel>,
+            List<ProductResponse>, List<ProductDao>>(
+        request: () async =>
+            await productRemoteDataSource.fetchProductBySection(2),
+        local: productLocalDataSource.getAllProducts,
+        saveToLocal: (networkData) async {
+          await productLocalDataSource.saveAllProducts(networkData);
+        },
+        mapper: (local) {
+          return local
+              .where((element) => element.section?.id == 2)
+              .map((e) => ProductModel.fromLocal(e))
+              .toList();
+        });
+    return result.data;
   }
 
   @override
   Future<FlashSaleModel> fetchFlashSale() async {
-    final products = await productRemoteDataSource.fetchProductBySection(1);
-    final startDate = products.firstOrNull?.section?.startDate;
-    final endDate = products.firstOrNull?.section?.endDate;
+    String? startDate = "";
+    String? endDate = "";
 
+    final Result<List<ProductModel>> result = await syncData<List<ProductModel>,
+        List<ProductResponse>, List<ProductDao>>(
+      request: () async =>
+          await productRemoteDataSource.fetchProductBySection(1),
+      local: productLocalDataSource.getAllProducts,
+      saveToLocal: (networkData) async {
+        await productLocalDataSource.saveAllProducts(networkData);
+      },
+      mapper: (e) {
+        startDate = e.firstOrNull?.section?.startDate?.orEmpty;
+        endDate = e.firstOrNull?.section?.endDate?.orEmpty;
+        return e
+            .where((element) => element.section?.id == 1)
+            .map((e) => ProductModel.fromLocal(e))
+            .toList();
+      },
+    );
 
     return Future.value(FlashSaleModel(
         id: 1,
@@ -34,7 +68,7 @@ class HomeRepository implements IHomeRepository {
         endDate: endDate.orEmpty,
         isShow: _isShowFlashSale(
             DateTime.parse(startDate.orEmpty), DateTime.parse(endDate.orEmpty)),
-        products: products.map((e) => e.toProductModel()).toList()));
+        products: result.data));
   }
 
   bool _isShowFlashSale(DateTime startDateMil, DateTime endDateMil) {

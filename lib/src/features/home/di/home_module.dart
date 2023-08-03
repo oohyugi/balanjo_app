@@ -4,7 +4,7 @@ import '../bloc/bloc.dart';
 import '../repository/repository.dart';
 
 void homeModule() {
-  getIt.registerLazySingleton(() => HomeRepository(getIt()));
+  getIt.registerLazySingleton(() => HomeRepository(getIt(),getIt()));
 
   getIt.registerFactory(() => HomeCubit());
   getIt.registerFactory(() => FlashSaleCubit(homeRepository: getIt()));

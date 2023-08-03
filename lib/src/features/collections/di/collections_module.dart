@@ -6,7 +6,7 @@ import '../bloc/bloc.dart';
 void collectionsModule() {
 
   getIt.registerLazySingleton(
-      () => CollectionRepository(productRemoteDataSource: getIt()));
+      () => CollectionRepository(productRemoteDataSource: getIt(),productLocalDataSource: getIt()));
 
   getIt.registerFactory(() => CollectionsCubit(collectionRepository: getIt()));
 }

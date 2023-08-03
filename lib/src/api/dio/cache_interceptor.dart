@@ -22,6 +22,7 @@ class CacheInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     _cache[response.requestOptions.uri] = response;
+
     super.onResponse(response, handler);
   }
 

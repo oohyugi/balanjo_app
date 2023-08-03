@@ -1,6 +1,10 @@
+import 'package:balanjo_app/src/features/order_confirmation/bloc/bloc.dart';
+import 'package:balanjo_app/src/features/order_confirmation/component/button_cart.dart';
+import 'package:balanjo_app/src/utils/UiState.dart';
 import 'package:balanjo_app/src/utils/extensions/double_ext.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../shared/component/component.dart';
 import '../../../shared/model/model.dart';
@@ -63,7 +67,11 @@ class ItemCard extends StatelessWidget {
             const SpaceVertical(size: 8),
             SizedBox(
                 width: MediaQuery.of(context).size.width / 3.4,
-                child: AddCart(product: product)),
+                child: BlocBuilder<SummaryOrderCubit, SummaryOrderState>(
+                  builder: (context, state) {
+                    return ButtonCart(product: product,isLoading: !state.uiState.isSuccess,);
+                  },
+                )),
           ],
         ),
       ],

@@ -1,4 +1,4 @@
-import 'package:balanjo_app/src/shared/data/local/service/cart_local_service.dart';
+import 'package:balanjo_app/src/shared/data/local/datasource/cart_local_datasource.dart';
 import '../../../model/model.dart';
 import '../../local/dao/cart_dao.dart';
 
@@ -11,26 +11,26 @@ abstract class ICartRepository {
 }
 
 class CartRepository implements ICartRepository {
-  final CartLocalService cartLocalService;
+  final CartLocalDataSource cartLocalDataSource;
 
-  CartRepository({required this.cartLocalService});
+  CartRepository(this.cartLocalDataSource);
 
   @override
   Future<void> decrement(int id, double estimatePrice) async {
-    final item = await cartLocalService.getCartByProductId(id);
+    final item = await cartLocalDataSource.getCartByProductId(id);
     if (item != null && item.qty > 1) {
       int qty = item.qty - 1;
 
-      cartLocalService.saveProductToCart(
+      cartLocalDataSource.saveProductToCart(
           CartDao(qty: qty, productId: id, estimatePrice: estimatePrice * qty));
     } else {
-      cartLocalService.removeCart(id);
+      cartLocalDataSource.removeCart(id);
     }
   }
 
   @override
   Future<CartModel> getCarts() async {
-    final carts = await cartLocalService.getAlCart();
+    final carts = await cartLocalDataSource.getAlCart();
     var totalItem =
         carts.fold(0, (previousValue, element) => previousValue + element.qty);
 
@@ -51,14 +51,14 @@ class CartRepository implements ICartRepository {
 
   @override
   Future<void> increment(int id, int maxQty, double estimatePrice) async {
-    final item = await cartLocalService.getCartByProductId(id);
+    final item = await cartLocalDataSource.getCartByProductId(id);
     if (item != null && item.qty < maxQty) {
       int qty = item.qty + 1;
 
-      cartLocalService.saveProductToCart(
+      cartLocalDataSource.saveProductToCart(
           CartDao(qty: qty, productId: id, estimatePrice: estimatePrice * qty));
     } else {
-      cartLocalService.saveProductToCart(
+      cartLocalDataSource.saveProductToCart(
           CartDao(qty: 1, productId: id, estimatePrice: estimatePrice));
     }
   }

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class CategoryImage extends StatelessWidget {
   const CategoryImage({super.key, required this.item, required this.onClick});
 
-  final CategoriesModel item;
+  final CategoryModel item;
   final VoidCallback? onClick;
 
   @override

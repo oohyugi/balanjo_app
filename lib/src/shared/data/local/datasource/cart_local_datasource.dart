@@ -1,12 +1,12 @@
-import 'package:balanjo_app/config/db.dart';
+import 'package:balanjo_app/config/isar_helper.dart';
 import 'package:isar/isar.dart';
 import '../../../../utils/log.dart';
 import '../dao/cart_dao.dart';
 
-class CartLocalService {
-  final IsarDb _isarDb;
+class CartLocalDataSource {
+  final IsarHelper _isarDb;
 
-  CartLocalService(this._isarDb);
+  CartLocalDataSource(this._isarDb);
 
   Future<void> saveToCart(CartDao cart) async {
     final isar = await _isarDb.db;
@@ -23,8 +23,6 @@ class CartLocalService {
           ..qty = cart.qty
           ..estimatePrice = cart.estimatePrice)
         : cart));
-
-
   }
 
   Future<void> removeCart(int productId) async {

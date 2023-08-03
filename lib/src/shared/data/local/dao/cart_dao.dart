@@ -10,15 +10,3 @@ class CartDao {
   late double estimatePrice;
   CartDao({required this.qty, required this.productId, required this.estimatePrice});
 }
-
-@embedded
-class ProductDao {
-  late String imageUrl;
-  late String title;
-  late String discountPercent;
-  late double basePrice;
-  late double discountPrice;
-  late int productId;
-  late bool isFavorite;
-  late int maxQty;
-}

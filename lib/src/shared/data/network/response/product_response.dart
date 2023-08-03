@@ -1,9 +1,8 @@
 import 'package:balanjo_app/src/utils/extensions/string_extentions.dart';
-
 import '../../../model/model.dart';
 
 class ProductResponse {
-  int? id;
+  int? id = -1;
   String? name;
   String? sku;
   String? imageUrl;
@@ -11,20 +10,20 @@ class ProductResponse {
   int? categoryId;
   int? stock;
   List<int>? tagIds;
-  Price? price;
-  Section? section;
+  PriceResponse? price;
+  SectionResponse? section;
 
   ProductResponse(
-      {id,
-      name,
-      sku,
-      imageUrl,
-      desc,
-      categoryId,
-      stock,
-      tagIds,
-      price,
-      section});
+      {required this.id,
+      this.name,
+      this.sku,
+      this.imageUrl,
+      this.desc,
+      this.categoryId,
+      this.stock,
+      this.tagIds,
+      this.price,
+      this.section});
 
   ProductResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -35,9 +34,11 @@ class ProductResponse {
     categoryId = json['category_id'];
     stock = json['stock'];
     tagIds = json['tag_ids'].cast<int>();
-    price = json['price'] != null ? Price.fromJson(json['price']) : null;
-    section =
-        json['section'] != null ? Section.fromJson(json['section']) : null;
+    price =
+        json['price'] != null ? PriceResponse.fromJson(json['price']) : null;
+    section = json['section'] != null
+        ? SectionResponse.fromJson(json['section'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -59,39 +60,17 @@ class ProductResponse {
     return data;
   }
 
-  ProductModel toProductModel({int qty = 0}) {
-    return ProductModel(
-        basePrice: price?.basePrice?.toDouble() ?? 0,
-        discountPercent: price?.discount ?? 0,
-        displayPrice: _getDisplayPrice(price),
-        imageUrl: imageUrl.orEmpty,
-        id: id ?? -1,
-        maxQty: stock ?? 0,
-        qty: qty,
-        title: name.orEmpty);
-  }
 
-  double _getDisplayPrice(Price? price) {
-    if (price != null) {
-      if (price.offerPrice != 0) {
-        return price.offerPrice!.toDouble();
-      } else {
-        return price.basePrice!.toDouble();
-      }
-    } else {
-      return 0;
-    }
-  }
 }
 
-class Price {
+class PriceResponse {
   int? basePrice;
   int? discount;
   int? offerPrice;
 
-  Price({basePrice, discount, offerPrice});
+  PriceResponse({this.basePrice, this.discount, this.offerPrice});
 
-  Price.fromJson(Map<String, dynamic> json) {
+  PriceResponse.fromJson(Map<String, dynamic> json) {
     basePrice = json['base_price'];
     discount = json['discount'];
     offerPrice = json['offer_price'];
@@ -106,15 +85,15 @@ class Price {
   }
 }
 
-class Section {
+class SectionResponse {
   int? id;
   String? name;
   String? startDate;
   String? endDate;
 
-  Section({this.id, this.name, this.startDate, this.endDate});
+  SectionResponse({this.id, this.name, this.startDate, this.endDate});
 
-  Section.fromJson(Map<String, dynamic> json) {
+  SectionResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     startDate = json['start_date'];

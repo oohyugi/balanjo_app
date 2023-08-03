@@ -7,3 +7,4 @@ export 'src/tapper.dart';
 export 'src/floating_cart.dart';
 export 'src/base_layout.dart';
 export 'src/product_card.dart';
+export 'src/shimmer.dart';

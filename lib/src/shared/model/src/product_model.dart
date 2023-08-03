@@ -1,3 +1,6 @@
+import 'package:balanjo_app/src/shared/data/local/dao/product_dao.dart';
+import 'package:balanjo_app/src/shared/data/network/response/product_response.dart';
+import 'package:balanjo_app/src/utils/extensions/string_extentions.dart';
 import 'package:equatable/equatable.dart';
 
 class ProductModel extends Equatable {
@@ -80,4 +83,52 @@ class ProductModel extends Equatable {
 
   @override
   List<Object?> get props => [id, qty, maxQty];
+
+  static ProductModel fromLocal(ProductDao e) {
+    return ProductModel(
+        basePrice: e.price?.basePrice?.toDouble() ?? 0,
+        discountPercent: e.price?.discount ?? 0,
+        displayPrice: getDisplayPriceLocal(e.price),
+        imageUrl: e.imageUrl.orEmpty,
+        id: e.id ?? -1,
+        maxQty: e.stock ?? 0,
+        qty: 0,
+        title: e.name.orEmpty);
+  }
+
+  static ProductModel fromApi({required ProductResponse res, int qty = 0}) {
+    return ProductModel(
+        basePrice: res.price?.basePrice?.toDouble() ?? 0,
+        discountPercent: res.price?.discount ?? 0,
+        displayPrice: getDisplayPrice(res.price),
+        imageUrl: res.imageUrl.orEmpty,
+        id: res.id ?? -1,
+        maxQty: res.stock ?? 0,
+        qty: qty,
+        title: res.name.orEmpty);
+  }
+}
+
+double getDisplayPrice(PriceResponse? price) {
+  if (price != null) {
+    if (price.offerPrice != 0) {
+      return price.offerPrice!.toDouble();
+    } else {
+      return price.basePrice!.toDouble();
+    }
+  } else {
+    return 0;
+  }
+}
+
+double getDisplayPriceLocal(Price? price) {
+  if (price != null) {
+    if (price.offerPrice != 0) {
+      return price.offerPrice!.toDouble();
+    } else {
+      return price.basePrice!.toDouble();
+    }
+  } else {
+    return 0;
+  }
 }
