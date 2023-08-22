@@ -89,7 +89,7 @@ class IncrementButton extends StatelessWidget {
     return InkWell(
       onTap: isEnable ? onClick : null,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
+        padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
         child: Icon(
           icon,
           color: isEnable

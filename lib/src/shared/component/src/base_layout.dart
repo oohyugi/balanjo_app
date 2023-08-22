@@ -1,4 +1,4 @@
-import 'package:balanjo_app/src/features/home/component/search.dart';
+import 'package:balanjo_app/src/shared/component/src/search.dart';
 import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,23 +37,20 @@ class _BaseLayoutState extends State<BaseLayout>
   @override
   Widget build(BuildContext context) {
     return widget.isHideAppBar
-        ? Container(
-            constraints:
-                BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
-            child: Stack(
-              children: [
-                widget.body,
-                if (widget.isShowFloatingCart)
-                  const Positioned(
-                      bottom: 16, left: 16, right: 16, child: FloatingCart())
-              ],
-            ),
-          )
+        ? Stack(
+          children: [
+            widget.body,
+            if (widget.isShowFloatingCart)
+              const Positioned(
+                  bottom: 16, left: 16, right: 16, child: FloatingCart())
+          ],
+        )
         : Scaffold(
             appBar: AppBar(
               title: widget.title,
               actions: widget.actions,
               bottom: widget.tabBar,
+              centerTitle: false,
               backgroundColor: Theme.of(context).colorScheme.background,
               elevation: 0,
               systemOverlayStyle: SystemUiOverlayStyle(
@@ -62,17 +59,13 @@ class _BaseLayoutState extends State<BaseLayout>
                       Theme.of(context).colorScheme.surfaceTint,
                       0)),
             ),
-            body: Container(
-              constraints:
-                  BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
-              child: Stack(
-                children: [
-                  widget.body,
-                  if (widget.isShowFloatingCart)
-                    const Positioned(
-                        bottom: 16, left: 16, right: 16, child: FloatingCart())
-                ],
-              ),
+            body: Stack(
+              children: [
+                widget.body,
+                if (widget.isShowFloatingCart)
+                  const Positioned(
+                      bottom: 16, left: 16, right: 16, child: SafeArea(child: FloatingCart()))
+              ],
             ),
           );
   }

@@ -35,7 +35,7 @@ class AddCart extends StatelessWidget {
                     onTap: () => context.read<CartCubit>()..increment(product),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 4, horizontal: 16),
+                          vertical: 6, horizontal: 16),
                       child: Center(
                           child: Text(
                         "Add",

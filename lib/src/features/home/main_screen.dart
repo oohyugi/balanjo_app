@@ -4,7 +4,7 @@ import 'package:balanjo_app/theme/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'component/search.dart';
+import '../../shared/component/src/search.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -20,19 +20,22 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: null,
+          centerTitle: false,
+          automaticallyImplyLeading: false,
           title: Padding(
             padding: const EdgeInsets.only(top: 10),
             child: SizedBox(
                 width: MediaQuery.of(context).size.width / 1.5,
                 child: const Search()),
           ),
-          // systemOverlayStyle: SystemUiOverlayStyle(
-          //     systemNavigationBarColor: ElevationOverlay.applySurfaceTint(
-          //         Theme.of(context).colorScheme.surface,
-          //         Theme.of(context).colorScheme.surfaceTint,
-          //         4),
-          // statusBarIconBrightness: Brightness.dark,
-          // statusBarColor: Theme.of(context).colorScheme.background,),
+          systemOverlayStyle: SystemUiOverlayStyle(
+              systemNavigationBarColor: ElevationOverlay.applySurfaceTint(
+                  Theme.of(context).colorScheme.surface,
+                  Theme.of(context).colorScheme.surfaceTint,
+                  4),
+          statusBarColor: Theme.of(context).colorScheme.background,
+          statusBarIconBrightness: Brightness.dark),
           actions: [
             IconButton(
                 onPressed: () {},
@@ -46,8 +49,8 @@ class _MainScreenState extends State<MainScreen> {
                           BlendMode.srcIn),
                     )))
           ],
-          backgroundColor: Theme.of(context).colorScheme.background,
           elevation: 0,
+          scrolledUnderElevation: 0,
         ),
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: (int index) {

@@ -1,9 +1,10 @@
-import 'package:balanjo_app/config/route/route_destination.dart';
+import 'package:balanjo_app/config/route/safe_route.dart';
 import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:balanjo_app/src/utils/UiState.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
+import '../../../config/route/screen/collections.dart';
 import '../../shared/bloc/bloc.dart';
 
 class CategoriesScreen extends StatelessWidget {
@@ -12,7 +13,7 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseLayout(
-      title: Text("Categories"),
+      title: const Text("Categories"),
       body: BlocBuilder<CategoriesCubit, CategoriesState>(
         builder: (context, state) {
           if (state.uiState.isSuccess && state.categories.isNotEmpty) {
@@ -29,8 +30,8 @@ class CategoriesScreen extends StatelessWidget {
                     .map((e) => CategoryImage(
                           item: e,
                           onClick: () {
-                            RouteDestination.navigateToCollections(
-                                context, e.id);
+                            CollectionsScreenRoute(categoryId: e.id)
+                                .push(context);
                           },
                         ))
                     .toList());

@@ -1,8 +1,9 @@
-import 'package:balanjo_app/src/features/order_confirmation/model/model.dart';
 import 'package:balanjo_app/src/shared/data/local/dao/cart_dao.dart';
 import 'package:balanjo_app/src/shared/data/local/datasource/cart_local_datasource.dart';
 import 'package:balanjo_app/src/shared/data/network/product/product_remote_datasource.dart';
 import 'package:balanjo_app/src/shared/model/model.dart';
+
+import '../../model/model.dart';
 
 abstract class IOrderRepository {
   Future<List<ProductModel>> fetchListCart();

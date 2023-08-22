@@ -1,4 +1,5 @@
-import 'package:balanjo_app/config/route/route_destination.dart';
+
+import 'package:balanjo_app/config/route/safe_route.dart';
 import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:balanjo_app/src/utils/UiState.dart';
 import 'package:balanjo_app/src/utils/extensions/double_ext.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../config/route/screen/screen.dart';
 import '../../bloc/bloc.dart';
 
 class FloatingCart extends StatelessWidget {
@@ -26,7 +28,7 @@ class FloatingCart extends StatelessWidget {
             elevation: 4,
             child: Tapper(
               onTap: () {
-                context.pushNamed(RouteDestination.orderConfirmation);
+                const OrderScreenRoute().push(context);
               },
               borderRadius: BorderRadius.circular(26),
               child: Padding(

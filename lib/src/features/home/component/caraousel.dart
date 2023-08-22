@@ -30,24 +30,21 @@ class _CarousellState extends State<Carousell>
   void initState() {
     _children = carousels
         .mapIndexed((i, e) {
-          return Container(
-            margin: EdgeInsets.only(left: i==0?16:2,right: i==carousels.length-1?16:2),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: CachedNetworkImage(
-                  imageUrl: e,
-                  fit: BoxFit.cover,
-                ),
+          return Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8)),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: CachedNetworkImage(
+                imageUrl: e,
+                fit: BoxFit.cover,
               ),
             ),
           );
     })
         .toList();
 
-    _pageController = PageController(viewportFraction: 0.88, initialPage: 0);
+    _pageController = PageController(viewportFraction: 0.88, initialPage: _currentPage);
     _animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 5));
 
@@ -84,17 +81,18 @@ class _CarousellState extends State<Carousell>
       children: [
         Expanded(
           child: PageView.builder(
-            itemCount: _children.length,
             pageSnapping: true,
-            padEnds: false,
+            padEnds: true,
             controller: _pageController,
             itemBuilder: (context, index) {
-              // return _children.loop(index);
-              return _children[index];
+              return _children.loop(index);
+              // return _children[index];
             },
             onPageChanged: (value) {
               setState(() {
                 _currentPage = value;
+                // _animationController.forward();
+
               });
             },
           ),

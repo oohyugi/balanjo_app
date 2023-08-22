@@ -1,7 +1,7 @@
 import 'package:balanjo_app/src/features/home/component/flashsale.dart';
 import 'package:balanjo_app/src/features/home/component/foryou.dart';
 import 'package:balanjo_app/src/features/home/component/caraousel.dart';
-import 'package:balanjo_app/src/features/home/component/search.dart';
+import 'package:balanjo_app/src/shared/component/src/search.dart';
 import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:flutter/material.dart';
 

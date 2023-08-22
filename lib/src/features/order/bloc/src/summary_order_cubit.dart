@@ -1,9 +1,9 @@
 
-import 'package:balanjo_app/src/features/order_confirmation/data/repository/order_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../utils/UiState.dart';
+import '../../data/repository/order_repository.dart';
 import '../../model/model.dart';
 
 part 'summary_order_state.dart';

@@ -1,10 +1,10 @@
-import 'package:balanjo_app/src/features/order_confirmation/bloc/bloc.dart';
-import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:balanjo_app/src/shared/component/src/shimmer_loading.dart';
 import 'package:balanjo_app/src/utils/UiState.dart';
 import 'package:balanjo_app/src/utils/extensions/double_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/bloc.dart';
 
 class PricingDetail extends StatelessWidget {
   const PricingDetail({super.key});
@@ -59,29 +59,32 @@ class ItemPrice extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: Theme.of(context)
-                .textTheme
-                .labelMedium
-                ?.copyWith(color: Theme.of(context).colorScheme.onBackground),
-          ),
-          ShimmerLoading(
-            isLoading: isLoading,
-            child: isLoading?Container(
-                width: 100,
-                height: 20,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Theme.of(context).colorScheme.surface)):Text(value,
-                style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: valueColor ??
-                        Theme.of(context).colorScheme.onBackground)),
-          ),
-        ],
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium
+                  ?.copyWith(color: Theme.of(context).colorScheme.onBackground),
+            ),
+            ShimmerLoading(
+              isLoading: isLoading,
+              child: isLoading?Container(
+                  width: 80,
+                  height: 12,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Theme.of(context).colorScheme.surface)):Text(value,
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: valueColor ??
+                          Theme.of(context).colorScheme.onBackground)),
+            ),
+          ],
+        ),
       ),
     );
   }

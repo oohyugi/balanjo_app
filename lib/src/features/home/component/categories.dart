@@ -1,9 +1,9 @@
+
+import 'package:balanjo_app/config/route/safe_route.dart';
 import 'package:balanjo_app/src/utils/UiState.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-
-import '../../../../config/route/route_destination.dart';
+import '../../../../config/route/screen/screen.dart';
 import '../../../shared/bloc/bloc.dart';
 import '../../../shared/component/component.dart';
 
@@ -18,7 +18,7 @@ class CategoryList extends StatelessWidget {
           return Header(
             title: "Discover The Organic World",
             onTapMore: () {
-              context.pushNamed(RouteDestination.categories);
+              CategoriesScreenRoute().push(context);
             },
             child: SizedBox(
               height: 134,
@@ -33,7 +33,9 @@ class CategoryList extends StatelessWidget {
                     child: CategoryImage(
                       item: state.categories[index],
                       onClick: () {
-                        RouteDestination.navigateToCollections(context, state.categories[index].id);
+                        CollectionsScreenRoute(
+                                categoryId: state.categories[index].id)
+                            .push(context);
                       },
                     ),
                   );
