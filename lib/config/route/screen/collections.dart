@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../main.dart';
 import '../../../../src/features/collections/bloc/bloc.dart';
 import '../../../../src/features/collections/collections_screen.dart';
-import '../../../../src/features/collections/product_screen.dart';
 import '../../../../src/shared/bloc/bloc.dart';
 
 @immutable

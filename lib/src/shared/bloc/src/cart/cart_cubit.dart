@@ -13,7 +13,6 @@ class CartCubit extends Cubit<CartState> {
   final CartRepository cartRepository;
 
   void increment(ProductModel product) async {
-    logDebug(tag: "product", message: product.maxQty.toString());
     await cartRepository.increment(
         product.id, product.maxQty, product.displayPrice);
     fetchCart();

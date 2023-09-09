@@ -6,7 +6,7 @@ import 'package:balanjo_app/src/shared/model/model.dart';
 import 'package:balanjo_app/src/utils/sync_server.dart';
 
 abstract class ICollectionRepository {
-  Future<List<ProductModel>> fetchProducts(int categoryId);
+  Future<List<ProductModel>> fetchProducts(int categoryId, String range,int offset);
 }
 
 class CollectionRepository implements ICollectionRepository {
@@ -18,20 +18,23 @@ class CollectionRepository implements ICollectionRepository {
   final ProductLocalDataSource productLocalDataSource;
 
   @override
-  Future<List<ProductModel>> fetchProducts(int categoryId) async {
-    final Result<List<ProductModel>> result = await syncData<List<ProductModel>,
-        List<ProductResponse>, List<ProductDao>>(
-      request: () async =>
-          await productRemoteDataSource.fetchProductsByCategory(categoryId),
-      local: productLocalDataSource.getAllProducts,
+  Future<List<ProductModel>> fetchProducts(int categoryId, String range,int offset) async {
+   var network = await productRemoteDataSource
+        .fetchProductsByCategory(categoryId, range);
+    final Result<List<ProductModel>> result = await syncData<
+        List<ProductModel>, List<ProductResponse>, List<ProductDao>>(
+      request: () async =>network,
+      local: () async =>
+          await productLocalDataSource.getAllProductsByCategoryId(categoryId,offset: offset),
       saveToLocal: (networkData) async {
         await productLocalDataSource.saveAllProducts(networkData);
       },
-      mapper: (e) {
-        return e
+      mapper: (l) {
+        var local = l
             .where((element) => element.categoryId == categoryId)
             .map((e) => ProductModel.fromLocal(e))
             .toList();
+        return local;
       },
     );
     return result.data;

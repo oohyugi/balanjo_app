@@ -5,8 +5,9 @@ const defaultSelectProduct =
     "select=id,name,sku,image_url,desc,category_id,stock,price(base_price,discount,offer_price),tag_ids";
 
 class ProductService {
-  Future<Response> fetchProductsByCategory(int categoryId) async {
-    return addInterceptors(dio: createDio(), isRequireAuth: false)
+  Future<Response> fetchProductsByCategory(int categoryId, String range) async {
+    return addInterceptors(
+            dio: createDio(), isRequireAuth: false, header: {"Range": range})
         .get("product?category_id=eq.$categoryId&$defaultSelectProduct");
   }
 

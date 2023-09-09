@@ -3,7 +3,6 @@ import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:balanjo_app/src/utils/UiState.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:responsive_grid_list/responsive_grid_list.dart';
 import '../../../config/route/screen/collections.dart';
 import '../../shared/bloc/bloc.dart';
 
@@ -17,24 +16,27 @@ class CategoriesScreen extends StatelessWidget {
       body: BlocBuilder<CategoriesCubit, CategoriesState>(
         builder: (context, state) {
           if (state.uiState.isSuccess && state.categories.isNotEmpty) {
-            return ResponsiveGridList(
-                minItemWidth: MediaQuery.of(context).size.width / 4,
-                maxItemsPerRow: 3,
-                horizontalGridSpacing: 4,
-                verticalGridSpacing: 4,
-                horizontalGridMargin: 16,
-                verticalGridMargin: 16,
-                listViewBuilderOptions: ListViewBuilderOptions(
-                    padding: const EdgeInsets.only(bottom: 68)),
-                children: state.categories
-                    .map((e) => CategoryImage(
-                          item: e,
-                          onClick: () {
-                            CollectionsScreenRoute(categoryId: e.id)
-                                .push(context);
-                          },
-                        ))
-                    .toList());
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: GridView.builder(
+                  itemCount: state.categories.length,
+                  cacheExtent: state.categories.length.toDouble(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      childAspectRatio: 0.79,
+                      mainAxisSpacing: 2,
+                      crossAxisSpacing: 2
+                  ),
+                  itemBuilder: (context, index) {
+                   return CategoryImage(
+                      item: state.categories[index],
+                      onClick: () {
+                        CollectionsScreenRoute(categoryId:  state.categories[index].id)
+                            .push(context);
+                      },
+                    );
+                  }),
+            );
           }
           return const Center(
             child: CircularProgressIndicator(),

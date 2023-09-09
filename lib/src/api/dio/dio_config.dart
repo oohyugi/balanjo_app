@@ -13,25 +13,33 @@ Dio createDio({baseUrl = url}) {
   return dio;
 }
 
-Dio addInterceptors({required Dio dio, bool isRequireAuth = true}) {
+Dio addInterceptors({required Dio dio, bool isRequireAuth = true, Map<String,
+    dynamic>? header}) {
   return dio
-    ..interceptors.add(CustomInterceptors())
+    ..interceptors.add(CustomInterceptors(header))
     ..interceptors.add(CacheInterceptor())
     ..transformer = MyTransformer();
 }
 
 class CustomInterceptors extends Interceptor {
+  CustomInterceptors(this.header);
+
+  final Map<String, dynamic>? header;
+
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     options.headers = {
       "apikey":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZoY3R5ZmR1bmpxZXlhYnNqcWFsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MDQzMDc5MiwiZXhwIjoyMDA2MDA2NzkyfQ.LDYanw9nlI1bLXnTFIkezmH65dDiiG1kZTueqmZ1vw4",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZoY3R5ZmR1bmpxZXlhYnNqcWFsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MDQzMDc5MiwiZXhwIjoyMDA2MDA2NzkyfQ.LDYanw9nlI1bLXnTFIkezmH65dDiiG1kZTueqmZ1vw4",
       "Authorization":
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZoY3R5ZmR1bmpxZXlhYnNqcWFsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MDQzMDc5MiwiZXhwIjoyMDA2MDA2NzkyfQ.LDYanw9nlI1bLXnTFIkezmH65dDiiG1kZTueqmZ1vw4"
+      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZoY3R5ZmR1bmpxZXlhYnNqcWFsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MDQzMDc5MiwiZXhwIjoyMDA2MDA2NzkyfQ.LDYanw9nlI1bLXnTFIkezmH65dDiiG1kZTueqmZ1vw4",
     };
+    if (header != null) {
+      options.headers.addAll(header!);
+    }
     logDebug(
         tag: 'REQUEST[${options.method}] => PATH:',
-        message: ' ${options.path}');
+        message: ' ${options.headers}');
     return handler.next(options);
   }
 
@@ -51,8 +59,8 @@ class CustomInterceptors extends Interceptor {
       logDebug(message: "${e.response?.requestOptions}");
     } else {
       // Something happened in setting up or sending the request that triggered an Error
-      logDebug(message:e.requestOptions);
-      logDebug(message:e.message);
+      logDebug(message: e.requestOptions);
+      logDebug(message: e.message);
     }
     return super.onError(e, handler);
   }

@@ -53,6 +53,7 @@ class _BaseLayoutState extends State<BaseLayout>
               centerTitle: false,
               backgroundColor: Theme.of(context).colorScheme.background,
               elevation: 0,
+              scrolledUnderElevation: 0,
               systemOverlayStyle: SystemUiOverlayStyle(
                   systemNavigationBarColor: ElevationOverlay.applySurfaceTint(
                       Theme.of(context).colorScheme.surface,

@@ -1,4 +1,3 @@
-import 'package:balanjo_app/src/shared/component/src/shimmer_loading.dart';
 import 'package:balanjo_app/src/utils/UiState.dart';
 import 'package:balanjo_app/src/utils/extensions/double_ext.dart';
 import 'package:balanjo_app/src/utils/log.dart';

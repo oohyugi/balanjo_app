@@ -1,4 +1,3 @@
-
 import 'log.dart';
 
 syncData<R, EntityR, EntityL>(
@@ -22,6 +21,8 @@ syncData<R, EntityR, EntityL>(
     return Result(data: <R>[], isLocal: true);
   }
 }
+
+
 
 //fetch data from api first, check if data is not empty, save to local, return data from local
 

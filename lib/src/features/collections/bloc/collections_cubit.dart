@@ -15,13 +15,20 @@ class CollectionsCubit extends Cubit<CollectionsState> {
 
   final CollectionRepository collectionRepository;
 
+  var range = "0-9";
+
   void fetchProduct(int categoryId) async {
-    emit(const CollectionsState.initial());
-    final response = await collectionRepository.fetchProducts(categoryId);
+    if(state.products.isNotEmpty){
+      range = "${state.products.length}-${state.products.length + 9}";
+    }
+    final response =
+        await collectionRepository.fetchProducts(categoryId, range,state.products.length);
     if (response.isEmpty) {
-      emit(const CollectionsState.failure());
+      emit( CollectionsState.success(products: state.products, hasReachedMax: true));
+
     } else {
-      emit(CollectionsState.success(products: response));
+      var list = List.of(state.products)..addAll(response);
+      emit(CollectionsState.success(products: list,hasReachedMax: response.length<10));
     }
   }
 }

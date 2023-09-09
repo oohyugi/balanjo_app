@@ -1,3 +1,5 @@
+import 'package:balanjo_app/config/route/safe_route.dart';
+import 'package:balanjo_app/config/route/screen/products.dart';
 import 'package:balanjo_app/src/features/home/bloc/src/flashsale/flash_sale_cubit.dart';
 import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:balanjo_app/src/utils/extensions/date.dart';
@@ -65,7 +67,10 @@ class FlashSale extends StatelessWidget {
                       ),
                       const SpaceHorizontal(size: 16),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+
+                            const ProductsScreenRoute(sectionId: 1,title:"Flash Deals" ).push(context);
+                          },
                           child: Text("More",
                               style: Theme.of(context)
                                   .textTheme
@@ -78,7 +83,7 @@ class FlashSale extends StatelessWidget {
                   ),
                   const SpaceVertical(size: 8),
                   SizedBox(
-                    height: 308,
+                    height: 310,
                     child: ListView.separated(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         scrollDirection: Axis.horizontal,

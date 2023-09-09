@@ -7,7 +7,7 @@ import '../response/product_response.dart';
 abstract class IProductRemoteDataSource {
   Future<List<ProductResponse>> fetchProductsByIds(List<int> productIds);
 
-  Future<List<ProductResponse>> fetchProductsByCategory(int categoryId);
+  Future<List<ProductResponse>> fetchProductsByCategory(int categoryId,String range);
 
   Future<List<ProductResponse>> fetchProductBySection(int sectionId);
 }
@@ -31,9 +31,9 @@ class ProductRemoteDataSource implements IProductRemoteDataSource {
   }
 
   @override
-  Future<List<ProductResponse>> fetchProductsByCategory(int categoryId) async {
+  Future<List<ProductResponse>> fetchProductsByCategory(int categoryId,String range) async {
     try {
-      final response = await productService.fetchProductsByCategory(categoryId);
+      final response = await productService.fetchProductsByCategory(categoryId,range);
       return (response.data as List)
           .map((e) => ProductResponse.fromJson(e))
           .toList();

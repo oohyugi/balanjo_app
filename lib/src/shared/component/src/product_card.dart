@@ -3,7 +3,6 @@ import 'package:balanjo_app/theme/colors.dart';
 import 'package:balanjo_app/theme/icons.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../component.dart';
 import '../../model/src/product_model.dart';
@@ -19,7 +18,6 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      borderOnForeground: false,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -44,11 +42,6 @@ class ProductCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                Positioned(
-                    right: 8,
-                    top: 8,
-                    child:
-                        Tapper(onTap: () {}, child: SvgPicture.asset(icHeart)))
               ],
             ),
           ),
@@ -97,18 +90,19 @@ class ProductCard extends StatelessWidget {
                 if (product.discountPercent != 0)
                   const SpaceHorizontal(size: 8.0),
                 if (product.discountPercent != 0)
-                  Text(product.basePrice.toIdr(),
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          decoration: TextDecoration.lineThrough,
-                          color: Theme.of(context).colorScheme.onBackground))
+                  Expanded(
+                    child: Text(product.basePrice.toIdr(),
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                            decoration: TextDecoration.lineThrough,
+                            color: Theme.of(context).colorScheme.onBackground)),
+                  )
               ],
             ),
           ),
           const SpaceVertical(size: 8.0),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-               product.displayPrice.toIdr(),
+            child: Text(product.displayPrice.toIdr(),
                 style: Theme.of(context).textTheme.labelLarge?.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                     fontWeight: FontWeight.w700)),
@@ -118,6 +112,103 @@ class ProductCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: AddCart(
               product: product,
+            ),
+          ),
+          const SpaceVertical(size: 12),
+        ],
+      ),
+    );
+  }
+}
+
+class ProductCardLoading extends StatelessWidget {
+  const ProductCardLoading({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 310,
+      margin: const EdgeInsets.symmetric(horizontal: 4),
+      decoration: BoxDecoration(
+        border: Border.all(width: 0.4,color: Theme.of(context).colorScheme.onBackground),
+        borderRadius: BorderRadius.circular(12)
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          AspectRatio(
+            aspectRatio: 2 / 2,
+            child: Container(
+              height: 117,
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(12.0),
+                      topRight: Radius.circular(12.0)),
+                  color: Colors.black),
+            ),
+          ),
+          const SpaceVertical(size: 12.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Container(
+              height: 11.0,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
+          const SpaceVertical(size: 4),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Container(
+              height: 11.0,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
+          const SpaceVertical(size: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Container(
+              width: 100,
+              height: 8,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
+          const SpaceVertical(size: 8.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Container(
+              width: 60,
+              height: 12,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
+          const SpaceVertical(size: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Container(
+              height: 32,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(12),
+              ),
             ),
           ),
           const SpaceVertical(size: 12),

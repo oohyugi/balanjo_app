@@ -19,7 +19,7 @@ class FlashSaleCubit extends Cubit<FlashSaleState> {
   }
 
   void hideFlashSale() async {
-    var repo = await homeRepository.fetchFlashSale();
+    await homeRepository.fetchFlashSale();
     emit(const FlashSaleState.failure());
   }
 }

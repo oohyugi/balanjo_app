@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Search extends StatefulWidget {
-  const Search({super.key});
+  const Search({super.key, this.isShowOnlyIcon = false});
+
+  final bool isShowOnlyIcon;
 
   @override
   State<Search> createState() => _SearchState();
@@ -22,6 +24,16 @@ class _SearchState extends State<Search> {
     _scrollNotificationObserver = ScrollNotificationObserver.maybeOf(context);
     _scrollNotificationObserver?.addListener(_handleScrollNotification);
     super.didChangeDependencies();
+  }
+
+  @override
+  void initState() {
+    _controller.addListener(() {
+      if (!_controller.isOpen) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      }
+    });
+    super.initState();
   }
 
   @override
@@ -69,39 +81,56 @@ class _SearchState extends State<Search> {
           padding: const EdgeInsets.symmetric(horizontal: 0),
           child: Stack(
             children: [
-              SearchBar(
-                padding: const MaterialStatePropertyAll<EdgeInsetsGeometry>(
-                    EdgeInsets.symmetric(horizontal: 16.0, vertical: 0)),
-                shape: const MaterialStatePropertyAll<OutlinedBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12.0)))),
-                constraints: const BoxConstraints(minHeight: 24,maxHeight: 42),
-                elevation:
-                    MaterialStatePropertyAll<double>(_scrolledUnder ? 0 : 1),
-                shadowColor: const MaterialStatePropertyAll<Color>(Colors.black),
-                leading: SvgPicture.asset(
-                  assetNameSearch,
-                  colorFilter: ColorFilter.mode(
-                      Theme.of(context).colorScheme.onBackground,
-                      BlendMode.srcIn),
-                ),
-                hintText: "Cari di Balanjo",
-                focusNode: FocusNode(
-                    canRequestFocus: false, descendantsAreFocusable: false),
-                controller: TextEditingController(),
-                onTap: () {
-                  controller.openView();
-                },
-              ),
-              Container(
-                height: 50,
-                color: Colors.transparent,
-                width: MediaQuery.of(context).size.width,
-              )
+              widget.isShowOnlyIcon
+                  ? Tapper(
+                      onTap: () {
+                        _controller.openView();
+                      },
+                      child: SvgPicture.asset(
+                        assetNameSearch,
+                        colorFilter: ColorFilter.mode(
+                            Theme.of(context).colorScheme.onBackground,
+                            BlendMode.srcIn),
+                      ),
+                    )
+                  : SizedBox(
+                      height: 44,
+                      child: SearchBar(
+                        padding:
+                            const MaterialStatePropertyAll<EdgeInsetsGeometry>(
+                                EdgeInsets.symmetric(
+                                    horizontal: 16.0, vertical: 0)),
+                        shape: const MaterialStatePropertyAll<OutlinedBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12.0)))),
+                        elevation: const MaterialStatePropertyAll<double>(1),
+                        leading: SvgPicture.asset(
+                          assetNameSearch,
+                          colorFilter: ColorFilter.mode(
+                              Theme.of(context).colorScheme.onBackground,
+                              BlendMode.srcIn),
+                        ),
+                        hintText: "Cari di Balanjo",
+
+                        onTap: () {
+                          controller.openView();
+                        },
+                      ),
+                    ),
+             if(!widget.isShowOnlyIcon)
+               Container(
+                 height: 50,
+                 color: Colors.transparent,
+                 width: MediaQuery.of(context).size.width,
+               )
+
             ],
           ),
         );
       },
+      viewBackgroundColor: Theme.of(context).colorScheme.background,
+      viewElevation: 0,
       suggestionsBuilder: (context, controller) {
         return List<Container>.generate(0, (i) {
           return Container();

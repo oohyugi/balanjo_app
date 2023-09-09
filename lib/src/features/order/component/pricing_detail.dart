@@ -1,9 +1,9 @@
-import 'package:balanjo_app/src/shared/component/src/shimmer_loading.dart';
 import 'package:balanjo_app/src/utils/UiState.dart';
 import 'package:balanjo_app/src/utils/extensions/double_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../shared/component/component.dart';
 import '../bloc/bloc.dart';
 
 class PricingDetail extends StatelessWidget {

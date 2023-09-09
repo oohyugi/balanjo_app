@@ -23,19 +23,20 @@ class _MainScreenState extends State<MainScreen> {
           leading: null,
           centerTitle: false,
           automaticallyImplyLeading: false,
-          title: Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: SizedBox(
-                width: MediaQuery.of(context).size.width / 1.5,
-                child: const Search()),
-          ),
+          title: SizedBox(
+              width: MediaQuery.of(context).size.width / 1.5,
+              child: const Search()),
           systemOverlayStyle: SystemUiOverlayStyle(
               systemNavigationBarColor: ElevationOverlay.applySurfaceTint(
                   Theme.of(context).colorScheme.surface,
                   Theme.of(context).colorScheme.surfaceTint,
                   4),
-          statusBarColor: Theme.of(context).colorScheme.background,
-          statusBarIconBrightness: Brightness.dark),
+              statusBarColor: Theme.of(context).colorScheme.background,
+              statusBarBrightness: Theme.of(context).brightness,
+              statusBarIconBrightness:
+                  Theme.of(context).brightness == Brightness.light
+                      ? Brightness.dark
+                      : Brightness.light),
           actions: [
             IconButton(
                 onPressed: () {},

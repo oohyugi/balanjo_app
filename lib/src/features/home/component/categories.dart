@@ -24,6 +24,7 @@ class CategoryList extends StatelessWidget {
               height: 134,
               child: ListView.separated(
                 itemCount: state.categories.length,
+                cacheExtent: state.categories.length.toDouble(),
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 padding: const EdgeInsets.symmetric(horizontal: 16),

@@ -1,5 +1,6 @@
 
 import 'package:balanjo_app/src/features/collections/di/collections_module.dart';
+import 'package:balanjo_app/src/features/product/di/product_module.dart';
 import 'package:balanjo_app/src/shared/bloc/src/cart/cart_cubit.dart';
 import 'package:balanjo_app/src/features/home/di/home_module.dart';
 import 'package:balanjo_app/src/shared/di/module.dart';
@@ -20,6 +21,7 @@ Future<void> main() async {
   categoriesModule();
   collectionsModule();
   orderModule();
+  productModule();
   Bloc.observer = BBlocObserve();
   runApp(const MyApp());
 }
@@ -37,16 +39,16 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'Balanjo',
-        themeMode: ThemeMode.light,
+        themeMode: ThemeMode.system,
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: lightColorScheme,
-          textTheme: GoogleFonts.ubuntuTextTheme(),
+          textTheme: GoogleFonts.montserratTextTheme(),
         ),
         darkTheme: ThemeData(
           useMaterial3: true,
           colorScheme: darkColorScheme,
-          textTheme: GoogleFonts.ubuntuTextTheme(),
+          textTheme: GoogleFonts.montserratTextTheme(),
         ),
         routeInformationParser: safeRoute.routeInformationParser,
         routeInformationProvider: safeRoute.routeInformationProvider,

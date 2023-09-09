@@ -29,4 +29,17 @@ class ProductLocalDataSource {
 
     return result;
   }
+
+  Future<List<ProductDao>> getAllProductsByCategoryId(int id,
+      {int offset = 0}) async {
+    final isar = await _helper.db;
+    var result = isar.writeTxnSync(() => isar.productDaos
+        .filter()
+        .categoryIdEqualTo(id)
+        .offset(offset)
+        .limit(10)
+        .findAllSync());
+
+    return result;
+  }
 }

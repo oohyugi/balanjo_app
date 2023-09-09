@@ -21,7 +21,7 @@ class IsarHelper {
   }
 
   Future<Isar> openDb() async {
-    final dir = await getApplicationDocumentsDirectory();
+    final dir = await getApplicationSupportDirectory();
 
     if (Isar.instanceNames.isEmpty) {
       return await Isar.open(collectionSchemas(),
