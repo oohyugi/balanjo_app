@@ -1,4 +1,3 @@
-
 import 'package:balanjo_app/src/utils/UiState.dart';
 import 'package:balanjo_app/src/utils/extensions/double_ext.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -69,7 +68,17 @@ class ItemCard extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 3.4,
                   child: BlocBuilder<SummaryOrderCubit, SummaryOrderState>(
                     builder: (context, state) {
-                      return ButtonCart(product: product,isLoading: !state.uiState.isSuccess,);
+                      if (state.uiState.isSuccess) {
+                        return ButtonCart(
+                          product: product,
+                        );
+                      }
+                      return const ShimmerDefault(
+                        child: RoundedPlaceHolder(
+                          height: 32,
+                          width: 120,
+                        ),
+                      );
                     },
                   )),
             ],

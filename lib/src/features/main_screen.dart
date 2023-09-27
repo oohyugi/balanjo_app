@@ -1,10 +1,13 @@
+import 'package:balanjo_app/src/features/favorite/favorite_screen.dart';
 import 'package:balanjo_app/src/features/home/home_screen.dart';
 import 'package:balanjo_app/src/features/home/model/model.dart';
+import 'package:balanjo_app/src/features/myorder/my_order_screen.dart';
+import 'package:balanjo_app/src/features/setting/setting_screen.dart';
 import 'package:balanjo_app/theme/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../shared/component/src/search.dart';
+import '../shared/component/src/search.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -41,7 +44,7 @@ class _MainScreenState extends State<MainScreen> {
             IconButton(
                 onPressed: () {},
                 icon: Badge(
-                    label: Text("2"),
+                    label: const Text("2"),
                     smallSize: 1,
                     child: SvgPicture.asset(
                       assetNameNotif,
@@ -85,18 +88,10 @@ class _MainScreenState extends State<MainScreen> {
             Container(
               color: Colors.green,
               alignment: Alignment.center,
-              child: const Text('Page 2'),
+              child: const FavoriteScreen(),
             ),
-            Container(
-              color: Colors.blue,
-              alignment: Alignment.center,
-              child: const Text('Page 3'),
-            ),
-            Container(
-              color: Colors.blue,
-              alignment: Alignment.center,
-              child: const Text('Page 4'),
-            ),
+            const MyOrderScreen(),
+           const SettingScreen()
           ],
         ));
   }

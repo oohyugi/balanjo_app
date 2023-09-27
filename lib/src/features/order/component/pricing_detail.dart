@@ -71,18 +71,17 @@ class ItemPrice extends StatelessWidget {
                   .labelMedium
                   ?.copyWith(color: Theme.of(context).colorScheme.onBackground),
             ),
-            ShimmerLoading(
-              isLoading: isLoading,
-              child: isLoading?Container(
-                  width: 80,
-                  height: 12,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Theme.of(context).colorScheme.surface)):Text(value,
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      color: valueColor ??
-                          Theme.of(context).colorScheme.onBackground)),
-            ),
+            isLoading
+                ? const ShimmerDefault(
+                    child: RoundedPlaceHolder(
+                    height: 14,
+                    width: 80,
+                  ),
+                )
+                : Text(value,
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        color: valueColor ??
+                            Theme.of(context).colorScheme.onBackground)),
           ],
         ),
       ),

@@ -9,3 +9,4 @@ export 'src/base_layout.dart';
 export 'src/product_card.dart';
 export 'src/shimmer.dart';
 export 'src/search.dart';
+export 'src/rounded_placeholder.dart';

@@ -5,7 +5,6 @@ import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:balanjo_app/src/utils/extensions/date.dart';
 import 'package:balanjo_app/src/utils/extensions/double_ext.dart';
 import 'package:balanjo_app/src/utils/extensions/string_extentions.dart';
-import 'package:balanjo_app/src/utils/log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

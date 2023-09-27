@@ -22,10 +22,6 @@ syncData<R, EntityR, EntityL>(
   }
 }
 
-
-
-//fetch data from api first, check if data is not empty, save to local, return data from local
-
 class Result<T> {
   final T data;
   final bool isLocal;

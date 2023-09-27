@@ -24,6 +24,7 @@ class CartCubit extends Cubit<CartState> {
   }
 
   void fetchCart() async {
+    emit(const CartState.initial());
     final cart = await cartRepository.getCarts();
     emit(CartState.success(cart: cart));
   }

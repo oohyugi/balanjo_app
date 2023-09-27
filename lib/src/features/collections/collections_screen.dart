@@ -151,41 +151,38 @@ class _ProductsContentState extends State<ProductsContent> {
             );
           }
 
-          return Shimmer(
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
-                children: [
-                  GridView.builder(
-                      itemCount:
-                          !state.hasReachedMax && state.products.length > 9
-                              ? state.products.length + 2
-                              : state.products.length,
-                      cacheExtent:
-                          !state.hasReachedMax && state.products.length > 9
-                              ? state.products.length + 2.toDouble()
-                              : state.products.length.toDouble(),
-                      shrinkWrap: true,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 0.53,
-                              mainAxisSpacing: 2,
-                              crossAxisSpacing: 2),
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.all(16),
-                      itemBuilder: (context, index) {
-                        if (index > state.products.length - 1) {
-                          return ShimmerLoading(
-                              isLoading: true, child: ProductCardLoading());
-                        }
-                        return ProductCard(
-                          key: Key(state.products[index].id.toString()),
-                          product: state.products[index],
-                        );
-                      }),
-                ],
-              ),
+          return SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
+              children: [
+                GridView.builder(
+                    itemCount:
+                        !state.hasReachedMax && state.products.length > 9
+                            ? state.products.length + 2
+                            : state.products.length,
+                    cacheExtent:
+                        !state.hasReachedMax && state.products.length > 9
+                            ? state.products.length + 2.toDouble()
+                            : state.products.length.toDouble(),
+                    shrinkWrap: true,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.53,
+                            mainAxisSpacing: 2,
+                            crossAxisSpacing: 2),
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.all(16),
+                    itemBuilder: (context, index) {
+                      if (index > state.products.length - 1) {
+                        return const ProductCardLoading();
+                      }
+                      return ProductCard(
+                        key: Key(state.products[index].id.toString()),
+                        product: state.products[index],
+                      );
+                    }),
+              ],
             ),
           );
         } else if (state.uiState.isFailure) {

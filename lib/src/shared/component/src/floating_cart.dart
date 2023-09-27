@@ -23,14 +23,14 @@ class FloatingCart extends StatelessWidget {
           final totalEstimatedPrice = state.cart?.totalEstimatedPrice ?? 0;
           return Card(
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(26)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             color: Theme.of(context).colorScheme.primary,
             elevation: 4,
             child: Tapper(
               onTap: () {
                 const OrderScreenRoute().push(context);
               },
-              borderRadius: BorderRadius.circular(26),
+              borderRadius: BorderRadius.circular(12),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 8),

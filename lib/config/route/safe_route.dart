@@ -1,5 +1,5 @@
 import 'package:balanjo_app/src/features/product/product_screen.dart';
-import 'package:balanjo_app/src/features/home/main_screen.dart';
+import 'package:balanjo_app/src/features/main_screen.dart';
 import 'package:balanjo_app/src/features/order/order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

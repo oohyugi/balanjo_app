@@ -1,4 +1,3 @@
-
 import 'package:balanjo_app/src/shared/bloc/bloc.dart';
 import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:balanjo_app/src/utils/UiState.dart';
@@ -70,7 +69,29 @@ class OrderScreen extends StatelessWidget {
                                   cartItems: state.products,
                                 );
                               }
-                              return Container();
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                child: ShimmerDefault(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      const RoundedPlaceHolder(width: 70, height: 70),
+                                      const SpaceHorizontal(size: 16),
+                                      Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          RoundedPlaceHolder(
+                                              width: MediaQuery.of(context).size.width/2, height: 16),
+                                          const SpaceVertical(size: 4),
+                                          const RoundedPlaceHolder(
+                                              width: 120, height: 14),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
                             },
                           )),
                       const SpaceVertical(size: 24),

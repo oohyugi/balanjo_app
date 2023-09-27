@@ -7,16 +7,12 @@ import '../../../shared/bloc/bloc.dart';
 import '../../../shared/component/component.dart';
 
 class ButtonCart extends StatelessWidget {
-  const ButtonCart({super.key, required this.product, required this.isLoading});
+  const ButtonCart({super.key, required this.product});
 
-  final bool isLoading;
   final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return const Center(child: SizedBox(width:20,height:20,child: CircularProgressIndicator()));
-    }
     return BlocBuilder<CartCubit, CartState>(
       builder: (context, state) {
         if (state.uiState.isSuccess && state.cart != null) {
@@ -35,19 +31,7 @@ class ButtonCart extends StatelessWidget {
                     ? Theme.of(context).colorScheme.primary
                     : Colors.transparent),
             child: !isInCart
-                ? InkWell(
-                    onTap: () => context.read<CartCubit>()..increment(product),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 4, horizontal: 16),
-                      child: Center(
-                          child: Text(
-                        "Add",
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.onPrimary),
-                      )),
-                    ),
-                  )
+                ? Container()
                 : Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
