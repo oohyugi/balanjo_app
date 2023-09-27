@@ -15,7 +15,6 @@ class HomeScreen extends StatelessWidget {
     return BaseLayout(
       isHideAppBar: true,
       title: Container(),
-
       body: const SingleChildScrollView(
         child: Column(
           children: [

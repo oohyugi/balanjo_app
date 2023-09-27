@@ -1,4 +1,3 @@
-import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:flutter/material.dart';
 
 class RoundedPlaceHolder extends StatelessWidget {
@@ -15,9 +14,8 @@ class RoundedPlaceHolder extends StatelessWidget {
       width: width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.0),
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.background,
       ),
     );
   }
 }
-

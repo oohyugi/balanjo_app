@@ -85,11 +85,11 @@ class _MainScreenState extends State<MainScreen> {
           index: _currentPageIndex,
           children: [
             const HomeScreen(),
-            Container(
-              color: Colors.green,
-              alignment: Alignment.center,
-              child: const FavoriteScreen(),
-            ),
+            // Container(
+            //   color: Colors.green,
+            //   alignment: Alignment.center,
+            //   child: const FavoriteScreen(),
+            // ),
             const MyOrderScreen(),
            const SettingScreen()
           ],

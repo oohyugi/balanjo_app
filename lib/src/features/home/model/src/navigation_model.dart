@@ -19,11 +19,11 @@ class NavigationModel {
         name: "Home",
         assetIcon: assetNameHome,
         assetIconSelected: assetNameHomeBold));
-    list.add(NavigationModel(
-        index: 1,
-        name: "Favorite",
-        assetIcon: assetNameBagHeart,
-        assetIconSelected: assetNameBagHeartBold));
+    // list.add(NavigationModel(
+    //     index: 1,
+    //     name: "Favorite",
+    //     assetIcon: assetNameBagHeart,
+    //     assetIconSelected: assetNameBagHeartBold));
 
     list.add(NavigationModel(
         index: 2,

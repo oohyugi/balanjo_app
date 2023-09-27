@@ -36,36 +36,33 @@ class _BaseLayoutState extends State<BaseLayout>
 
   @override
   Widget build(BuildContext context) {
-    return widget.isHideAppBar
-        ? Stack(
-          children: [
-            widget.body,
-            if (widget.isShowFloatingCart)
-              const Positioned(
-                  bottom: 16, left: 16, right: 16, child: FloatingCart())
-          ],
-        )
-        : Scaffold(
-            appBar: AppBar(
-              title: widget.title,
-              actions: widget.actions,
-              bottom: widget.tabBar,
-              centerTitle: false,
-              backgroundColor: Theme.of(context).colorScheme.background,
-              elevation: 0,
-              scrolledUnderElevation: 0,
-              systemOverlayStyle: SystemUiOverlayStyle(
-                  systemNavigationBarColor: ElevationOverlay.applySurfaceTint(
-                      Theme.of(context).colorScheme.surface,
-                      Theme.of(context).colorScheme.surfaceTint,
-                      0)),
-            ),
+    return Scaffold(
+            appBar: widget.isHideAppBar
+                ? null
+                : AppBar(
+                    title: widget.title,
+                    actions: widget.actions,
+                    bottom: widget.tabBar,
+                    centerTitle: false,
+                    backgroundColor: Theme.of(context).colorScheme.background,
+                    elevation: 0,
+                    scrolledUnderElevation: 0,
+                    systemOverlayStyle: SystemUiOverlayStyle(
+                        systemNavigationBarColor:
+                            ElevationOverlay.applySurfaceTint(
+                                Theme.of(context).colorScheme.surface,
+                                Theme.of(context).colorScheme.surfaceTint,
+                                0)),
+                  ),
             body: Stack(
               children: [
                 widget.body,
                 if (widget.isShowFloatingCart)
                   const Positioned(
-                      bottom: 16, left: 16, right: 16, child: SafeArea(child: FloatingCart()))
+                      bottom: 16,
+                      left: 16,
+                      right: 16,
+                      child: SafeArea(child: FloatingCart()))
               ],
             ),
           );
