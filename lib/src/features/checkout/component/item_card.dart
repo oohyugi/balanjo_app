@@ -66,7 +66,7 @@ class ItemCard extends StatelessWidget {
               const SpaceVertical(size: 8),
               SizedBox(
                   width: MediaQuery.of(context).size.width / 3.4,
-                  child: BlocBuilder<SummaryOrderCubit, SummaryOrderState>(
+                  child: BlocBuilder<SummaryCubit, SummaryState>(
                     builder: (context, state) {
                       if (state.uiState.isSuccess) {
                         return ButtonCart(

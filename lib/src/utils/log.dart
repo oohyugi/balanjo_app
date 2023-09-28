@@ -6,3 +6,9 @@ logDebug({String? tag, dynamic message}) {
   }
 }
 
+logMessage(dynamic message) {
+  if (kDebugMode) {
+    print("$message");
+  }
+}
+

@@ -11,7 +11,7 @@ class PricingDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SummaryOrderCubit, SummaryOrderState>(
+    return BlocBuilder<SummaryCubit, SummaryState>(
       builder: (context, state) {
         if (state.uiState.isSuccess && state.data != null) {}
         return Column(

@@ -5,17 +5,17 @@ import 'package:balanjo_app/src/shared/model/model.dart';
 
 import '../../model/model.dart';
 
-abstract class IOrderRepository {
+abstract class ICheckoutRepository {
   Future<List<ProductModel>> fetchListCart();
 
   Future<SummaryOrderMdl> fetchOrderSummary();
 }
 
-class OrderRepository implements IOrderRepository {
+class CheckoutRepository implements ICheckoutRepository {
   final CartLocalDataSource cartLocalDataSource;
   final ProductRemoteDataSource productRemoteDataSource;
 
-  OrderRepository(
+  CheckoutRepository(
       {required this.cartLocalDataSource,
       required this.productRemoteDataSource});
 

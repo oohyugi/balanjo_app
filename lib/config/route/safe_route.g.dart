@@ -31,8 +31,8 @@ RouteBase get $mainScreenRoute => GoRouteData.$route(
               factory: $ProductsScreenRouteExtension._fromState,
             ),
             GoRouteData.$route(
-              path: 'order',
-              factory: $OrderScreenRouteExtension._fromState,
+              path: 'checkout',
+              factory: $CheckoutScreenRouteExtension._fromState,
             ),
           ],
         ),
@@ -135,12 +135,12 @@ extension $ProductsScreenRouteExtension on ProductsScreenRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $OrderScreenRouteExtension on OrderScreenRoute {
-  static OrderScreenRoute _fromState(GoRouterState state) =>
-      const OrderScreenRoute();
+extension $CheckoutScreenRouteExtension on CheckoutScreenRoute {
+  static CheckoutScreenRoute _fromState(GoRouterState state) =>
+      const CheckoutScreenRoute();
 
   String get location => GoRouteData.$location(
-        '/home/order',
+        '/home/checkout',
       );
 
   void go(BuildContext context) => context.go(location);

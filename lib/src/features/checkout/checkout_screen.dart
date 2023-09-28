@@ -9,8 +9,8 @@ import 'component/checkout.dart';
 import 'component/pricing_detail.dart';
 import 'component/shopping_cart.dart';
 
-class OrderScreen extends StatelessWidget {
-  const OrderScreen({super.key});
+class CheckoutScreen extends StatelessWidget {
+  const CheckoutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class OrderScreen extends StatelessWidget {
       title: const Text("Konfirmasi Pesanan"),
       body: BlocListener<CartCubit, CartState>(
           listener: (context, state) {
-            context.read<ItemOrderCubit>().fetchItemsOrder();
+            context.read<ItemCheckoutCubit>().fetchItemsOrder();
             if (state.uiState.isSuccess && state.cart?.totalItem == 0) {
               context.pop();
             }
@@ -59,11 +59,11 @@ class OrderScreen extends StatelessWidget {
                       Header(
                           title: "Keranjang Belanja",
                           isShowTapMore: false,
-                          child: BlocBuilder<ItemOrderCubit, ItemOrderState>(
+                          child: BlocBuilder<ItemCheckoutCubit, ItemCheckoutState>(
                             builder: (context, state) {
                               if (state.uiState.isSuccess) {
                                 context
-                                    .read<SummaryOrderCubit>()
+                                    .read<SummaryCubit>()
                                     .getSummaryOrder();
                                 return ShoppingCart(
                                   cartItems: state.products,

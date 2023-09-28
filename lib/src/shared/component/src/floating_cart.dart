@@ -28,7 +28,7 @@ class FloatingCart extends StatelessWidget {
             elevation: 4,
             child: Tapper(
               onTap: () {
-                const OrderScreenRoute().push(context);
+                const CheckoutScreenRoute().push(context);
               },
               borderRadius: BorderRadius.circular(12),
               child: Padding(

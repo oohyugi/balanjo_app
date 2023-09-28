@@ -28,32 +28,33 @@ class _CarousellState extends State<Carousell>
 
   @override
   void initState() {
-    _children = carousels
-        .mapIndexed((i, e) {
-          return Card(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8)),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: CachedNetworkImage(
-                imageUrl: e,
-                fit: BoxFit.cover,
-              ),
+    _children = carousels.mapIndexed((i, e) {
+      return Padding(
+        padding: EdgeInsets.only(left: i == 0 ? 16 : 0,right: i != carousels.length-1 ? 16:0),
+        child: Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: CachedNetworkImage(
+              imageUrl: e,
+              fit: BoxFit.cover,
             ),
-          );
-    })
-        .toList();
+          ),
+        ),
+      );
+    }).toList();
 
-    _pageController = PageController(viewportFraction: 0.88, initialPage: _currentPage);
+    _pageController =
+        PageController(viewportFraction: 0.88, initialPage: _currentPage);
     _animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 5));
 
     _animationController.addListener(() {
       if (_animationController.status == AnimationStatus.completed) {
         _animationController.reset(); //Reset the controller
-        if(_currentPage == carousels.length-1){
-          _currentPage=0;
-        }else {
+        if (_currentPage == carousels.length - 1) {
+          _currentPage = 0;
+        } else {
           _currentPage++;
         }
 
@@ -82,7 +83,7 @@ class _CarousellState extends State<Carousell>
         Expanded(
           child: PageView.builder(
             pageSnapping: true,
-            padEnds: true,
+            padEnds: false,
             controller: _pageController,
             itemBuilder: (context, index) {
               return _children.loop(index);
@@ -92,7 +93,6 @@ class _CarousellState extends State<Carousell>
               setState(() {
                 _currentPage = value;
                 // _animationController.forward();
-
               });
             },
           ),

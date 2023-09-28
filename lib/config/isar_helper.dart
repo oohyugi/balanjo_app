@@ -1,4 +1,5 @@
 import 'package:balanjo_app/src/shared/data/local/dao/category_dao.dart';
+import 'package:balanjo_app/src/shared/data/local/dao/location_dao.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -9,7 +10,8 @@ List<CollectionSchema> collectionSchemas() {
   return [
     CartDaoSchema,
     CategoryDaoSchema,
-    ProductDaoSchema
+    ProductDaoSchema,
+    LocationDaoSchema,
   ];
 }
 

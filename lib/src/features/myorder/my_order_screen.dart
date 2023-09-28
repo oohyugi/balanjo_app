@@ -12,33 +12,33 @@ class MyOrderScreen extends StatelessWidget {
         length: 2,
         child: Builder(builder: (context) {
           return BaseLayout(
-            isHideAppBar: true,
+            title: Text("Orders"),
+            isShowFloatingCart: false,
+            notificationPredicate: (ScrollNotification notification) {
+              return notification.depth == 1;
+            },
+            tabBar: TabBar(
+              padding: EdgeInsets.zero,
+              tabAlignment: TabAlignment.start,
+              isScrollable: true,
+              onTap: (index) {},
+              tabs: const [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 8.0),
+                  child: Text("History"),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 8.0),
+                  child: Text("Ongoing"),
+                )
+              ],
+            ),
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TabBar(
-                  tabAlignment: TabAlignment.start,
-                  onTap: (index) {},
-                  tabs: const [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 0.0, vertical: 8.0),
-                      child: Text("History"),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 0.0, vertical: 8.0),
-                      child: Text("Ongoing"),
-                    )
-                  ],
-                  isScrollable: true,
-                ),
                 const Expanded(
                   child: TabBarView(
-                    children: [
-                      HistoryScreen(),
-                     OngoingScreen()
-                    ],
+                    children: [HistoryScreen(), OngoingScreen()],
                   ),
                 ),
               ],

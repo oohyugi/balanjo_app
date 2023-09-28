@@ -13,10 +13,28 @@ Dio createDio({baseUrl = url}) {
   return dio;
 }
 
-Dio addInterceptors({required Dio dio, bool isRequireAuth = true, Map<String,
-    dynamic>? header}) {
+Dio addInterceptors(
+    {required Dio dio,
+    bool isRequireAuth = true,
+    Map<String, dynamic>? header}) {
   return dio
     ..interceptors.add(CustomInterceptors(header))
+    ..interceptors.add(CacheInterceptor())
+    ..transformer = MyTransformer();
+}
+
+extension DioExt on Dio {
+  Dio addGeocodingInterceptors() {
+    return this
+      ..interceptors.add(GeocodingInterceptor(""))
+      ..interceptors.add(CacheInterceptor())
+      ..transformer = MyTransformer();
+  }
+}
+
+Dio geocodingInterceptors({required Dio dio}) {
+  return dio
+    ..interceptors.add(GeocodingInterceptor("AIzaSyDwaDc-GF8gS5cDPFFUjSOJVMpE3Y9EVBI"))
     ..interceptors.add(CacheInterceptor())
     ..transformer = MyTransformer();
 }
@@ -30,9 +48,9 @@ class CustomInterceptors extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     options.headers = {
       "apikey":
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZoY3R5ZmR1bmpxZXlhYnNqcWFsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MDQzMDc5MiwiZXhwIjoyMDA2MDA2NzkyfQ.LDYanw9nlI1bLXnTFIkezmH65dDiiG1kZTueqmZ1vw4",
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZoY3R5ZmR1bmpxZXlhYnNqcWFsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MDQzMDc5MiwiZXhwIjoyMDA2MDA2NzkyfQ.LDYanw9nlI1bLXnTFIkezmH65dDiiG1kZTueqmZ1vw4",
       "Authorization":
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZoY3R5ZmR1bmpxZXlhYnNqcWFsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MDQzMDc5MiwiZXhwIjoyMDA2MDA2NzkyfQ.LDYanw9nlI1bLXnTFIkezmH65dDiiG1kZTueqmZ1vw4",
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZoY3R5ZmR1bmpxZXlhYnNqcWFsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MDQzMDc5MiwiZXhwIjoyMDA2MDA2NzkyfQ.LDYanw9nlI1bLXnTFIkezmH65dDiiG1kZTueqmZ1vw4",
     };
     if (header != null) {
       options.headers.addAll(header!);
@@ -78,4 +96,18 @@ class MyTransformer extends BackgroundTransformer {
       return super.transformRequest(options);
     }
   }
+}
+
+class GeocodingInterceptor extends Interceptor {
+  GeocodingInterceptor(this._apiKey) : super();
+
+  final String _apiKey;
+
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) =>
+      handler.next(
+        options.copyWith(
+          queryParameters: options.queryParameters..['key'] = _apiKey,
+        ),
+      );
 }

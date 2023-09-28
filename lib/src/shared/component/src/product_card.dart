@@ -1,9 +1,6 @@
 import 'package:balanjo_app/src/utils/extensions/double_ext.dart';
-import 'package:balanjo_app/theme/colors.dart';
-import 'package:balanjo_app/theme/icons.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
 import '../component.dart';
 import '../../model/src/product_model.dart';
 
@@ -128,91 +125,92 @@ class ProductCardLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 310,
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      decoration: BoxDecoration(
-        border: Border.all(width: 0.4,color: Theme.of(context).colorScheme.onBackground),
-        borderRadius: BorderRadius.circular(12)
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          AspectRatio(
-            aspectRatio: 2 / 2,
-            child: Container(
-              height: 117,
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(12.0),
-                      topRight: Radius.circular(12.0)),
-                  color: Colors.black),
-            ),
-          ),
-          const SpaceVertical(size: 12.0),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Container(
-              height: 11.0,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(12),
+    return ShimmerDefault(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: 310,
+        margin: const EdgeInsets.symmetric(horizontal: 4),
+        decoration: BoxDecoration(
+            border: Border.all(
+                width: 0.4, color: Theme.of(context).colorScheme.onBackground),
+            borderRadius: BorderRadius.circular(12)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            AspectRatio(
+              aspectRatio: 2 / 2,
+              child: Container(
+                height: 117,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(12.0),
+                        topRight: Radius.circular(12.0)),
+                    color: Theme.of(context).colorScheme.surface),
               ),
             ),
-          ),
-          const SpaceVertical(size: 4),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Container(
-              height: 11.0,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(12),
+            const SpaceVertical(size: 12.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Container(
+                height: 11.0,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
-          ),
-          const SpaceVertical(size: 8),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Container(
-              width: 100,
-              height: 8,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(12),
+            const SpaceVertical(size: 4),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Container(
+                height: 11.0,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
-          ),
-          const SpaceVertical(size: 8.0),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Container(
-              width: 60,
-              height: 12,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(12),
+            const SpaceVertical(size: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Container(
+                width: 100,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
-          ),
-          const SpaceVertical(size: 8),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Container(
-              height: 32,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(12),
+            const SpaceVertical(size: 8.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Container(
+                width: 60,
+                height: 12,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
-          ),
-          const SpaceVertical(size: 12),
-        ],
+            const SpaceVertical(size: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Container(
+                height: 32,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
+            const SpaceVertical(size: 12),
+          ],
+        ),
       ),
     );
   }

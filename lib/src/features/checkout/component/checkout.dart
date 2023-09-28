@@ -11,7 +11,7 @@ class Checkout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SummaryOrderCubit, SummaryOrderState>(
+    return BlocBuilder<SummaryCubit, SummaryState>(
       builder: (context, state) {
         return BottomSheet(
           elevation: 1,

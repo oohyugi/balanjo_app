@@ -10,18 +10,20 @@ class BaseLayout extends StatefulWidget {
   final bool isShowFloatingCart;
   final TabBar? tabBar;
   final Color? navBarColor;
-  final bool isHideAppBar;
+  final double elevation;
+  final ScrollNotificationPredicate? notificationPredicate;
 
-  const BaseLayout({
-    Key? key,
-    this.title,
-    required this.body,
-    this.actions,
-    this.tabBar,
-    this.isShowFloatingCart = true,
-    this.navBarColor,
-    this.isHideAppBar = false,
-  }) : super(key: key);
+  const BaseLayout(
+      {Key? key,
+      this.title,
+      required this.body,
+      this.actions,
+      this.tabBar,
+      this.isShowFloatingCart = true,
+      this.navBarColor,
+      this.elevation = 4,
+      this.notificationPredicate})
+      : super(key: key);
 
   @override
   State<BaseLayout> createState() => _BaseLayoutState();
@@ -37,34 +39,35 @@ class _BaseLayoutState extends State<BaseLayout>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            appBar: widget.isHideAppBar
-                ? null
-                : AppBar(
-                    title: widget.title,
-                    actions: widget.actions,
-                    bottom: widget.tabBar,
-                    centerTitle: false,
-                    backgroundColor: Theme.of(context).colorScheme.background,
-                    elevation: 0,
-                    scrolledUnderElevation: 0,
-                    systemOverlayStyle: SystemUiOverlayStyle(
-                        systemNavigationBarColor:
-                            ElevationOverlay.applySurfaceTint(
-                                Theme.of(context).colorScheme.surface,
-                                Theme.of(context).colorScheme.surfaceTint,
-                                0)),
-                  ),
-            body: Stack(
-              children: [
-                widget.body,
-                if (widget.isShowFloatingCart)
-                  const Positioned(
-                      bottom: 16,
-                      left: 16,
-                      right: 16,
-                      child: SafeArea(child: FloatingCart()))
-              ],
-            ),
-          );
+      extendBody: true,
+      appBar: AppBar(
+        title: widget.title,
+        actions: widget.actions,
+        bottom: widget.tabBar != null
+            ? PreferredSize(
+                preferredSize: const Size.fromHeight(32),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: widget.tabBar,
+                ))
+            : null,
+        centerTitle: false,
+        shadowColor: Theme.of(context).colorScheme.shadow,
+        scrolledUnderElevation: widget.elevation,
+        notificationPredicate:
+            widget.notificationPredicate ?? defaultScrollNotificationPredicate,
+      ),
+      body: Stack(
+        children: [
+          widget.body,
+          if (widget.isShowFloatingCart)
+            const Positioned(
+                bottom: 16,
+                left: 16,
+                right: 16,
+                child: SafeArea(child: FloatingCart()))
+        ],
+      ),
+    );
   }
 }

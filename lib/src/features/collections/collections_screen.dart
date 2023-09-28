@@ -43,6 +43,9 @@ class CollectionsScreen extends StatelessWidget {
               length: state.categories.length,
               child: Builder(builder: (context) {
                 return BaseLayout(
+                  notificationPredicate: (ScrollNotification notification) {
+                    return notification.depth == 1;
+                  },
                   actions: const [
                     Padding(
                       padding: EdgeInsets.only(right: 16),
@@ -105,7 +108,7 @@ class ProductsContent extends StatefulWidget {
   State<ProductsContent> createState() => _ProductsContentState();
 }
 
-class _ProductsContentState extends State<ProductsContent> {
+class _ProductsContentState extends State<ProductsContent> with AutomaticKeepAliveClientMixin {
   final _scrollController = ScrollController();
   bool shouldLoadMore = true;
 
@@ -114,6 +117,9 @@ class _ProductsContentState extends State<ProductsContent> {
     _scrollController.addListener(_onScroll);
     super.initState();
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void dispose() {
@@ -156,10 +162,9 @@ class _ProductsContentState extends State<ProductsContent> {
             child: Column(
               children: [
                 GridView.builder(
-                    itemCount:
-                        !state.hasReachedMax && state.products.length > 9
-                            ? state.products.length + 2
-                            : state.products.length,
+                    itemCount: !state.hasReachedMax && state.products.length > 9
+                        ? state.products.length + 2
+                        : state.products.length,
                     cacheExtent:
                         !state.hasReachedMax && state.products.length > 9
                             ? state.products.length + 2.toDouble()
@@ -172,7 +177,8 @@ class _ProductsContentState extends State<ProductsContent> {
                             mainAxisSpacing: 2,
                             crossAxisSpacing: 2),
                     physics: const NeverScrollableScrollPhysics(),
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.only(
+                        left: 16, right: 16, top: 16, bottom: 100),
                     itemBuilder: (context, index) {
                       if (index > state.products.length - 1) {
                         return const ProductCardLoading();

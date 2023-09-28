@@ -1,6 +1,6 @@
 import 'package:balanjo_app/src/features/product/product_screen.dart';
 import 'package:balanjo_app/src/features/main_screen.dart';
-import 'package:balanjo_app/src/features/order/order_screen.dart';
+import 'package:balanjo_app/src/features/checkout/checkout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../../main.dart';
 import '../../../src/features/categories/categories_drawer.dart';
 import '../../../src/features/home/bloc/bloc.dart';
-import '../../../src/features/order/bloc/bloc.dart';
+import '../../../src/features/checkout/bloc/bloc.dart';
 import '../../../src/shared/bloc/bloc.dart';
 import 'screen/screen.dart';
 
@@ -29,7 +29,7 @@ final safeRoute = GoRouter(
     TypedGoRoute<CategoriesScreenRoute>(path: 'categories'),
     TypedGoRoute<CollectionsScreenRoute>(path: 'collections/:categoryId'),
     TypedGoRoute<ProductsScreenRoute>(path: 'products/:sectionId'),
-    TypedGoRoute<OrderScreenRoute>(path: 'order'),
+    TypedGoRoute<CheckoutScreenRoute>(path: 'checkout'),
   ]),
 ])
 @immutable

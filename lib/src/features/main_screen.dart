@@ -1,13 +1,14 @@
-import 'package:balanjo_app/src/features/favorite/favorite_screen.dart';
 import 'package:balanjo_app/src/features/home/home_screen.dart';
 import 'package:balanjo_app/src/features/home/model/model.dart';
 import 'package:balanjo_app/src/features/myorder/my_order_screen.dart';
 import 'package:balanjo_app/src/features/setting/setting_screen.dart';
-import 'package:balanjo_app/theme/icons.dart';
+import 'package:balanjo_app/src/shared/bloc/bloc.dart';
+import 'package:balanjo_app/src/utils/log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../shared/component/src/search.dart';
+import '../service/location.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -20,80 +21,70 @@ class _MainScreenState extends State<MainScreen> {
   int _currentPageIndex = 0;
 
   @override
+  void initState() {
+
+    context.read<LocationCubit>().getLocation();
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          leading: null,
-          centerTitle: false,
-          automaticallyImplyLeading: false,
-          title: SizedBox(
-              width: MediaQuery.of(context).size.width / 1.5,
-              child: const Search()),
-          systemOverlayStyle: SystemUiOverlayStyle(
-              systemNavigationBarColor: ElevationOverlay.applySurfaceTint(
-                  Theme.of(context).colorScheme.surface,
-                  Theme.of(context).colorScheme.surfaceTint,
-                  4),
-              statusBarColor: Theme.of(context).colorScheme.background,
-              statusBarBrightness: Theme.of(context).brightness,
-              statusBarIconBrightness:
-                  Theme.of(context).brightness == Brightness.light
-                      ? Brightness.dark
-                      : Brightness.light),
-          actions: [
-            IconButton(
-                onPressed: () {},
-                icon: Badge(
-                    label: const Text("2"),
-                    smallSize: 1,
-                    child: SvgPicture.asset(
-                      assetNameNotif,
+    Color navColor = ElevationOverlay.applySurfaceTint(
+        Theme.of(context).colorScheme.surface,
+        Theme.of(context).colorScheme.surfaceTint,
+        4);
+    return AnnotatedRegion(
+      value: SystemUiOverlayStyle(
+        systemNavigationBarContrastEnforced: true,
+        systemNavigationBarColor: navColor,
+        systemNavigationBarDividerColor: navColor,
+        systemNavigationBarIconBrightness:
+            Theme.of(context).brightness == Brightness.light
+                ? Brightness.dark
+                : Brightness.light,
+      ),
+      child: Scaffold(
+          bottomNavigationBar: NavigationBar(
+            shadowColor: Theme.of(context).colorScheme.shadow,
+            onDestinationSelected: (int index) {
+              setState(() {
+                _currentPageIndex = index;
+              });
+            },
+            selectedIndex: _currentPageIndex,
+            destinations: NavigationModel.navigations()
+                .map((e) => _buildNavigationDestination(
+                    isSelected: e.index == _currentPageIndex,
+                    icon: SvgPicture.asset(
+                      e.assetIcon,
                       colorFilter: ColorFilter.mode(
-                          Theme.of(context).colorScheme.onBackground,
+                          Theme.of(context).colorScheme.onSurface,
                           BlendMode.srcIn),
-                    )))
-          ],
-          elevation: 0,
-          scrolledUnderElevation: 0,
-        ),
-        bottomNavigationBar: NavigationBar(
-          onDestinationSelected: (int index) {
-            setState(() {
-              _currentPageIndex = index;
-            });
-          },
-          selectedIndex: _currentPageIndex,
-          destinations: NavigationModel.navigations()
-              .map((e) => _buildNavigationDestination(
-                  isSelected: e.index == _currentPageIndex,
-                  icon: SvgPicture.asset(
-                    e.assetIcon,
-                    colorFilter: ColorFilter.mode(
-                        Theme.of(context).colorScheme.onSurface,
-                        BlendMode.srcIn),
-                  ),
-                  selectedIcon: SvgPicture.asset(
-                    e.assetIconSelected,
-                    colorFilter: ColorFilter.mode(
-                        Theme.of(context).colorScheme.onSurface,
-                        BlendMode.srcIn),
-                  ),
-                  label: e.name))
-              .toList(),
-        ),
-        body: IndexedStack(
-          index: _currentPageIndex,
-          children: [
-            const HomeScreen(),
-            // Container(
-            //   color: Colors.green,
-            //   alignment: Alignment.center,
-            //   child: const FavoriteScreen(),
-            // ),
-            const MyOrderScreen(),
-           const SettingScreen()
-          ],
-        ));
+                    ),
+                    selectedIcon: SvgPicture.asset(
+                      e.assetIconSelected,
+                      colorFilter: ColorFilter.mode(
+                          Theme.of(context).colorScheme.onSurface,
+                          BlendMode.srcIn),
+                    ),
+                    label: e.name))
+                .toList(),
+          ),
+          body: IndexedStack(
+            index: _currentPageIndex,
+            children: [
+              const HomeScreen(),
+              // Container(
+              //   color: Colors.green,
+              //   alignment: Alignment.center,
+              //   child: const FavoriteScreen(),
+              // ),
+              const MyOrderScreen(),
+              const SettingScreen()
+            ],
+          )),
+    );
   }
 
   NavigationDestination _buildNavigationDestination(

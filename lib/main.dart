@@ -1,6 +1,6 @@
-
 import 'package:balanjo_app/src/features/collections/di/collections_module.dart';
 import 'package:balanjo_app/src/features/product/di/product_module.dart';
+import 'package:balanjo_app/src/shared/bloc/bloc.dart';
 import 'package:balanjo_app/src/shared/bloc/src/cart/cart_cubit.dart';
 import 'package:balanjo_app/src/features/home/di/home_module.dart';
 import 'package:balanjo_app/src/shared/di/module.dart';
@@ -10,17 +10,16 @@ import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'config/bloc_observer.dart';
 import 'config/route/safe_route.dart';
-import 'src/features/order/di/module.dart';
+import 'src/features/checkout/di/module.dart';
 import 'theme/color_schemes.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> main() async {
-
   homeModule();
-  categoriesModule();
+  sharedModule();
   collectionsModule();
-  orderModule();
+  checkoutModule();
   productModule();
   Bloc.observer = BBlocObserve();
   runApp(const MyApp());
@@ -29,13 +28,18 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<CartCubit>()..fetchCart(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt<CartCubit>()..fetchCart(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<LocationCubit>()..getLocation(),
+        )
+      ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'Balanjo',

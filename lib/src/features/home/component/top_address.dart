@@ -1,0 +1,61 @@
+import 'package:balanjo_app/src/utils/UiState.dart';
+import 'package:balanjo_app/src/utils/extensions/string_extentions.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../shared/bloc/bloc.dart';
+import '../../../shared/component/component.dart';
+
+class TopAddress extends StatelessWidget {
+  const TopAddress({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 2,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Deliver to",
+            style: Theme.of(context).textTheme.labelSmall,
+          ),
+          BlocBuilder<LocationCubit, LocationState>(builder: (context, state) {
+            return state.uiState.isSuccess
+                ? Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          state.location?.address ?? "Select address",
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelMedium
+                              ?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: state.location?.address == null
+                                      ? Theme.of(context).colorScheme.error
+                                      : null),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const SpaceHorizontal(size: 4),
+                      const Icon(
+                        Icons.expand_circle_down_outlined,
+                        size: 18,
+                      )
+                    ],
+                  )
+                : ShimmerDefault(
+                    child: RoundedPlaceHolder(
+                    width: MediaQuery.of(context).size.width / 2.5,
+                    height: 14,
+                  ));
+          })
+        ],
+      ),
+    );
+  }
+}
