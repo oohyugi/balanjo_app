@@ -50,7 +50,7 @@ class FloatingCart extends StatelessWidget {
                                           .colorScheme
                                           .onPrimary,
                                       fontWeight: FontWeight.w700)),
-                          Text("Estimated Price",
+                          Text("Estimasi Harga",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)

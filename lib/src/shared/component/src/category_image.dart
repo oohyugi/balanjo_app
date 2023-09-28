@@ -39,7 +39,7 @@ class CategoryImage extends StatelessWidget {
                 item.name.toLowerCase().capitalize,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onBackground),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onBackground,fontWeight: FontWeight.w600),
               ),
             ),
             const SpaceVertical(size: 8)

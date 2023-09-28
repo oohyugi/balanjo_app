@@ -19,8 +19,9 @@ class OrderCard extends StatelessWidget {
           children: [
             Text(
               history.date,
-              style: Theme.of(context).textTheme.labelSmall,
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.onSurface),
             ),
+            const SpaceVertical(size: 4),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,

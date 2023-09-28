@@ -43,16 +43,16 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'Balanjo',
-        themeMode: ThemeMode.light,
+        themeMode: ThemeMode.system,
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: lightColorScheme,
-          textTheme: GoogleFonts.montserratTextTheme(),
+          textTheme: GoogleFonts.nunitoTextTheme(),
         ),
         darkTheme: ThemeData(
           useMaterial3: true,
           colorScheme: darkColorScheme,
-          textTheme: GoogleFonts.montserratTextTheme(),
+          textTheme: GoogleFonts.nunitoTextTheme(),
         ),
         routeInformationParser: safeRoute.routeInformationParser,
         routeInformationProvider: safeRoute.routeInformationProvider,

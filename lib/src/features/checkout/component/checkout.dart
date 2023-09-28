@@ -14,7 +14,7 @@ class Checkout extends StatelessWidget {
     return BlocBuilder<SummaryCubit, SummaryState>(
       builder: (context, state) {
         return BottomSheet(
-          elevation: 1,
+          elevation: 2,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(8), topLeft: Radius.circular(8))),
@@ -54,7 +54,7 @@ class Checkout extends StatelessWidget {
                             minimumSize: const Size(100, 52),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(14))),
-                        child: const Text("Checkout"),
+                        child: const Text("Pilih Pembayaran"),
                       ),
                     ),
                     const SpaceVertical(size: 12)

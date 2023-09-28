@@ -81,7 +81,10 @@ class LocationRepository implements ILocationRepository {
 
     return results
         .map((e) => LocationModel(
-            latitude: e.latitude, longitude: e.longitude, address: e.address))
+            latitude: e.latitude,
+            longitude: e.longitude,
+            address: e.address,
+            title: e.title))
         .toList();
   }
 
@@ -91,6 +94,7 @@ class LocationRepository implements ILocationRepository {
         id: location.address.hashCode,
         latitude: location.latitude,
         longitude: location.longitude,
+        title: location.title ?? "",
         address: location.address ?? ""));
   }
 }

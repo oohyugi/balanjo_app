@@ -10,3 +10,4 @@ export 'src/product_card.dart';
 export 'src/shimmer.dart';
 export 'src/search.dart';
 export 'src/rounded_placeholder.dart';
+export 'src/tips.dart';

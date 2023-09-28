@@ -31,7 +31,7 @@ class TopAddress extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Deliver to",
+                "Antar ke",
                 style: Theme
                     .of(context)
                     .textTheme
@@ -77,7 +77,7 @@ class TopAddress extends StatelessWidget {
                 ),
               if (state.uiState.isFailure)
                 Text(
-                  "Select address",
+                  "Pilih Lokasi",
                   style: Theme
                       .of(context)
                       .textTheme

@@ -17,24 +17,25 @@ class PricingDetail extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Divider(),
             ItemPrice(
                 isLoading: state.uiState.isInitial,
-                title: "Estimated Price",
+                title: "Total Harga (${state.data?.totalItem} items)",
                 value: state.data?.estimatedPrice.toIdr() ?? ""),
             ItemPrice(
               isLoading: state.uiState.isInitial,
-              title: "Ongkos kirim",
+              title: "Ongkos Kirim",
               value: state.data?.deliveryFee.toIdr() ?? "",
-              valueColor: Theme.of(context).colorScheme.primary,
             ),
             ItemPrice(
               isLoading: state.uiState.isInitial,
-              title: "Diskon",
-              value: "- ${state.data?.totalDiscount.toIdr()}",
-              valueColor: Theme.of(context).colorScheme.error,
+              title: "Biaya Layanan",
+              value: state.data?.serviceFee.toIdr() ?? "",
             ),
-            const Divider(),
+            ItemPrice(
+              isLoading: state.uiState.isInitial,
+              title: "Promo",
+              value: "-",
+            ),
           ],
         );
       },
@@ -69,19 +70,19 @@ class ItemPrice extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .labelMedium
-                  ?.copyWith(color: Theme.of(context).colorScheme.onBackground),
+                  ?.copyWith(color: Theme.of(context).colorScheme.onBackground,fontWeight: FontWeight.w500),
             ),
             isLoading
                 ? const ShimmerDefault(
                     child: RoundedPlaceHolder(
-                    height: 14,
-                    width: 80,
-                  ),
-                )
+                      height: 14,
+                      width: 80,
+                    ),
+                  )
                 : Text(value,
                     style: Theme.of(context).textTheme.labelMedium?.copyWith(
                         color: valueColor ??
-                            Theme.of(context).colorScheme.onBackground)),
+                            Theme.of(context).colorScheme.onBackground,fontWeight: FontWeight.bold)),
           ],
         ),
       ),

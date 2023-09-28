@@ -49,13 +49,14 @@ class CheckoutRepository implements ICheckoutRepository {
 
     double discountTotal = basePrice - discountPrice;
 
-    final totalPrice = (totalEstimatedPrice - discountTotal) + 10000;
+    final totalPrice = totalEstimatedPrice + 10000 + 2000;
     return Future.value(SummaryOrderMdl(
         id: "",
         totalItem: totalItem,
         estimatedPrice: totalEstimatedPrice,
         totalPrice: totalPrice,
         deliveryFee: 10000,
+        serviceFee: 2000,
         totalDiscount: discountTotal));
   }
 

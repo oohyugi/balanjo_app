@@ -27,7 +27,7 @@ class NavigationModel {
 
     list.add(NavigationModel(
         index: 2,
-        name: "My Orders",
+        name: "Orders",
         assetIcon: assetNameBill,
         assetIconSelected: assetNameBillBold));
 

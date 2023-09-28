@@ -20,10 +20,10 @@ class LocationCubit extends Cubit<LocationState> {
       final allLocations = await locationRepository.getSavedLocations();
       if (allLocations.isNotEmpty) {
         emit(LocationState.success(location: allLocations.last));
-      }else {
+      } else {
         _getLocation().then((value) async {
           final isAlreadyInLocal = allLocations.any((element) =>
-          element.latitude == value?.latitude &&
+              element.latitude == value?.latitude &&
               element.longitude == value?.longitude);
 
           if (!isAlreadyInLocal && value != null) {
@@ -32,20 +32,21 @@ class LocationCubit extends Cubit<LocationState> {
             if (result.results.isEmpty) {
               emit(const LocationState.failure());
             } else {
+              final address = result.results.firstOrNull?.formattedAddress;
               final location = LocationModel(
                   latitude: value.latitude ?? 0.0,
                   longitude: value.longitude ?? 0.0,
+                  title: address?.substring(0,address.indexOf(",")),
                   address: result.results.firstOrNull?.formattedAddress);
               emit(const LocationState.initial());
               locationRepository.savedLocation(location);
               emit(LocationState.success(location: location));
             }
-          }else {
+          } else {
             emit(const LocationState.failure());
           }
         });
       }
-
     } catch (e) {
       emit(const LocationState.failure());
     }

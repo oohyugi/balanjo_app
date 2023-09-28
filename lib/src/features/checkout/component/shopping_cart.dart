@@ -19,7 +19,10 @@ class ShoppingCart extends StatelessWidget {
           return ItemCard(product: cartItems[index]);
         },
         separatorBuilder: (context, index) {
-          return const SpaceVertical(size: 8);
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 8),
+            child: Divider(thickness: 0.2,),
+          );
         },
         itemCount: cartItems.length);
   }

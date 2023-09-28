@@ -41,28 +41,19 @@ class ItemCard extends StatelessWidget {
               SizedBox(
                 child: Text(
                   product.title,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onBackground),
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground,fontWeight: FontWeight.bold),
                   textAlign: TextAlign.start,
                   softWrap: true,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               const SpaceVertical(size: 4),
-              Row(
-                children: [
-                  Text(product.displayPrice.toIdr(),
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: Theme.of(context).colorScheme.onBackground)),
-                  const SpaceHorizontal(size: 4),
-                  if (product.discountPercent != 0)
-                    Text(product.basePrice.toIdr(),
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            decoration: TextDecoration.lineThrough,
-                            color: Theme.of(context).colorScheme.onBackground,
-                            fontWeight: FontWeight.w400)),
-                ],
-              ),
+              Text(product.displayPrice.toIdr(),
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).colorScheme.onBackground)),
               const SpaceVertical(size: 8),
               SizedBox(
                   width: MediaQuery.of(context).size.width / 3.4,
