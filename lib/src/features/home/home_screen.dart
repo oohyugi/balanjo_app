@@ -12,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../theme/icons.dart';
+import '../../utils/UiState.dart';
 import 'component/categories.dart';
 import 'component/top_address.dart';
 
@@ -21,20 +22,24 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseLayout(
-      title: Tapper(
-        onTap: () {
-          showModalBottomSheet<void>(
-            context: context,
-            enableDrag: true,
-            showDragHandle: true,
-            builder: (BuildContext context) {
-              return BlocProvider(
-                  create: (BuildContext context) => getIt<SavedLocationCubit>()..getAll(),
-                  child: const ModalContentAddress());
-            },
-          );
+      title: TopAddress(
+        onTap: (SimpleUiState state) {
+          if (state.isSuccess) {
+            showModalBottomSheet<void>(
+              context: context,
+              enableDrag: true,
+              showDragHandle: true,
+              builder: (BuildContext context) {
+                return BlocProvider(
+                    create: (BuildContext context) =>
+                        getIt<SavedLocationCubit>()..getAll(),
+                    child: const ModalContentAddress());
+              },
+            );
+          } else {
+            context.read<LocationCubit>().getLocation();
+          }
         },
-        child: const TopAddress(),
       ),
       actions: [
         const Search(

@@ -9,53 +9,92 @@ import '../../../shared/component/component.dart';
 class TopAddress extends StatelessWidget {
   const TopAddress({
     super.key,
+    required this.onTap,
   });
+
+  final Function(SimpleUiState state) onTap;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width / 2,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Deliver to",
-            style: Theme.of(context).textTheme.labelSmall,
-          ),
-          BlocBuilder<LocationCubit, LocationState>(builder: (context, state) {
-            return state.uiState.isSuccess
-                ? Row(
-                    children: [
-                      Flexible(
-                        child: Text(
-                          state.location?.address ?? "Select address",
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelMedium
-                              ?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  color: state.location?.address == null
-                                      ? Theme.of(context).colorScheme.error
-                                      : null),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      const SpaceHorizontal(size: 4),
-                      const Icon(
-                        Icons.expand_circle_down_outlined,
-                        size: 18,
-                      )
-                    ],
-                  )
-                : ShimmerDefault(
+      width: MediaQuery
+          .of(context)
+          .size
+          .width / 2,
+      child:
+      BlocBuilder<LocationCubit, LocationState>(builder: (context, state) {
+        return Tapper(
+          onTap: () {
+            onTap(state.uiState);
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Deliver to",
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .labelSmall,
+              ),
+              if (state.uiState.isInitial)
+                ShimmerDefault(
                     child: RoundedPlaceHolder(
-                    width: MediaQuery.of(context).size.width / 2.5,
-                    height: 14,
-                  ));
-          })
-        ],
-      ),
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width / 2.5,
+                      height: 14,
+                    )),
+              if (state.uiState.isSuccess)
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        state.location?.address ?? "",
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .labelMedium
+                            ?.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: state.location?.address == null
+                                ? Theme
+                                .of(context)
+                                .colorScheme
+                                .error
+                                : null),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SpaceHorizontal(size: 4),
+                    const Icon(
+                      Icons.expand_circle_down_outlined,
+                      size: 18,
+                    )
+                  ],
+                ),
+              if (state.uiState.isFailure)
+                Text(
+                  "Select address",
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .labelMedium
+                      ?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: Theme
+                          .of(context)
+                          .colorScheme
+                          .error),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                )
+            ],
+          ),
+        );
+      }),
     );
   }
 }

@@ -20,30 +20,34 @@ class LocationCubit extends Cubit<LocationState> {
       final allLocations = await locationRepository.getSavedLocations();
       if (allLocations.isNotEmpty) {
         emit(LocationState.success(location: allLocations.last));
-      }
-      _getLocation().then((value) async {
-        final isAlreadyInLocal = allLocations.any((element) =>
-            element.latitude == value?.latitude &&
-            element.longitude == value?.longitude);
+      }else {
+        _getLocation().then((value) async {
+          final isAlreadyInLocal = allLocations.any((element) =>
+          element.latitude == value?.latitude &&
+              element.longitude == value?.longitude);
 
-        if (!isAlreadyInLocal) {
-          final result = await locationRepository
-              .reverse("${value?.latitude},${value?.longitude}");
-          if (result.results.isEmpty) {
+          if (!isAlreadyInLocal && value != null) {
+            final result = await locationRepository
+                .reverse("${value.latitude},${value.longitude}");
+            if (result.results.isEmpty) {
+              emit(const LocationState.failure());
+            } else {
+              final location = LocationModel(
+                  latitude: value.latitude ?? 0.0,
+                  longitude: value.longitude ?? 0.0,
+                  address: result.results.firstOrNull?.formattedAddress);
+              emit(const LocationState.initial());
+              locationRepository.savedLocation(location);
+              emit(LocationState.success(location: location));
+            }
+          }else {
             emit(const LocationState.failure());
-          } else {
-            final location = LocationModel(
-                latitude: value?.latitude ?? 0.0,
-                longitude: value?.longitude ?? 0.0,
-                address: result.results.firstOrNull?.formattedAddress);
-            emit(const LocationState.initial());
-            locationRepository.savedLocation(location);
-            emit(LocationState.success(location: location));
           }
-        }
-      });
+        });
+      }
+
     } catch (e) {
-      LocationState.failure();
+      emit(const LocationState.failure());
     }
   }
 

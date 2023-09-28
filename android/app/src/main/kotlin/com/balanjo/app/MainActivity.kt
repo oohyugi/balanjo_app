@@ -1,4 +1,4 @@
-package com.balanjo.balanjo_app
+package com.balanjo.app
 
 import io.flutter.embedding.android.FlutterActivity
 
