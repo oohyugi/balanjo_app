@@ -33,6 +33,7 @@ class CheckoutScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const SpaceHorizontal(size: 16),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: TileCard(
