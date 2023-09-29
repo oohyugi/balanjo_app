@@ -24,7 +24,7 @@ class ForYou extends StatelessWidget {
               child: SizedBox(
                 height: 310,
                 child: ListView.separated(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
                     scrollDirection: Axis.horizontal,
                     cacheExtent: state.products.length.toDouble(),
                     shrinkWrap: true,

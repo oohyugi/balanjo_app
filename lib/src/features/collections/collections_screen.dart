@@ -3,13 +3,10 @@ import 'package:balanjo_app/src/features/collections/bloc/bloc.dart';
 import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:balanjo_app/src/utils/UiState.dart';
 import 'package:balanjo_app/src/utils/extensions/string_extentions.dart';
-import 'package:balanjo_app/src/utils/log.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../shared/bloc/bloc.dart';
-import '../../shared/component/src/product_card.dart';
 
 class CollectionsScreen extends StatelessWidget {
   const CollectionsScreen({
@@ -108,9 +105,9 @@ class ProductsContent extends StatefulWidget {
   State<ProductsContent> createState() => _ProductsContentState();
 }
 
-class _ProductsContentState extends State<ProductsContent> with AutomaticKeepAliveClientMixin {
+class _ProductsContentState extends State<ProductsContent>
+    with AutomaticKeepAliveClientMixin {
   final _scrollController = ScrollController();
-  bool shouldLoadMore = true;
 
   @override
   void initState() {
@@ -136,16 +133,15 @@ class _ProductsContentState extends State<ProductsContent> with AutomaticKeepAli
   bool get _isBottom {
     if (!_scrollController.hasClients) return false;
     final maxScroll = _scrollController.position.maxScrollExtent;
-    final currentScroll = _scrollController.position.pixels;
-    logDebug(tag: "scroll", message: "max $maxScroll, curr $currentScroll");
-    return maxScroll > currentScroll && (maxScroll - currentScroll) <= 100;
+    final currentScroll = _scrollController.offset;
+    return currentScroll >= maxScroll && !_scrollController.position.outOfRange;
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<CollectionsCubit, CollectionsState>(
       builder: (context, state) {
-        logDebug(tag: "hasReachMax", message: state.hasReachedMax);
         if (state.uiState.isSuccess) {
           if (state.products.isEmpty) {
             return Center(
@@ -178,7 +174,7 @@ class _ProductsContentState extends State<ProductsContent> with AutomaticKeepAli
                             crossAxisSpacing: 2),
                     physics: const NeverScrollableScrollPhysics(),
                     padding: const EdgeInsets.only(
-                        left: 16, right: 16, top: 16, bottom: 100),
+                        left: 16, right: 16, top: 16, bottom: 120),
                     itemBuilder: (context, index) {
                       if (index > state.products.length - 1) {
                         return const ProductCardLoading();

@@ -3,9 +3,7 @@ import 'package:balanjo_app/src/features/home/component/flashsale.dart';
 import 'package:balanjo_app/src/features/home/component/foryou.dart';
 import 'package:balanjo_app/src/features/home/component/caraousel.dart';
 import 'package:balanjo_app/src/features/home/modal_content_address.dart';
-import 'package:balanjo_app/src/service/location.dart';
 import 'package:balanjo_app/src/shared/bloc/bloc.dart';
-import 'package:balanjo_app/src/shared/component/src/search.dart';
 import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -63,7 +61,7 @@ class HomeScreen extends StatelessWidget {
             SpaceVertical(size: 18),
             SizedBox(
               height: 158,
-              child: Carousell(),
+              child: Carousel(),
             ),
             SpaceVertical(size: 18),
             CategoryList(),

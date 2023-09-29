@@ -32,7 +32,7 @@ class CategoryList extends StatelessWidget {
                   cacheExtent: state.categories.length.toDouble(),
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
                   itemBuilder: (context, index) {
                     return SizedBox(
                       width: 100,

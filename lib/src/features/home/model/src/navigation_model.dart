@@ -26,13 +26,13 @@ class NavigationModel {
     //     assetIconSelected: assetNameBagHeartBold));
 
     list.add(NavigationModel(
-        index: 2,
+        index: 1,
         name: "Orders",
         assetIcon: assetNameBill,
         assetIconSelected: assetNameBillBold));
 
     list.add(NavigationModel(
-        index: 3,
+        index: 2,
         name: "Setting",
         assetIcon: assetNameSetting,
         assetIconSelected: assetNameSettingBold));

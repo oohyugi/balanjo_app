@@ -21,12 +21,12 @@ class Header extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: Text(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
                 title,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w700,
@@ -34,18 +34,16 @@ class Header extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-            ),
-            if (isShowTapMore)
-              TextButton(
-                  onPressed: onTapMore,
-                  child: Text(actionLabel ?? "More",
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.onBackground)))
-          ],
+              if (isShowTapMore)
+                TextButton(
+                    onPressed: onTapMore,
+                    child: Text(actionLabel ?? "More",
+                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                            color: Theme.of(context).colorScheme.onBackground)))
+            ],
+          ),
         ),
-        const SizedBox(
-          height: 8,
-        ),
+
         child,
       ],
     );

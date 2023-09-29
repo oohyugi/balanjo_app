@@ -17,12 +17,9 @@ class TopAddress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width / 2,
+      width: MediaQuery.of(context).size.width / 2,
       child:
-      BlocBuilder<LocationCubit, LocationState>(builder: (context, state) {
+          BlocBuilder<LocationCubit, LocationState>(builder: (context, state) {
         return Tapper(
           onTap: () {
             onTap(state.uiState);
@@ -32,38 +29,29 @@ class TopAddress extends StatelessWidget {
             children: [
               Text(
                 "Antar ke",
-                style: Theme
-                    .of(context)
+                style: Theme.of(context)
                     .textTheme
-                    .labelSmall,
+                    .labelSmall
+                    ?.copyWith(color: Theme.of(context).colorScheme.onSurface),
               ),
               if (state.uiState.isInitial)
                 ShimmerDefault(
                     child: RoundedPlaceHolder(
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width / 2.5,
-                      height: 14,
-                    )),
+                  width: MediaQuery.of(context).size.width / 2.5,
+                  height: 14,
+                )),
               if (state.uiState.isSuccess)
                 Row(
                   children: [
                     Flexible(
                       child: Text(
                         state.location?.address ?? "",
-                        style: Theme
-                            .of(context)
+                        style: Theme.of(context)
                             .textTheme
                             .labelMedium
                             ?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: state.location?.address == null
-                                ? Theme
-                                .of(context)
-                                .colorScheme
-                                .error
-                                : null),
+                                fontWeight: FontWeight.w700,
+                                color: Theme.of(context).colorScheme.onSurface),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -78,16 +66,9 @@ class TopAddress extends StatelessWidget {
               if (state.uiState.isFailure)
                 Text(
                   "Pilih Lokasi",
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .labelMedium
-                      ?.copyWith(
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
                       fontWeight: FontWeight.w700,
-                      color: Theme
-                          .of(context)
-                          .colorScheme
-                          .error),
+                      color: Theme.of(context).colorScheme.error),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 )

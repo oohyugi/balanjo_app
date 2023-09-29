@@ -19,7 +19,10 @@ class OngoingScreen extends StatelessWidget {
                     title: "Oder $i",
                     displayPrice: 10000,
                     id: i,
-                    status: HistoryStatus.success,
+                    totalItems: 3,
+                    status: i % 2 == 0
+                ? HistoryStatus.waiting
+                    : HistoryStatus.progress,
                     date: '2023-07-08 15:40')),
           );
         },

@@ -1,18 +1,17 @@
 import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:balanjo_app/src/utils/extensions/list.dart';
-import 'package:balanjo_app/src/utils/log.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
-class Carousell extends StatefulWidget {
-  const Carousell({super.key});
+class Carousel extends StatefulWidget {
+  const Carousel({super.key});
 
   @override
-  State<Carousell> createState() => _CarousellState();
+  State<Carousel> createState() => _CarouselState();
 }
 
-class _CarousellState extends State<Carousell>
+class _CarouselState extends State<Carousel>
     with SingleTickerProviderStateMixin {
   final carousels = [
     "https://sesa.id/cdn/shop/files/Web_Banner_3_460x@2x.jpg?v=1689585568",
@@ -30,7 +29,7 @@ class _CarousellState extends State<Carousell>
   void initState() {
     _children = carousels.mapIndexed((i, e) {
       return Padding(
-        padding: EdgeInsets.only(left: i == 0 ? 16 : 0,right: i != carousels.length-1 ? 16:0),
+        padding: EdgeInsets.only(left: i != carousels.length? 14 : 0),
         child: Card(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           child: ClipRRect(

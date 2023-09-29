@@ -84,7 +84,7 @@ class FlashSale extends StatelessWidget {
                   SizedBox(
                     height: 310,
                     child: ListView.separated(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.symmetric(horizontal: 14),
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {

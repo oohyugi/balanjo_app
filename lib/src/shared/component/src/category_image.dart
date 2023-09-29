@@ -12,11 +12,12 @@ class CategoryImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      child: Tapper(
-        onTap: onClick,
-        borderRadius:  BorderRadius.circular(8),
+    return Tapper(
+      onTap: onClick,
+      borderRadius:  BorderRadius.circular(8),
+      child: Card(
+        elevation: 0.5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

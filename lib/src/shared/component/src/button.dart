@@ -94,7 +94,7 @@ class IncrementButton extends StatelessWidget {
           icon,
           color: isEnable
               ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).dividerColor,
+              : Theme.of(context).colorScheme.outline,
           size: 18,
         ),
       ),
