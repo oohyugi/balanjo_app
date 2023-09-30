@@ -27,11 +27,8 @@ class OngoingScreen extends StatelessWidget {
           );
         },
         separatorBuilder: (context, i) {
-          return const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8),
-            child: Divider(),
-          );
+         return Container();
         },
-        itemCount: 1);
+        itemCount: 2);
   }
 }

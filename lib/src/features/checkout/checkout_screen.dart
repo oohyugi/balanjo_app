@@ -1,6 +1,7 @@
 import 'package:balanjo_app/src/shared/bloc/bloc.dart';
 import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:balanjo_app/src/utils/UiState.dart';
+import 'package:balanjo_app/theme/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -54,11 +55,7 @@ class CheckoutScreen extends StatelessWidget {
                           builder: (context, state) {
                             return TileCard(
                               titleHeader: 'Lokasi Antar',
-                              leading: Icon(
-                                Icons.pin_drop,
-                                color: Theme.of(context).colorScheme.primary,
-                                size: 24,
-                              ),
+                              leading: svgIcon(context, assetNamePinPoint,color: Theme.of(context).colorScheme.primary),
                               title: state.location?.title ?? "",
                               subtitle: state.location?.address ?? "",
                             );

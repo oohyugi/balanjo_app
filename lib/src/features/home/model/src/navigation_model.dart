@@ -16,7 +16,7 @@ class NavigationModel {
     List<NavigationModel> list = List.empty(growable: true);
     list.add(NavigationModel(
         index: 0,
-        name: "Home",
+        name: "Beranda",
         assetIcon: assetNameHome,
         assetIconSelected: assetNameHomeBold));
     // list.add(NavigationModel(
@@ -27,15 +27,15 @@ class NavigationModel {
 
     list.add(NavigationModel(
         index: 1,
-        name: "Orders",
+        name: "Pesanan",
         assetIcon: assetNameBill,
         assetIconSelected: assetNameBillBold));
 
     list.add(NavigationModel(
         index: 2,
-        name: "Setting",
-        assetIcon: assetNameSetting,
-        assetIconSelected: assetNameSettingBold));
+        name: "Akun",
+        assetIcon: assetNameUser,
+        assetIconSelected: assetNameUserBold));
 
     return list;
   }

@@ -1,5 +1,6 @@
 import 'package:balanjo_app/src/utils/UiState.dart';
 import 'package:balanjo_app/src/utils/extensions/double_ext.dart';
+import 'package:balanjo_app/theme/icons.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../shared/component/component.dart';
@@ -66,18 +67,25 @@ class OrderCard extends StatelessWidget {
                                 bottomRight: Radius.circular(12),
                               )),
                         ),
-                        SpaceVertical(size: 16),
+                        const SpaceVertical(size: 16),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Text(getTitle(context, history.status),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium
-                                  ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onBackground,
-                                      fontWeight: FontWeight.bold)),
+                          child: Row(
+                            children: [
+                              svgIcon(context,
+                                  getAssetName(context, history.status),color: getStatusColor(context, history.status),width: 18,height: 18),
+                              const SpaceHorizontal(size: 8),
+                              Text(getTitle(context, history.status),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium
+                                      ?.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onBackground,
+                                          fontWeight: FontWeight.bold)),
+                            ],
+                          ),
                         ),
                         if (history.status == HistoryStatus.waiting)
                           Padding(
@@ -93,18 +101,18 @@ class OrderCard extends StatelessWidget {
                                           .onBackground,
                                     )),
                           ),
-                        SpaceVertical(size: 16)
+                        const SpaceVertical(size: 16)
                       ],
                     ),
                   ),
                 ),
-                SpaceVertical(size: 16),
+                const SpaceVertical(size: 16),
                 const Divider(
                   thickness: 0.5,
                 ),
-                
-                getActionButton(context, history.status).isNotEmpty? 
-                const SpaceVertical(size: 8): SpaceVertical(size: 16),
+                getActionButton(context, history.status).isNotEmpty
+                    ? const SpaceVertical(size: 8)
+                    : const SpaceVertical(size: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
@@ -167,6 +175,15 @@ String getTitle(BuildContext context, HistoryStatus status) {
     HistoryStatus.progress => "Pesanan di Proses",
     HistoryStatus.success => "Selesai",
     HistoryStatus.cancelled => "Dibatalkan",
+  };
+}
+
+String getAssetName(BuildContext context, HistoryStatus status) {
+  return switch (status) {
+    HistoryStatus.waiting => assetNameClock,
+    HistoryStatus.progress => assetNameDelivery,
+    HistoryStatus.success => assetNameChecked,
+    HistoryStatus.cancelled => assetNameCancel,
   };
 }
 

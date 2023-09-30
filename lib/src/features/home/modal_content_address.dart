@@ -1,5 +1,6 @@
 import 'package:balanjo_app/src/shared/bloc/bloc.dart';
 import 'package:balanjo_app/src/utils/UiState.dart';
+import 'package:balanjo_app/theme/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,10 +33,7 @@ class ModalContentAddress extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8))),
                     onPressed: () {},
-                    icon: const Icon(
-                      Icons.pin_drop_outlined,
-                      size: 14,
-                    ),
+                    icon: svgIcon(context, assetNamePinPoint,width: 16,height: 16),
                     label: Text(
                       "Select on map",
                       style: Theme.of(context).textTheme.labelSmall,

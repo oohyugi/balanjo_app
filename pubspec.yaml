@@ -93,6 +93,21 @@ flutter:
     - assets/icons/ic_notif.svg
     - assets/icons/ic_heart.svg
     - assets/icons/ic_heart_bold.svg
+    - assets/icons/ic_edit.svg
+    - assets/icons/ic_box.svg
+    - assets/icons/ic_cancel.svg
+    - assets/icons/ic_checked.svg
+    - assets/icons/ic_clock.svg
+    - assets/icons/ic_logout.svg
+    - assets/icons/ic_pinpoint.svg
+    - assets/icons/ic_privacy.svg
+    - assets/icons/ic_ribbon.svg
+    - assets/icons/ic_term.svg
+    - assets/icons/ic_delivery.svg
+    - assets/icons/ic_question.svg
+    - assets/icons/ic_point_map.svg
+    - assets/icons/ic_user.svg
+    - assets/icons/ic_user_bold.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

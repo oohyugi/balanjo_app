@@ -1,7 +1,7 @@
 import 'package:balanjo_app/src/features/home/home_screen.dart';
 import 'package:balanjo_app/src/features/home/model/model.dart';
 import 'package:balanjo_app/src/features/myorder/my_order_screen.dart';
-import 'package:balanjo_app/src/features/setting/setting_screen.dart';
+import 'package:balanjo_app/src/features/setting/presentation/setting_screen.dart';
 import 'package:balanjo_app/src/shared/bloc/bloc.dart';
 import 'package:balanjo_app/src/utils/log.dart';
 import 'package:flutter/material.dart';

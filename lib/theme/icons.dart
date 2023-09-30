@@ -19,6 +19,22 @@ const String assetNameCart = 'assets/icons/ic_cart.svg';
 const String icHeart = 'assets/icons/ic_heart.svg';
 const String icHeartBold = 'assets/icons/ic_heart_bold.svg';
 
+const String assetNameEdit = 'assets/icons/ic_edit.svg';
+const String assetNameBox = 'assets/icons/ic_box.svg';
+const String assetNameChecked = 'assets/icons/ic_checked.svg';
+const String assetNameCancel = 'assets/icons/ic_cancel.svg';
+const String assetNameClock = 'assets/icons/ic_clock.svg';
+const String assetNameLogout = 'assets/icons/ic_logout.svg';
+const String assetNamePinPoint = 'assets/icons/ic_pinpoint.svg';
+const String assetNamePrivacy = 'assets/icons/ic_privacy.svg';
+const String assetNameRibbon = 'assets/icons/ic_ribbon.svg';
+const String assetNameTerm = 'assets/icons/ic_term.svg';
+const String assetNameDelivery = 'assets/icons/ic_delivery.svg';
+const String assetNameQuestion = 'assets/icons/ic_question.svg';
+const String assetNamePointMap = 'assets/icons/ic_point_map.svg';
+const String assetNameUser = 'assets/icons/ic_user.svg';
+const String assetNameUserBold = 'assets/icons/ic_user_bold.svg';
+
 final Widget iconBagHeart =
     SvgPicture.asset(assetNameBagHeart, semanticsLabel: 'bag heart');
 final Widget iconBagHeartBold =
@@ -35,3 +51,11 @@ final Widget iconSettingBold = SvgPicture.asset(assetNameSettingBold);
 final Widget iconSearch = SvgPicture.asset(assetNameSearch);
 final Widget iconNotif = SvgPicture.asset(assetNameNotif);
 final Widget iconCart = SvgPicture.asset(assetNameCart);
+
+svgIcon(BuildContext context, String assetName,
+        {double? width, double? height, Color? color}) =>
+    SvgPicture.asset(assetName,
+        height: height,
+        width: width,
+        colorFilter: ColorFilter.mode(
+            color??Theme.of(context).colorScheme.onBackground, BlendMode.srcIn));

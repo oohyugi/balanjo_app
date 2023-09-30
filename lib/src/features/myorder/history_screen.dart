@@ -28,12 +28,7 @@ class HistoryScreen extends StatelessWidget {
           );
         },
         separatorBuilder: (context, i) {
-          return const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8),
-            child: Divider(
-              thickness: 0.5,
-            ),
-          );
+          return  Container();
         },
         itemCount: 5);
   }

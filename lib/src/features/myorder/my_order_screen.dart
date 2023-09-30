@@ -12,7 +12,7 @@ class MyOrderScreen extends StatelessWidget {
         length: 2,
         child: Builder(builder: (context) {
           return BaseLayout(
-            title: Text("Orders"),
+            title: Text("Pesanan"),
             isShowFloatingCart: false,
             notificationPredicate: (ScrollNotification notification) {
               return notification.depth == 1;
