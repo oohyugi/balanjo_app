@@ -77,7 +77,7 @@ class FloatingCart extends StatelessWidget {
                         ),
                         const SpaceHorizontal(size: 8),
                         SvgPicture.asset(
-                          assetNameCart,
+                          Assets.icCart,
                           colorFilter: ColorFilter.mode(
                               Theme.of(context).colorScheme.background,
                               BlendMode.srcIn),

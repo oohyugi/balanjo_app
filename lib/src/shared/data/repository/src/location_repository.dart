@@ -1,3 +1,4 @@
+import 'package:balanjo_app/config/env.dart';
 import 'package:balanjo_app/src/api/dio/dio_config.dart';
 import 'package:balanjo_app/src/shared/data/local/dao/location_dao.dart';
 import 'package:balanjo_app/src/shared/data/local/datasource/location_local_datasource.dart';
@@ -60,13 +61,14 @@ class LocationRepository implements ILocationRepository {
   ) async {
     final Map<String, dynamic> query = <String, dynamic>{
       'latlng': latlng,
-      'key': "AIzaSyDwaDc-GF8gS5cDPFFUjSOJVMpE3Y9EVBI"
+      'key': Env.googleApiKey
     };
 
     query.removeWhere((_, dynamic value) => value == null);
     var dio = createDio(baseUrl: _baseUrl);
     final Response<Map<String, dynamic>> response =
-        await dio.get<Map<String, dynamic>>(
+        await addInterceptors(dio: dio, isRequireAuth: false, header: {})
+            .get<Map<String, dynamic>>(
       _baseUrl,
       queryParameters: query,
     );

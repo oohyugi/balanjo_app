@@ -21,7 +21,7 @@ class SettingInfo extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12),
         child: Row(
           children: [
-            svgIcon(context, assetName, width: 24, height: 24),
+            SvgIcon( assetName, width: 24, height: 24),
             const SpaceHorizontal(size: 16),
             Expanded(
                 child: Text(

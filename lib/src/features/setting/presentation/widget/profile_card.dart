@@ -5,7 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ProfileCard extends StatelessWidget {
-  const ProfileCard({super.key, required this.name, required this.phone, required this.avatarUrl});
+  const ProfileCard(
+      {super.key,
+      required this.name,
+      required this.phone,
+      required this.avatarUrl});
 
   final String name;
   final String phone;
@@ -42,9 +46,7 @@ class ProfileCard extends StatelessWidget {
           ),
         ),
         const SpaceHorizontal(size: 16),
-        IconButton(
-            onPressed: () {},
-            icon: svgIcon(context, assetNameEdit))
+        IconButton(onPressed: () {}, icon: SvgIcon(Assets.icEdit))
       ],
     );
   }

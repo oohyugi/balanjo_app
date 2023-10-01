@@ -1,3 +1,5 @@
+import 'package:balanjo_app/config/route/safe_route.dart';
+import 'package:balanjo_app/config/route/screen/maps.dart';
 import 'package:balanjo_app/main.dart';
 import 'package:balanjo_app/src/features/home/component/flashsale.dart';
 import 'package:balanjo_app/src/features/home/component/foryou.dart';
@@ -8,6 +10,8 @@ import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../theme/icons.dart';
 import '../../utils/UiState.dart';
@@ -31,7 +35,18 @@ class HomeScreen extends StatelessWidget {
                 return BlocProvider(
                     create: (BuildContext context) =>
                         getIt<SavedLocationCubit>()..getAll(),
-                    child: const ModalContentAddress());
+                    child: ModalContentAddress(
+                      onTapMap: (location) {
+                        context.pop();
+                        MapsScreenRoute(
+                                latitude: location.latitude,
+                                longitude: location.longitude)
+                            .push(context);
+                      },
+                      onTapItem: () {
+                        context.pop();
+                      },
+                    ));
               },
             );
           } else {
@@ -49,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                 label: const Text("2"),
                 smallSize: 1,
                 child: SvgPicture.asset(
-                  assetNameNotif,
+                  Assets.icNotif,
                   colorFilter: ColorFilter.mode(
                       Theme.of(context).colorScheme.onBackground,
                       BlendMode.srcIn),

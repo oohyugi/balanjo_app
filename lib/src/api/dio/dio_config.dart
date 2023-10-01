@@ -17,8 +17,10 @@ Dio addInterceptors(
     {required Dio dio,
     bool isRequireAuth = true,
     Map<String, dynamic>? header}) {
+
+
   return dio
-    ..interceptors.add(CustomInterceptors(header))
+    ..interceptors.add(CustomInterceptors(header, isRequireAuth))
     ..interceptors.add(CacheInterceptor())
     ..transformer = MyTransformer();
 }
@@ -40,18 +42,23 @@ Dio geocodingInterceptors({required Dio dio}) {
 }
 
 class CustomInterceptors extends Interceptor {
-  CustomInterceptors(this.header);
+  CustomInterceptors(this.header, this.isRequiredAuth);
 
   final Map<String, dynamic>? header;
+  final bool isRequiredAuth;
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    options.headers = {
+
+    if(isRequiredAuth) {
+      options.headers = {
       "apikey":
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZoY3R5ZmR1bmpxZXlhYnNqcWFsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MDQzMDc5MiwiZXhwIjoyMDA2MDA2NzkyfQ.LDYanw9nlI1bLXnTFIkezmH65dDiiG1kZTueqmZ1vw4",
       "Authorization":
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZoY3R5ZmR1bmpxZXlhYnNqcWFsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MDQzMDc5MiwiZXhwIjoyMDA2MDA2NzkyfQ.LDYanw9nlI1bLXnTFIkezmH65dDiiG1kZTueqmZ1vw4",
     };
+
+    }
     if (header != null) {
       options.headers.addAll(header!);
     }

@@ -34,6 +34,10 @@ RouteBase get $mainScreenRoute => GoRouteData.$route(
               path: 'checkout',
               factory: $CheckoutScreenRouteExtension._fromState,
             ),
+            GoRouteData.$route(
+              path: 'maps',
+              factory: $MapsScreenRouteExtension._fromState,
+            ),
           ],
         ),
       ],
@@ -141,6 +145,30 @@ extension $CheckoutScreenRouteExtension on CheckoutScreenRoute {
 
   String get location => GoRouteData.$location(
         '/home/checkout',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $MapsScreenRouteExtension on MapsScreenRoute {
+  static MapsScreenRoute _fromState(GoRouterState state) => MapsScreenRoute(
+        latitude: double.parse(state.uri.queryParameters['latitude']!),
+        longitude: double.parse(state.uri.queryParameters['longitude']!),
+      );
+
+  String get location => GoRouteData.$location(
+        '/home/maps',
+        queryParams: {
+          'latitude': latitude.toString(),
+          'longitude': longitude.toString(),
+        },
       );
 
   void go(BuildContext context) => context.go(location);

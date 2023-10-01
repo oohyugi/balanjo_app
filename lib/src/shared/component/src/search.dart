@@ -51,7 +51,7 @@ class _SearchState extends State<Search> {
                         _controller.openView();
                       },
                       icon: SvgPicture.asset(
-                        assetNameSearch,
+                        Assets.icSearch,
                         colorFilter: ColorFilter.mode(
                             Theme.of(context).colorScheme.onBackground,
                             BlendMode.srcIn),
@@ -70,7 +70,7 @@ class _SearchState extends State<Search> {
                                     BorderRadius.all(Radius.circular(12.0)))),
                         elevation: const MaterialStatePropertyAll<double>(1),
                         leading: SvgPicture.asset(
-                          assetNameSearch,
+                          Assets.icSearch,
                           colorFilter: ColorFilter.mode(
                               Theme.of(context).colorScheme.onBackground,
                               BlendMode.srcIn),

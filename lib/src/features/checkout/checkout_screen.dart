@@ -55,7 +55,7 @@ class CheckoutScreen extends StatelessWidget {
                           builder: (context, state) {
                             return TileCard(
                               titleHeader: 'Lokasi Antar',
-                              leading: svgIcon(context, assetNamePinPoint,color: Theme.of(context).colorScheme.primary),
+                              leading: SvgIcon(Assets.icPinPoint,color: Theme.of(context).colorScheme.primary),
                               title: state.location?.title ?? "",
                               subtitle: state.location?.address ?? "",
                             );

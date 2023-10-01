@@ -40,7 +40,7 @@ class SettingScreen extends StatelessWidget {
                           thickness: 0.5,
                         ),
                         SettingInfo(
-                          assetName: assetNamePointMap,
+                          assetName: Assets.icPointMap,
                           title: "Alamat Tersimpan",
                           onTap: () {},
                         )
@@ -60,7 +60,7 @@ class SettingScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: SettingInfo(
-                            assetName: assetNameQuestion,
+                            assetName: Assets.icQuestion,
                             title: "Pusat Bantuan",
                             onTap: () {},
                           ),
@@ -71,7 +71,7 @@ class SettingScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: SettingInfo(
-                            assetName: assetNamePrivacy,
+                            assetName: Assets.icPrivacy,
                             title: "Kebijakan Privasi",
                             onTap: () {},
                           ),
@@ -82,7 +82,7 @@ class SettingScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: SettingInfo(
-                            assetName: assetNameTerm,
+                            assetName: Assets.icTerm,
                             title: "Persyaratan Layanan",
                             onTap: () {},
                           ),
@@ -93,7 +93,7 @@ class SettingScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: SettingInfo(
-                            assetName: assetNameRibbon,
+                            assetName: Assets.icRibbon,
                             title: "Tentang Aplikasi",
                             onTap: () {},
                           ),
@@ -110,7 +110,7 @@ class SettingScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: SettingInfo(
-                      assetName: assetNameLogout,
+                      assetName: Assets.icLogout,
                       title: "Keluar",
                       onTap: () {},
                     ),

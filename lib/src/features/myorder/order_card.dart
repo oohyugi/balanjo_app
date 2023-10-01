@@ -72,7 +72,7 @@ class OrderCard extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Row(
                             children: [
-                              svgIcon(context,
+                              SvgIcon(
                                   getAssetName(context, history.status),color: getStatusColor(context, history.status),width: 18,height: 18),
                               const SpaceHorizontal(size: 8),
                               Text(getTitle(context, history.status),
@@ -180,10 +180,10 @@ String getTitle(BuildContext context, HistoryStatus status) {
 
 String getAssetName(BuildContext context, HistoryStatus status) {
   return switch (status) {
-    HistoryStatus.waiting => assetNameClock,
-    HistoryStatus.progress => assetNameDelivery,
-    HistoryStatus.success => assetNameChecked,
-    HistoryStatus.cancelled => assetNameCancel,
+    HistoryStatus.waiting => Assets.icClock,
+    HistoryStatus.progress => Assets.icDelivery,
+    HistoryStatus.success => Assets.icChecked,
+    HistoryStatus.cancelled => Assets.icCancel,
   };
 }
 

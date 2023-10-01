@@ -17,8 +17,8 @@ class NavigationModel {
     list.add(NavigationModel(
         index: 0,
         name: "Beranda",
-        assetIcon: assetNameHome,
-        assetIconSelected: assetNameHomeBold));
+        assetIcon: Assets.icHome,
+        assetIconSelected: Assets.icHomeBold));
     // list.add(NavigationModel(
     //     index: 1,
     //     name: "Favorite",
@@ -28,14 +28,14 @@ class NavigationModel {
     list.add(NavigationModel(
         index: 1,
         name: "Pesanan",
-        assetIcon: assetNameBill,
-        assetIconSelected: assetNameBillBold));
+        assetIcon: Assets.icBill,
+        assetIconSelected: Assets.icBillBold));
 
     list.add(NavigationModel(
         index: 2,
         name: "Akun",
-        assetIcon: assetNameUser,
-        assetIconSelected: assetNameUserBold));
+        assetIcon: Assets.icUser,
+        assetIconSelected: Assets.icUserBold));
 
     return list;
   }

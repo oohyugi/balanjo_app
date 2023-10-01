@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
   final String title;
   final String? actionLabel;
   final VoidCallback? onTapMore;
@@ -11,7 +11,7 @@ class Header extends StatelessWidget {
       {Key? key,
       required this.title,
       this.onTapMore,
-      required this.child,
+      this.child,
       this.isShowTapMore = true,
       this.actionLabel})
       : super(key: key);
@@ -38,13 +38,17 @@ class Header extends StatelessWidget {
                 TextButton(
                     onPressed: onTapMore,
                     child: Text(actionLabel ?? "More",
-                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                            color: Theme.of(context).colorScheme.onBackground)))
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium
+                            ?.copyWith(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onBackground)))
             ],
           ),
         ),
-
-        child,
+        child ?? const SizedBox(),
       ],
     );
   }
