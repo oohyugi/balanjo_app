@@ -1,4 +1,5 @@
 import 'package:balanjo_app/src/features/collections/di/collections_module.dart';
+import 'package:balanjo_app/src/features/map/map_module.dart';
 import 'package:balanjo_app/src/features/product/di/product_module.dart';
 import 'package:balanjo_app/src/shared/bloc/bloc.dart';
 import 'package:balanjo_app/src/shared/bloc/src/cart/cart_cubit.dart';
@@ -21,6 +22,7 @@ Future<void> main() async {
   collectionsModule();
   checkoutModule();
   productModule();
+  mapModule();
   Bloc.observer = BBlocObserve();
   runApp(const MyApp());
 }
@@ -37,7 +39,7 @@ class MyApp extends StatelessWidget {
           create: (context) => getIt<CartCubit>()..fetchCart(),
         ),
         BlocProvider(
-          create: (context) => getIt<LocationCubit>()..getLocation(),
+          create: (context) => getIt<LocationCubit>()..getLastLocation(),
         )
       ],
       child: MaterialApp.router(

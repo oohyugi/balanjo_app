@@ -35,29 +35,17 @@ class CheckoutScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SpaceHorizontal(size: 16),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: TileCard(
-                            titleHeader: "Penerima",
-                            title: "John Doe",
-                            subtitle: "08123455757",
-                            leading: Container(
-                              width: 24,
-                              height: 24,
-                              decoration: const BoxDecoration(
-                                  shape: BoxShape.circle, color: Colors.grey),
-                            )),
-                      ),
-                      const SpaceVertical(size: 8),
+
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: BlocBuilder<LocationCubit, LocationState>(
                           builder: (context, state) {
                             return TileCard(
-                              titleHeader: 'Lokasi Antar',
-                              leading: SvgIcon(Assets.icPinPoint,color: Theme.of(context).colorScheme.primary),
-                              title: state.location?.title ?? "",
-                              subtitle: state.location?.address ?? "",
+                              titleHeader: 'Lokasi pengantaran',
+                              leading: SvgIcon(Assets.icPinPoint,
+                                  color: Theme.of(context).colorScheme.primary),
+                              title: state.selectedLocation?.title ?? "",
+                              subtitle: state.selectedLocation?.address ?? "",
                             );
                           },
                         ),
@@ -209,9 +197,19 @@ class TileCard extends StatelessWidget {
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium
-                                      ?.copyWith(fontWeight: FontWeight.bold,color: Theme.of(context).colorScheme.onSurface)),
+                                      ?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurface)),
                               Text(subtitle,
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface)),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurface)),
                             ],
                           ),
                         ),

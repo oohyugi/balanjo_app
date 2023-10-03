@@ -1,7 +1,13 @@
 import 'dart:async';
 
+import 'package:balanjo_app/src/features/map/bloc/map_cubit.dart';
+import 'package:balanjo_app/src/shared/bloc/bloc.dart';
 import 'package:balanjo_app/src/shared/component/component.dart';
+import 'package:balanjo_app/src/utils/log.dart';
+import 'package:balanjo_app/theme/style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -28,6 +34,11 @@ class MapScreenState extends State<MapScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BaseLayout(
       isShowFloatingCart: false,
@@ -51,13 +62,89 @@ class MapScreenState extends State<MapScreen> {
                   },
                   onCameraIdle: () {
                     // fetch geocoding
+                    context
+                        .read<MapCubit>()
+                        .fetchAddress(initial: widget.initialLocation);
+                  },
+                  onCameraMove: (pos) {
+                    context.read<MapCubit>().onCameraMove(pos.target);
                   },
                 ),
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 200,
-                child: const Text("Location"),
+              SafeArea(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 200,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: BlocBuilder<MapCubit, MapState>(
+                      builder: (context, state) {
+                        if (state is AddressLoaded) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                state.locationModel.title ?? "",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface,
+                                        fontWeight: FontWeight.bold),
+                              ),
+                              const SpaceVertical(size: 12),
+                              Expanded(
+                                child: Text(state.locationModel.address ?? "",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurface)),
+                              ),
+                              const SpaceVertical(size: 24),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                child: FilledButton(
+                                  style: filledLarge(context),
+                                  onPressed: () {
+                                    context
+                                        .read<LocationCubit>()
+                                        .setSelectedLocation(
+                                            state.locationModel);
+                                    context.pop();
+                                  },
+                                  child: const Text("Konfirmasi"),
+                                ),
+                              )
+                            ],
+                          );
+                        } else if (state is AddressLoading) {
+                          return ShimmerDefault(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const RoundedPlaceHolder(width: 80, height: 18),
+                                const SpaceVertical(size: 16),
+                                RoundedPlaceHolder(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 15),
+                                const SpaceVertical(size: 4),
+                                RoundedPlaceHolder(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 15),
+                              ],
+                            ),
+                          );
+                        }
+                        return Container();
+                      },
+                    ),
+                  ),
+                ),
               )
             ],
           ),
@@ -80,7 +167,7 @@ class MapScreenState extends State<MapScreen> {
                         ),
                       )))),
           Padding(
-            padding: const EdgeInsets.only(bottom: 214),
+            padding: const EdgeInsets.only(bottom: 246),
             child: Center(
               child: Icon(
                 Icons.location_on_sharp,
@@ -110,13 +197,15 @@ class MapScreenState extends State<MapScreen> {
 
   _goToCurrentLocation() async {
     final GoogleMapController controller = await _controller.future;
-    await controller.animateCamera(CameraUpdate.newCameraPosition(
-      CameraPosition(
-        bearing: 0,
-        target: LatLng(currentLocation?.latitude ?? 0.0,
-            currentLocation?.longitude ?? 0.0),
-        zoom: zoom,
-      ),
-    ));
+    if (currentLocation != null) {
+      await controller.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(
+          bearing: 0,
+          target: LatLng(currentLocation?.latitude ?? 0.0,
+              currentLocation?.longitude ?? 0.0),
+          zoom: zoom,
+        ),
+      ));
+    }
   }
 }

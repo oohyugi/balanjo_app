@@ -7,7 +7,7 @@ const defaultSelectProduct =
 class ProductService {
   Future<Response> fetchProductsByCategory(int categoryId, String range) async {
     return addInterceptors(
-            dio: createDio(), isRequireAuth: false, header: {"Range": range})
+            dio: createDio(), isRequireAuth: true, header: {"Range": range})
         .get("product?category_id=eq.$categoryId&$defaultSelectProduct");
   }
 
@@ -17,17 +17,17 @@ class ProductService {
         .replaceAll("[", "")
         .replaceAll("]", "")
         .replaceAll(" ", "");
-    return addInterceptors(dio: createDio(), isRequireAuth: false)
+    return addInterceptors(dio: createDio(), isRequireAuth: true)
         .get("product?id=in.($productId)&$defaultSelectProduct");
   }
 
   Future<Response> fetchProductsBySection(int sectionId) async {
-    return addInterceptors(dio: createDio(), isRequireAuth: false).get(
+    return addInterceptors(dio: createDio(), isRequireAuth: true).get(
         "product?section_id=eq.$sectionId&$defaultSelectProduct,section(id,name,start_date,end_date)");
   }
 
   Future<Response> fetchCategories() async {
-    return addInterceptors(dio: createDio(), isRequireAuth: false)
+    return addInterceptors(dio: createDio(), isRequireAuth: true)
         .get("category?select=id,name");
   }
 }

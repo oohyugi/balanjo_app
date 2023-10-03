@@ -6,7 +6,7 @@ const defaultCategoryPath =
 
 class CategoryService {
   Future<Response> fetchCategories() async {
-    return addInterceptors(dio: createDio(), isRequireAuth: false)
+    return addInterceptors(dio: createDio(), isRequireAuth: true)
         .get(defaultCategoryPath);
   }
 }

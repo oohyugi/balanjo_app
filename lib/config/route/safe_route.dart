@@ -14,6 +14,7 @@ part 'safe_route.g.dart';
 final safeRoute = GoRouter(
   routes: $appRoutes,
   initialLocation: "/",
+
   errorBuilder: (context, state) {
     return const Center(
       child: Text("Not Found"),

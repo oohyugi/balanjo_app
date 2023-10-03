@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:balanjo_app/config/env.dart';
 import 'package:balanjo_app/src/api/dio/dio_config.dart';
 import 'package:balanjo_app/src/shared/data/local/dao/location_dao.dart';
@@ -7,6 +9,7 @@ import 'package:balanjo_app/src/utils/log.dart';
 import 'package:dio/dio.dart';
 
 import '../../network/response/geocoding_response.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class ILocationRepository {
   Future<GoogleGeocodingResponse> search(
@@ -20,6 +23,8 @@ abstract class ILocationRepository {
   Future<GoogleGeocodingResponse> reverse(String latlng);
 
   Future<List<LocationModel>> getSavedLocations();
+
+  Future<LocationModel?> getSelectedLocation();
 
   Future<void> savedLocation(LocationModel location);
 }
@@ -61,6 +66,7 @@ class LocationRepository implements ILocationRepository {
   ) async {
     final Map<String, dynamic> query = <String, dynamic>{
       'latlng': latlng,
+      'location_type':'ROOFTOP',
       'key': Env.googleApiKey
     };
 
@@ -93,10 +99,46 @@ class LocationRepository implements ILocationRepository {
   @override
   Future<void> savedLocation(LocationModel location) async {
     await locationLocalDataSource.save(LocationDao(
-        id: location.address.hashCode,
         latitude: location.latitude,
         longitude: location.longitude,
         title: location.title ?? "",
         address: location.address ?? ""));
+  }
+
+  @override
+  Future<LocationModel?> getSelectedLocation() async {
+    // final titleSelected = await getSelectedLocationTitle();
+    // if (titleSelected != null) {
+    //   final result =
+    //       await locationLocalDataSource.getSelectedLocation(titleSelected);
+    //   if (result == null) {
+    //     return null;
+    //   } else {
+    //     return LocationModel(
+    //         latitude: result.latitude,
+    //         longitude: result.longitude,
+    //         address: result.address,
+    //         title: result.title);
+    //   }
+    // } else {
+    //   return null;
+    // }
+  }
+
+  Future<LocationModel?> getLastLocation() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final location = prefs.getString('location');
+    if (location != null) {
+      logMessage("last loc ${json.decode(location)}");
+      return LocationModel.fromJson(json.decode(location));
+    } else {
+      return null;
+    }
+  }
+
+  Future<void> saveLastLocation(LocationModel location) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('location', json.encode(location));
   }
 }

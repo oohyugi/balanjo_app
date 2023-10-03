@@ -1,8 +1,6 @@
 import 'package:balanjo_app/config/isar_helper.dart';
 import 'package:balanjo_app/src/shared/data/local/dao/location_dao.dart';
 import 'package:isar/isar.dart';
-import '../../../../utils/log.dart';
-import '../dao/cart_dao.dart';
 
 class LocationLocalDataSource {
   final IsarHelper _isarDb;
@@ -19,5 +17,11 @@ class LocationLocalDataSource {
     var results = isar.writeTxnSync(() => isar.locationDaos.where().findAllSync());
 
     return results;
+  }
+
+  Future<LocationDao?> getSelectedLocation(String title) async {
+    final isar = await _isarDb.db;
+    return isar.locationDaos.filter().titleEqualTo(title).findFirstSync();
+
   }
 }

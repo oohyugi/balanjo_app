@@ -45,7 +45,7 @@ class TopAddress extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        state.location?.address ?? "",
+                        state.selectedLocation?.address ?? state.location?.address??"",
                         style: Theme.of(context)
                             .textTheme
                             .labelMedium

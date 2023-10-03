@@ -52,6 +52,7 @@ dependencies:
   location: ^5.0.0
   google_maps_flutter: ^2.5.0
   envied: ^0.3.0+3
+  shared_preferences: ^2.2.1
 
 dev_dependencies:
   flutter_test:

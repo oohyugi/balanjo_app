@@ -83,11 +83,11 @@ LocationDao _locationDaoDeserialize(
 ) {
   final object = LocationDao(
     address: reader.readString(offsets[0]),
-    id: id,
     latitude: reader.readDouble(offsets[1]),
     longitude: reader.readDouble(offsets[2]),
     title: reader.readString(offsets[3]),
   );
+  object.id = id;
   return object;
 }
 

@@ -9,12 +9,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class ModalContentAddress extends StatelessWidget {
+class ModalContentAddress extends StatefulWidget {
   const ModalContentAddress(
       {super.key, required this.onTapMap, required this.onTapItem});
 
   final Function(LocationModel) onTapMap;
-  final VoidCallback onTapItem;
+  final Function(LocationModel?) onTapItem;
+
+  @override
+  State<ModalContentAddress> createState() => _ModalContentAddressState();
+}
+
+class _ModalContentAddressState extends State<ModalContentAddress> {
+  @override
+  void initState() {
+    context.read<LocationCubit>().getLastLocation();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +52,12 @@ class ModalContentAddress extends StatelessWidget {
                     return OutlinedButton.icon(
                         style: outLineSmall(),
                         onPressed: () {
-                          if (state.uiState.isSuccess && state.location!=null) {
-                            onTapMap(state.location!);
+                          if (state.uiState.isSuccess &&
+                              state.selectedLocation != null) {
+                            widget.onTapMap(state.selectedLocation!);
                           } else {
-                            onTapMap(const LocationModel(latitude:-1.6305338, longitude: 103.605292));
+                            widget.onTapMap(const LocationModel(
+                                latitude: -1.6305338, longitude: 103.605292));
                           }
                         },
                         icon: const SvgIcon(Assets.icPinPoint,
@@ -59,11 +72,17 @@ class ModalContentAddress extends StatelessWidget {
             ),
             BlocBuilder<LocationCubit, LocationState>(
                 builder: (context, state) {
+              if (state.location == null) {
+                return const ShimmerDefault(
+                    child: RoundedPlaceHolder(width: 100, height: 16));
+              }
               return LocationTile(
                 assetName: Assets.icGps,
                 title: "Lokasi saat ini",
                 subtitle: state.location?.address ?? "",
-                onTap: onTapItem,
+                onTap: () {
+                  widget.onTapItem(state.location);
+                },
               );
             }),
             Flexible(
@@ -75,7 +94,9 @@ class ModalContentAddress extends StatelessWidget {
                             title: state.locations[i].title ?? "",
                             subtitle: state.locations[i].address ?? "",
                             assetName: Assets.icHistory,
-                            onTap: onTapItem,
+                            onTap: () {
+                              widget.onTapItem(state.locations[i]);
+                            },
                           ),
                       separatorBuilder: (context, i) => const Padding(
                             padding: EdgeInsets.symmetric(vertical: 8),

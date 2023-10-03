@@ -4,7 +4,7 @@ part 'location_dao.g.dart';
 
 @collection
 class LocationDao {
-  Id id;
+  Id id = Isar.autoIncrement;
 
   late double latitude;
   late double longitude;
@@ -12,7 +12,7 @@ class LocationDao {
   late String title;
 
   LocationDao(
-      {required this.id,
+      {
       required this.latitude,
       required this.longitude,
       required this.title,

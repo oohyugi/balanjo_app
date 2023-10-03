@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../theme/icons.dart';
 import '../../utils/UiState.dart';
@@ -26,32 +25,31 @@ class HomeScreen extends StatelessWidget {
     return BaseLayout(
       title: TopAddress(
         onTap: (SimpleUiState state) {
-          if (state.isSuccess) {
-            showModalBottomSheet<void>(
-              context: context,
-              enableDrag: true,
-              showDragHandle: true,
-              builder: (BuildContext context) {
-                return BlocProvider(
-                    create: (BuildContext context) =>
-                        getIt<SavedLocationCubit>()..getAll(),
-                    child: ModalContentAddress(
-                      onTapMap: (location) {
-                        context.pop();
-                        MapsScreenRoute(
-                                latitude: location.latitude,
-                                longitude: location.longitude)
-                            .push(context);
-                      },
-                      onTapItem: () {
-                        context.pop();
-                      },
-                    ));
-              },
-            );
-          } else {
-            context.read<LocationCubit>().getLocation();
-          }
+          showModalBottomSheet<void>(
+            context: context,
+            enableDrag: true,
+            showDragHandle: true,
+            builder: (BuildContext context) {
+              return BlocProvider(
+                  create: (BuildContext context) =>
+                      getIt<SavedLocationCubit>()..getAll(),
+                  child: ModalContentAddress(
+                    onTapMap: (location) {
+                      context.pop();
+                      MapsScreenRoute(
+                              latitude: location.latitude,
+                              longitude: location.longitude)
+                          .push(context);
+                    },
+                    onTapItem: (location) {
+                      context.pop();
+                      context
+                          .read<LocationCubit>()
+                          .setSelectedLocation(location);
+                    },
+                  ));
+            },
+          );
         },
       ),
       actions: [

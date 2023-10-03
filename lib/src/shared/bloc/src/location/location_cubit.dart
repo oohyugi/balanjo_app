@@ -15,41 +15,62 @@ class LocationCubit extends Cubit<LocationState> {
 
   final LocationRepository locationRepository;
 
-  void getLocation() async {
-    try {
-      final allLocations = await locationRepository.getSavedLocations();
-      if (allLocations.isNotEmpty) {
-        emit(LocationState.success(location: allLocations.last));
-      } else {
-        _getLocation().then((value) async {
-          final isAlreadyInLocal = allLocations.any((element) =>
-              element.latitude == value?.latitude &&
-              element.longitude == value?.longitude);
+  LocationModel? _selectedLocation;
+  LocationModel? _currentLocation;
+  LocationData? _locationData;
+  Location location = Location();
 
-          if (!isAlreadyInLocal && value != null) {
-            final result = await locationRepository
-                .reverse("${value.latitude},${value.longitude}");
-            if (result.results.isEmpty) {
-              emit(const LocationState.failure());
-            } else {
-              final address = result.results.firstOrNull?.formattedAddress;
-              final location = LocationModel(
-                  latitude: value.latitude ?? 0.0,
-                  longitude: value.longitude ?? 0.0,
-                  title: address?.substring(0,address.indexOf(",")),
-                  address: result.results.firstOrNull?.formattedAddress);
-              emit(const LocationState.initial());
-              locationRepository.savedLocation(location);
-              emit(LocationState.success(location: location));
-            }
-          } else {
-            emit(const LocationState.failure());
-          }
-        });
-      }
-    } catch (e) {
-      emit(const LocationState.failure());
+  // runtime when user change location
+  void setSelectedLocation(LocationModel? location) async {
+    _selectedLocation = location;
+    getSelectedLocation();
+  }
+
+  void getSelectedLocation() async {
+    if (_selectedLocation == null) {
+      // getCurrentLocation
+      getLocation();
+    } else {
+      emit(LocationState.success(
+          selectedLocation: _selectedLocation, location: _currentLocation));
     }
+  }
+
+  void getLastLocation() async {
+    final lastLocation = await locationRepository.getLastLocation();
+    if (lastLocation==null) {
+      getLocation();
+    } else {
+      emit(LocationState.success(
+          location: lastLocation,
+          selectedLocation: _selectedLocation ?? lastLocation));
+    }
+  }
+
+  // get location
+  void getLocation() async {
+    _getLocation().then((value) async {
+      final result = await locationRepository
+          .reverse("${value?.latitude},${value?.longitude}");
+
+      if (result.results.isEmpty) {
+        emit(const LocationState.failure());
+      } else {
+        final location = LocationModel(
+          latitude: value?.latitude ?? 0.0,
+          longitude: value?.longitude ?? 0.0,
+          title: result
+              .results.firstOrNull?.addressComponents.firstOrNull?.longName,
+          address: result.results.firstOrNull?.formattedAddress,
+        );
+
+        //save last location
+        locationRepository.saveLastLocation(location);
+
+        emit(LocationState.success(
+            location: location, selectedLocation: _selectedLocation));
+      }
+    });
   }
 
   void search(String address) {
@@ -58,32 +79,29 @@ class LocationCubit extends Cubit<LocationState> {
       // emit(LocationState.success(location: value));
     });
   }
-}
 
-Future<LocationData?> _getLocation() async {
-  Location location = Location();
-  LocationData locationData;
+  Future<LocationData?> _getLocation() async {
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
 
-  bool serviceEnabled;
-  PermissionStatus permissionGranted;
-
-  serviceEnabled = await location.serviceEnabled();
-  if (!serviceEnabled) {
-    serviceEnabled = await location.requestService();
+    serviceEnabled = await location.serviceEnabled();
     if (!serviceEnabled) {
-      return null;
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
+        return null;
+      }
     }
-  }
 
-  permissionGranted = await location.hasPermission();
-  if (permissionGranted == PermissionStatus.denied) {
-    permissionGranted = await location.requestPermission();
-    if (permissionGranted != PermissionStatus.granted) {
-      return null;
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await location.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
+        return null;
+      }
     }
+
+    _locationData = await location.getLocation();
+
+    return _locationData;
   }
-
-  locationData = await location.getLocation();
-
-  return locationData;
 }
