@@ -1,13 +1,11 @@
 import 'package:balanjo_app/src/shared/bloc/bloc.dart';
 import 'package:balanjo_app/src/shared/component/component.dart';
-import 'package:balanjo_app/src/shared/component/src/header.dart';
 import 'package:balanjo_app/src/shared/model/model.dart';
 import 'package:balanjo_app/src/utils/UiState.dart';
-import 'package:balanjo_app/theme/icons.dart';
+import 'package:balanjo_app/res/icons.dart';
 import 'package:balanjo_app/theme/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ModalContentAddress extends StatefulWidget {
   const ModalContentAddress(
@@ -23,7 +21,7 @@ class ModalContentAddress extends StatefulWidget {
 class _ModalContentAddressState extends State<ModalContentAddress> {
   @override
   void initState() {
-    context.read<LocationCubit>().getLastLocation();
+    context.read<LocationCubit>().getLocation();
     super.initState();
   }
 
@@ -72,10 +70,6 @@ class _ModalContentAddressState extends State<ModalContentAddress> {
             ),
             BlocBuilder<LocationCubit, LocationState>(
                 builder: (context, state) {
-              if (state.location == null) {
-                return const ShimmerDefault(
-                    child: RoundedPlaceHolder(width: 100, height: 16));
-              }
               return LocationTile(
                 assetName: Assets.icGps,
                 title: "Lokasi saat ini",
@@ -152,10 +146,21 @@ class LocationTile extends StatelessWidget {
           title,
           style: Theme.of(context).textTheme.titleMedium,
         ),
-        subtitle: Text(
-          subtitle,
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
+        subtitle: subtitle.isEmpty
+            ? ShimmerDefault(
+                child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RoundedPlaceHolder(
+                      width: MediaQuery.of(context).size.width, height: 12),
+                  const SpaceVertical(size: 4),
+                  const RoundedPlaceHolder(width: 100, height: 12),
+                ],
+              ))
+            : Text(
+                subtitle,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
       ),
     );
   }

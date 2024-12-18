@@ -1,7 +1,7 @@
 import 'package:balanjo_app/src/features/setting/presentation/widget/login_card.dart';
 import 'package:balanjo_app/src/features/setting/presentation/widget/setting_info.dart';
 import 'package:balanjo_app/src/shared/component/component.dart';
-import 'package:balanjo_app/theme/icons.dart';
+import 'package:balanjo_app/res/icons.dart';
 import 'package:flutter/material.dart';
 
 import 'widget/profile_card.dart';

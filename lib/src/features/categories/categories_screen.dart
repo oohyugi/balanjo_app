@@ -22,7 +22,7 @@ class CategoriesScreen extends StatelessWidget {
                 cacheExtent: state.categories.length.toDouble(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
-                    childAspectRatio: 0.79,
+                    childAspectRatio: 0.76,
                     mainAxisSpacing: 2,
                     crossAxisSpacing: 2
                 ),

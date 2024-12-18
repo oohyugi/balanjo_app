@@ -1,3 +1,4 @@
+import 'package:balanjo_app/config/route/screen/transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -14,17 +15,22 @@ class CollectionsScreenRoute extends GoRouteData {
   const CollectionsScreenRoute({required this.categoryId});
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => getIt<CollectionsCubit>(),
+  buildPage(BuildContext context, GoRouterState state) =>
+      CustomTransitionPage<void>(
+          key: state.pageKey,
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => getIt<CollectionsCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => getIt<CategoriesCubit>()..fetchCategories(),
+              ),
+            ],
+            child: CollectionsScreen(
+              id: categoryId,
+            ),
           ),
-          BlocProvider(
-            create: (context) => getIt<CategoriesCubit>()..fetchCategories(),
-          ),
-        ],
-        child: CollectionsScreen(
-          id: categoryId,
-        ),
-      );
+          transitionsBuilder: (context, animation, animation2, child) =>
+              CustomTransitionBuilder(animation: animation, child: child));
 }

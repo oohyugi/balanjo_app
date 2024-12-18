@@ -28,8 +28,7 @@ class LocationCubit extends Cubit<LocationState> {
 
   void getSelectedLocation() async {
     if (_selectedLocation == null) {
-      // getCurrentLocation
-      getLocation();
+      getLastLocation();
     } else {
       emit(LocationState.success(
           selectedLocation: _selectedLocation, location: _currentLocation));

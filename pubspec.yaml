@@ -53,6 +53,9 @@ dependencies:
   google_maps_flutter: ^2.5.0
   envied: ^0.3.0+3
   shared_preferences: ^2.2.1
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.15.3
+  google_sign_in: ^6.1.6
 
 dev_dependencies:
   flutter_test:
@@ -114,6 +117,9 @@ flutter:
     - assets/icons/ic_user_bold.svg
     - assets/icons/ic_gps.svg
     - assets/icons/ic_history.svg
+    - assets/icons/ic_marker.svg
+    - assets/icons/ic_google.svg
+    - assets/icons/ic_login_google.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

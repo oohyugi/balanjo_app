@@ -1,3 +1,4 @@
+import 'package:balanjo_app/res/strings.dart';
 import 'package:balanjo_app/src/features/collections/di/collections_module.dart';
 import 'package:balanjo_app/src/features/map/map_module.dart';
 import 'package:balanjo_app/src/features/product/di/product_module.dart';
@@ -13,6 +14,8 @@ import 'config/bloc_observer.dart';
 import 'config/route/safe_route.dart';
 import 'src/features/checkout/di/module.dart';
 import 'theme/color_schemes.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 final getIt = GetIt.instance;
 
@@ -25,6 +28,9 @@ Future<void> main() async {
   mapModule();
   Bloc.observer = BBlocObserve();
   runApp(const MyApp());
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -44,7 +50,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
-        title: 'Balanjo',
+        title: Strings.appTitle,
         themeMode: ThemeMode.system,
         theme: ThemeData(
           useMaterial3: true,

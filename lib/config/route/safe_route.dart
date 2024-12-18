@@ -1,3 +1,4 @@
+import 'package:balanjo_app/config/route/screen/login.dart';
 import 'package:balanjo_app/config/route/screen/maps.dart';
 import 'package:balanjo_app/src/features/main_screen.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,9 @@ final safeRoute = GoRouter(
   },
 );
 
+
+// define your route here
+// run "dart run build_runner build" in the terminal
 @TypedGoRoute<MainScreenRoute>(path: '/', routes: [
   TypedGoRoute<HomeScreenRoute>(path: 'home', routes: [
     TypedGoRoute<CategoriesScreenRoute>(path: 'categories'),
@@ -29,6 +33,7 @@ final safeRoute = GoRouter(
     TypedGoRoute<ProductsScreenRoute>(path: 'products/:sectionId'),
     TypedGoRoute<CheckoutScreenRoute>(path: 'checkout'),
     TypedGoRoute<MapsScreenRoute>(path: 'maps'),
+    TypedGoRoute<LoginScreenRoute>(path: 'login'),
   ]),
 ])
 @immutable

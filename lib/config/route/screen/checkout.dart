@@ -1,3 +1,4 @@
+import 'package:balanjo_app/config/route/screen/transition.dart';
 import 'package:balanjo_app/src/features/checkout/checkout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,15 +13,20 @@ class CheckoutScreenRoute extends GoRouteData {
   const CheckoutScreenRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => MultiBlocProvider(
-    providers: [
-      BlocProvider(
-        create: (context) => getIt<SummaryCubit>(),
-      ),
-      BlocProvider(
-        create: (context) => getIt<ItemCheckoutCubit>()..fetchItemsOrder(),
-      ),
-    ],
-    child: const CheckoutScreen(),
-  );
+  buildPage(BuildContext context, GoRouterState state) =>
+      CustomTransitionPage<void>(
+          key: state.pageKey,
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => getIt<SummaryCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => getIt<ItemCheckoutCubit>()..fetchItemsOrder(),
+              ),
+            ],
+            child: const CheckoutScreen(),
+          ),
+          transitionsBuilder: (context, animation, animation2, child) =>
+              CustomTransitionBuilder(animation: animation, child: child));
 }

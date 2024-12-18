@@ -38,6 +38,10 @@ RouteBase get $mainScreenRoute => GoRouteData.$route(
               path: 'maps',
               factory: $MapsScreenRouteExtension._fromState,
             ),
+            GoRouteData.$route(
+              path: 'login',
+              factory: $LoginScreenRouteExtension._fromState,
+            ),
           ],
         ),
       ],
@@ -169,6 +173,24 @@ extension $MapsScreenRouteExtension on MapsScreenRoute {
           'latitude': latitude.toString(),
           'longitude': longitude.toString(),
         },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LoginScreenRouteExtension on LoginScreenRoute {
+  static LoginScreenRoute _fromState(GoRouterState state) =>
+      const LoginScreenRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/login',
       );
 
   void go(BuildContext context) => context.go(location);

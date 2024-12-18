@@ -20,16 +20,13 @@ class ItemCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: CachedNetworkImage(
-              imageUrl: product.imageUrl,
-              height: 70,
-              width: 70,
-              fit: BoxFit.cover,
-            ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: CachedNetworkImage(
+            imageUrl: product.imageUrl,
+            height: 70,
+            width: 70,
+            fit: BoxFit.cover,
           ),
         ),
         const SpaceHorizontal(size: 16),

@@ -1,6 +1,6 @@
 import 'package:balanjo_app/src/utils/UiState.dart';
 import 'package:balanjo_app/src/utils/extensions/double_ext.dart';
-import 'package:balanjo_app/theme/icons.dart';
+import 'package:balanjo_app/res/icons.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../shared/component/component.dart';

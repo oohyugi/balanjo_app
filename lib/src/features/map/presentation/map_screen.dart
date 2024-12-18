@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:balanjo_app/src/features/map/bloc/map_cubit.dart';
 import 'package:balanjo_app/src/shared/bloc/bloc.dart';
 import 'package:balanjo_app/src/shared/component/component.dart';
-import 'package:balanjo_app/src/utils/log.dart';
+import 'package:balanjo_app/res/icons.dart';
 import 'package:balanjo_app/theme/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,22 +20,20 @@ class MapScreen extends StatefulWidget {
   State<MapScreen> createState() => MapScreenState();
 }
 
-class MapScreenState extends State<MapScreen> {
+class MapScreenState extends State<MapScreen>
+    with SingleTickerProviderStateMixin {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
   double zoom = 19.0;
   LocationData? currentLocation;
+  double scale = 0.0;
+  bool isAnimateMarker = false;
 
   @override
   void initState() {
     _currentLocation();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -65,9 +63,15 @@ class MapScreenState extends State<MapScreen> {
                     context
                         .read<MapCubit>()
                         .fetchAddress(initial: widget.initialLocation);
+                    setState(() {
+                      isAnimateMarker = false;
+                    });
                   },
                   onCameraMove: (pos) {
                     context.read<MapCubit>().onCameraMove(pos.target);
+                    setState(() {
+                      isAnimateMarker = true;
+                    });
                   },
                 ),
               ),
@@ -151,47 +155,55 @@ class MapScreenState extends State<MapScreen> {
           Positioned(
               bottom: 216,
               right: 16,
-              child: IconButton(
+              child: IconButton.filledTonal(
+                style: IconButton.styleFrom(),
                   onPressed: () {
                     _goToCurrentLocation();
                   },
-                  icon: Container(
+                  icon: const Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Icon(
+                      Icons.my_location_sharp,
+                      color: Colors.blue,
+                    ),
+                  ))),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 242),
+            child: Center(
+              child: AnimatedContainer(
+                
+                duration: const Duration(milliseconds: 200),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SvgIcon(
+                      Assets.icMarker,
+                      width: 46,
+                      height: 46,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    SpaceVertical(size: isAnimateMarker?14:0),
+                    Container(
+                      width: 12,
+                      height: 12,
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Theme.of(context).colorScheme.secondary),
-                      child: Padding(
-                        padding: const EdgeInsets.all(14.0),
-                        child: Icon(
-                          Icons.my_location_sharp,
-                          color: Theme.of(context).colorScheme.onSecondary,
-                        ),
-                      )))),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 246),
-            child: Center(
-              child: Icon(
-                Icons.location_on_sharp,
-                color: Colors.red.shade800,
-                size: 46,
+                          color: Theme.of(context).colorScheme.primary),
+                    )
+                  ],
+                ),
               ),
             ),
           )
         ],
       ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: _goToTheLake,
-      //   label: const Text('To the lake!'),
-      //   icon: const Icon(Icons.directions_boat),
-      // ),
     );
   }
 
   void _currentLocation() async {
     var location = Location();
     try {
-      location.onLocationChanged.listen((event) {
-        currentLocation = event;
-      });
+      currentLocation = await location.getLocation();
     } on Exception {}
   }
 

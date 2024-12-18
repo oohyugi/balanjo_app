@@ -8,7 +8,7 @@
 PRODUCT_NAME = balanjo_app
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.balanjo.balanjoApp
+PRODUCT_BUNDLE_IDENTIFIER = com.balanjo.app
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2023 com.balanjo. All rights reserved.

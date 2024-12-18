@@ -1,4 +1,4 @@
-import 'package:balanjo_app/theme/icons.dart';
+import 'package:balanjo_app/res/icons.dart';
 
 class NavigationModel {
   final int index;

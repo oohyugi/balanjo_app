@@ -3,7 +3,7 @@ import 'package:balanjo_app/config/route/safe_route.dart';
 import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:balanjo_app/src/utils/UiState.dart';
 import 'package:balanjo_app/src/utils/extensions/double_ext.dart';
-import 'package:balanjo_app/theme/icons.dart';
+import 'package:balanjo_app/res/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';

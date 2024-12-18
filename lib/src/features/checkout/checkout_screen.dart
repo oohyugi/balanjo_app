@@ -1,7 +1,8 @@
 import 'package:balanjo_app/src/shared/bloc/bloc.dart';
 import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:balanjo_app/src/utils/UiState.dart';
-import 'package:balanjo_app/theme/icons.dart';
+import 'package:balanjo_app/src/utils/log.dart';
+import 'package:balanjo_app/res/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +22,7 @@ class CheckoutScreen extends StatelessWidget {
       body: BlocListener<CartCubit, CartState>(
           listener: (context, state) {
             context.read<ItemCheckoutCubit>().fetchItemsOrder();
-            // context.read<LocationCubit>().getLocation();
+            context.read<LocationCubit>().getSelectedLocation();
             if (state.uiState.isSuccess && state.cart?.totalItem == 0) {
               context.pop();
             }
@@ -40,12 +41,13 @@ class CheckoutScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: BlocBuilder<LocationCubit, LocationState>(
                           builder: (context, state) {
+                            logDebug(tag: "tai",message: state.selectedLocation);
                             return TileCard(
-                              titleHeader: 'Lokasi pengantaran',
+                              titleHeader: 'Lokasi pengiriman',
                               leading: SvgIcon(Assets.icPinPoint,
-                                  color: Theme.of(context).colorScheme.primary),
-                              title: state.selectedLocation?.title ?? "",
-                              subtitle: state.selectedLocation?.address ?? "",
+                                  color: Theme.of(context).colorScheme.primary,width: 18,height: 18,),
+                              title: state.selectedLocation?.title ?? state.location?.title??"",
+                              subtitle: state.selectedLocation?.address ?? state.location?.address ?? "",
                             );
                           },
                         ),

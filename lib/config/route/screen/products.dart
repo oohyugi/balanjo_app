@@ -1,3 +1,4 @@
+import 'package:balanjo_app/config/route/screen/transition.dart';
 import 'package:balanjo_app/src/features/product/bloc/product_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,8 +15,13 @@ class ProductsScreenRoute extends GoRouteData {
   const ProductsScreenRoute({required this.sectionId, required this.title});
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => BlocProvider(
-        create: (context) => getIt<ProductCubit>()..fetchProduct(sectionId),
-        child: ProductScreen(sectionId: sectionId, title: title),
-      );
+  buildPage(BuildContext context, GoRouterState state) =>
+      CustomTransitionPage<void>(
+          key: state.pageKey,
+          child: BlocProvider(
+            create: (context) => getIt<ProductCubit>()..fetchProduct(sectionId),
+            child: ProductScreen(sectionId: sectionId, title: title),
+          ),
+          transitionsBuilder: (context, animation, animation2, child) =>
+              CustomTransitionBuilder(animation: animation, child: child));
 }

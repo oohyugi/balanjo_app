@@ -13,6 +13,7 @@ Dio createDio({baseUrl = url}) {
   return dio;
 }
 
+
 Dio addInterceptors(
     {required Dio dio,
     bool isRequireAuth = true,
@@ -36,7 +37,7 @@ extension DioExt on Dio {
 
 Dio geocodingInterceptors({required Dio dio}) {
   return dio
-    ..interceptors.add(GeocodingInterceptor("AIzaSyDwaDc-GF8gS5cDPFFUjSOJVMpE3Y9EVBI"))
+    ..interceptors.add(GeocodingInterceptor("xxx"))
     ..interceptors.add(CacheInterceptor())
     ..transformer = MyTransformer();
 }
@@ -53,9 +54,9 @@ class CustomInterceptors extends Interceptor {
     if(isRequiredAuth) {
       options.headers = {
       "apikey":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZoY3R5ZmR1bmpxZXlhYnNqcWFsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MDQzMDc5MiwiZXhwIjoyMDA2MDA2NzkyfQ.LDYanw9nlI1bLXnTFIkezmH65dDiiG1kZTueqmZ1vw4",
+          "xxx",
       "Authorization":
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZoY3R5ZmR1bmpxZXlhYnNqcWFsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MDQzMDc5MiwiZXhwIjoyMDA2MDA2NzkyfQ.LDYanw9nlI1bLXnTFIkezmH65dDiiG1kZTueqmZ1vw4",
+          "Bearer xx",
     };
 
     }

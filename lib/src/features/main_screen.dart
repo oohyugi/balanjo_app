@@ -73,15 +73,10 @@ class _MainScreenState extends State<MainScreen> {
           ),
           body: IndexedStack(
             index: _currentPageIndex,
-            children: [
-              const HomeScreen(),
-              // Container(
-              //   color: Colors.green,
-              //   alignment: Alignment.center,
-              //   child: const FavoriteScreen(),
-              // ),
-              const MyOrderScreen(),
-              const SettingScreen()
+            children: const [
+              HomeScreen(),
+              MyOrderScreen(),
+              SettingScreen()
             ],
           )),
     );

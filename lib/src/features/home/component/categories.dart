@@ -26,7 +26,7 @@ class CategoryList extends StatelessWidget {
                 CategoriesScreenRoute().push(context);
               },
               child: SizedBox(
-                height: 134,
+                height: 136,
                 child: ListView.separated(
                   itemCount: state.categories.length,
                   cacheExtent: state.categories.length.toDouble(),

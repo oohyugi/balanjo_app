@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-
-
-
 class Assets {
+  Assets._();
+
   static const String icBagHeart = 'assets/icons/ic_bag_heart.svg';
   static const String icBagHeartBold = 'assets/icons/ic_bag_heart_bold.svg';
   static const String icHome = 'assets/icons/ic_home.svg';
@@ -35,6 +34,9 @@ class Assets {
   static const String icUserBold = 'assets/icons/ic_user_bold.svg';
   static const String icGps = 'assets/icons/ic_gps.svg';
   static const String icHistory = 'assets/icons/ic_history.svg';
+  static const String icMarker = 'assets/icons/ic_marker.svg';
+  static const String icGoogle = 'assets/icons/ic_google.svg';
+  static const String icLoginGoogle = 'assets/icons/ic_login_google.svg';
 }
 
 class SvgIcon extends StatelessWidget {

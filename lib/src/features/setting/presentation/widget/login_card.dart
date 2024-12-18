@@ -1,3 +1,5 @@
+import 'package:balanjo_app/config/route/safe_route.dart';
+import 'package:balanjo_app/config/route/screen/login.dart';
 import 'package:balanjo_app/src/shared/component/component.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +23,9 @@ class LoginCard extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12)),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  const LoginScreenRoute().push(context);
+                },
                 child: Text("Masuk")))
       ],
     );
